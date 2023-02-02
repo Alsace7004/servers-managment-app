@@ -1,0 +1,13 @@
+
+### GET ALL USER
+GET http://localhost:8003/api/users
+### ADD NEW USER
+POST http://localhost:8003/api/users
+Content-Type: application/json
+
+{
+    "name":"kossi",
+    "email":"kossi@kossi.com",
+    "password":"123456789"
+}
+### Another Action
