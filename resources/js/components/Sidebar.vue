@@ -5,7 +5,7 @@
                 </div>
                 <ul>
                     <li>
-                        <router-link :to="{name:'dashboard'}" class="item active">
+                        <router-link :to="{name:'dashboard'}" class="item">
                             <span class="icon"><i class="fas fa-home"></i></span>
                             <span>Dashboard</span>
                         </router-link>
@@ -51,12 +51,15 @@
 
 <style scoped>
 
-.sidebar ul li a.router-link-exact-active {
-  /* color: var(--color-text); */
-  color:orange
+.sidebar ul li a.router-link-exact-active,
+.sidebar ul li a.router-link-exact-active .icon {
+    background: #dd3333;
+    color: #fff;
 }
 
-.sidebar ul li a.router-link-exact-active:hover {
-  background-color: #fff;
-}
+/* .sidebar ul li a.router-link-exact-active:hover {
+  
+} */
+
+
 </style>
