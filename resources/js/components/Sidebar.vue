@@ -35,7 +35,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="#" class="item">
+                        <router-link to="/logout" class="item">
                             <span class="icon"><i class="fas fa-power-off"></i></span>
                             <span>Logout</span>
                         </router-link>
@@ -51,4 +51,12 @@
 
 <style scoped>
 
+.sidebar ul li a.router-link-exact-active {
+  /* color: var(--color-text); */
+  color:orange
+}
+
+.sidebar ul li a.router-link-exact-active:hover {
+  background-color: #fff;
+}
 </style>
