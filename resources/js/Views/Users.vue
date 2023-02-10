@@ -15,14 +15,7 @@
                                 </div>
                             </div>
                             <div class="data_box_content">
-                                <table>
-                                    <thead>
-                                        <th>#</th>
-                                        <th>Nom</th>
-                                        <th>Prenom</th>
-                                        <th>Email</th>
-                                        <th>Action</th>
-                                    </thead>
+                                <v-table :columns="columns">
                                     <tbody>
                                         <tr>
                                             <td>01</td>
@@ -102,7 +95,7 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </v-table>
                             </div>
                             <div class="data_box_footer">
                                 <div>
@@ -154,9 +147,18 @@
 <script setup>
     import ContentHeader from "../components/ContentHeader.vue"
     import ProperModal from "../components/ProperModal.vue"
+    import vTable from "../components/vTable/vTable.vue";
+    import {ref} from "vue";
     /****************GDialog*****Begin*****************/
     let isModalVisible = ref(false)
     /****************GDialog*****End*******************/
+    let columns =[
+        {label:'~#',name:''},
+        {label:'Nom',name:''},
+        {label:'Prenom',name:''},
+        {label:'Email',name:''},
+        {label:'Actions',name:''},
+    ]
 </script>
 
 <style scoped>

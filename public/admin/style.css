@@ -46,7 +46,7 @@ body{
     left: 0;
     width: 250px;
     height: 100%;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     transition: all 0.5s ease;
 }
 /* .sidebar > ul:hover{
@@ -57,7 +57,7 @@ body{
 /*******************THE-SIDEBAR-HEADER**************************/
 .wrapper .sidebar .sidebar_header{
     /* border: 1px solid var(--secondary-color); */
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-weight: bolder;
     text-align: center;
     margin-top: 1rem;
@@ -80,24 +80,24 @@ body{
     padding: 13px 14px;
     border-radius: 5px;
     margin: 4px 0;
-    color: var(--secondary-color);
+    color: var(--primary-color);
     text-decoration: none;
 }
 .wrapper .sidebar ul li > a:hover,
 .wrapper .sidebar ul li > a:hover .icon
 {
-    background: var(--secondary-color);
-    color: var(--primary-color)
+    background: var(--primary-color);
+    color: var(--secondary-color)
 }
 .wrapper .sidebar ul li > a.active,
 .wrapper .sidebar ul li > a.active .icon
 {
-    background: var(--secondary-color);
-    color: var(--primary-color)
+    background: var(--primary-color);
+    color: var(--secondary-color)
 }
 
 .icon{
-    color: var(--secondary-color);
+    color: var(--primary-color);
     width: 30px;
 }
 
@@ -116,7 +116,7 @@ body{
  /* border: 1px solid magenta; */
  height: 55px;
  padding: 0 30px;
- background-color: var(--primary-color);
+ background-color: var(--secondary-color);
  display: flex;
  align-items: center;
  justify-content: space-between;
@@ -128,7 +128,7 @@ body{
 /*******************THE-HAMBUGER**************************/
 .section .navbar .hambuger{
     cursor: pointer;
-    color: var(--secondary-color);
+    color: var(--primary-color);
 }
 /*******************THE-CONTENT**************************/
 .wrapper .section .content{
@@ -151,7 +151,7 @@ body{
     width: 45px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
 
 /*********************SHOW/HIDE-SIDE-BAR***************************************/
@@ -226,18 +226,21 @@ table th,td{
     border: none;
     background: none;
     cursor: pointer;
+    margin-right: 0.5rem;
 }
 .edit_btn{
     color: var(--primary-color);
     border: none;
     background: none;
     cursor: pointer;
+    margin-right: 0.5rem;
 }
 .view_btn{
     color: var(--primary-color);
     border: none;
     background: none;
     cursor: pointer;
+    margin-right: 0.5rem;
 }
 /******************************SEARCH-BAR-FORM******************************/
 .search_bar{
