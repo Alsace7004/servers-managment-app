@@ -1,6 +1,6 @@
 <template>
             <ContentHeader message="Users Page !!!"/>
-            
+                        <button @click="toggleModal">Open Modal</button>
                         <div class="data_box">
                             <div class="data_box_header">
                                 <div class="per_page">
@@ -142,11 +142,18 @@
                             </template>
                         </proper-modal>
                         <!-- Proper Modal End -->
+                        <Modal @close="toggleModal" :modalActive="modalActive">
+                            <div class="modal-content">
+                                <h1>Here is the modal Header</h1>
+                                <p>Here is the modal content</p>
+                            </div>
+                        </Modal>
 </template>
 
 <script setup>
     import ContentHeader from "../components/ContentHeader.vue"
     import ProperModal from "../components/ProperModal.vue"
+    import Modal from "../components/Modal.vue"
     import vTable from "../components/vTable/vTable.vue";
     import {ref} from "vue";
     /****************GDialog*****Begin*****************/
@@ -159,8 +166,24 @@
         {label:'Email',name:''},
         {label:'Actions',name:''},
     ]
+    let modalActive = ref(true)
+    const toggleModal = ()=>{
+        modalActive.value = !modalActive.value
+    }
 </script>
 
 <style scoped>
-
+    .modal-content{
+        display: flex;
+        flex-direction: column;
+    }
+    h1,p{
+        margin-bottom: 16px;
+    }
+    h1{
+        font-size: 32px;
+    }
+    p{
+        font-size: 18px;
+    }
 </style>
