@@ -1,8 +1,8 @@
 <template>
     <transition name="modal-animation">
-        <div v-show="modalActive" class="modal">
+        <div  class="modal" :id="modalName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
             <transition name="modal-animation-inner">
-                    <div v-show="modalActive" class="modal-inner">
+                    <div class="modal-inner">
                         <i @click="close" class="far fa-times-circle"></i>
                         <!-- Modal Content -->
                         <slot/>
@@ -15,7 +15,10 @@
 
 <script setup>
     defineProps({
-        modalActive:Boolean
+        modalActive:{type:Boolean,default:false},
+        modalName:{
+            type:String
+        }
     })
     const emit = defineEmits()
     const close = ()=>{
