@@ -17,10 +17,10 @@
                             <div class="data_box_content">
                                 <v-table :columns="columns">
                                     <tbody>
-                                        <tr>
-                                            <td>01</td>
-                                            <td>Kodjo</td>
-                                            <td>EYRAM</td>
+                                        <tr v-for="(user,key) in users" :key="key">
+                                            <td>{{user.id}}</td>
+                                            <td>{{user.name}}</td>
+                                            <td>{{user.email}}</td>
                                             <td>kodjo@eyram.com</td>
                                             <td>
                                                 <button class="view_btn"><i class="fas fa-eye"></i></button>
@@ -28,7 +28,7 @@
                                                 <button class="delete_btn"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <!--<tr>
                                             <td>02</td>
                                             <td>Komlan</td>
                                             <td>ETONAM</td>
@@ -93,18 +93,23 @@
                                                 <button class="edit_btn"><i class="fas fa-edit"></i></button>
                                                 <button class="delete_btn"><i class="fas fa-trash"></i></button>
                                             </td>
-                                        </tr>
+                                        </tr>-->
                                     </tbody>
                                 </v-table>
                             </div>
                             <div class="data_box_footer">
                                 <div>
-                                    (1-5 sur 10)
+                                    ({{from}}-{{to}} sur {{total}})
                                 </div>
                                 <div>
-                                    <button class="previous_btn">Previous</button>
+                                    <!-- <button class="previous_btn">Previous</button>
                                     1 2 3 ... 59
-                                    <button class="next_btn">Next</button>
+                                    <button class="next_btn">Next</button> -->
+                                    <button class="pagination_btn" style="margin-right:0.5rem;cursor:pointer" v-for="(link,key) in links" :key="key" :class="getClass(link)">
+                                        <a @click.prevent="navigation(link)">
+                                            {{link.label}}
+                                        </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +160,7 @@
     import ProperModal from "../components/ProperModal.vue"
     import Modal from "../components/Modal.vue"
     import vTable from "../components/vTable/vTable.vue";
-    import {ref} from "vue";
+    import {onMounted, ref,reactive} from "vue";
     /****************GDialog*****Begin*****************/
     let isModalVisible = ref(false)
     /****************GDialog*****End*******************/
@@ -166,9 +171,67 @@
         {label:'Email',name:''},
         {label:'Actions',name:''},
     ]
+
+        let from = ref()
+        let to = ref()
+        let total = ref()
+        let next_page_url = ref()
+        let prev_page_url = ref()
+
+        /* let current_page = ref()
+        let last_page = ref()
+        let first_page_url = ref()
+        let last_page_url = ref() */
+
+        
+    /*************************************************/
     let modalActive = ref(true)
     const toggleModal = ()=>{
         modalActive.value = !modalActive.value
+    }
+    /********************WORKING-ON-TABLE-REFS********************/
+    let users = ref([])
+    let links = ref([])
+    const tData = reactive({
+        page:0,
+        search :'',
+        length :'5',
+    })
+    /*************************************************/
+    onMounted(()=>{
+        getUsers()
+    })
+    /*************************************************/
+    const getUsers = (pageGet)=>{
+        tData.page = pageGet
+        axios.get("api/users",{params:tData}).then((res)=>{
+            let content = res.data.users;
+            users.value = content.data;
+            //console.log("Valeur de res dans getUsers:",res)
+            configPagination(content)
+        })
+    }
+    const configPagination = (data)=>{
+        from.value          = data.from
+        to.value            = data.to
+        total.value         = data.total
+        next_page_url.value = data.next_page_url
+        prev_page_url.value = data.prev_page_url
+        links.value         = data.links        
+    }
+    const navigation = (nav)=>{
+        const url = nav.url.split("=");
+        const page = url[1];
+        getUsers(page)
+    }
+    const getClass = (item)=>{
+        if(item.url === null) return "page-item disabled no-cursor"
+        if(item.url != null){
+            if(item.active === true){
+                return "page-item active no-cursor";
+            }else return "page-item";
+        }
+        //console.log("valeur de item dans getClass:",item)
     }
 </script>
 
@@ -185,5 +248,19 @@
     }
     p{
         font-size: 18px;
+    }
+    .disabled{
+        background: red;
+    }
+    .no-cursor {
+        cursor: default !important;
+        pointer-events: none;
+    }
+    .pagination_btn{
+        background-color: rgb(81, 79, 79);
+        padding: 2px 10px;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: 600;
     }
 </style>

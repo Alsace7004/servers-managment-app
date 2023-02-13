@@ -11,10 +11,10 @@ class UserController extends Controller
     //
 
     public function index(){
-        $users = User::query()->select('id','name','email','created_at')->get();
+        $users = User::query()->select('id','name','email','created_at');
         return response()->json([
             'status'=>true,
-            'users'=>$users,
+            'users'=>$users->paginate(3),
         ]);
     }
     public function store(Request $request){
