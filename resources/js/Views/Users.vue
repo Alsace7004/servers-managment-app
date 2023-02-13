@@ -1,6 +1,6 @@
 <template>
             <ContentHeader message="Users Page !!!"/>
-                        <button style="margin-right:1rem" @click="showModal">Create Modal</button>
+                        <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Add User</button>
                         <button @click="toggleModal2">Edit Modal</button>
                         <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#create_user">Open Modal</button> -->
                         <div class="data_box">
@@ -25,7 +25,7 @@
                                             <td>{{user.email}}</td>
                                             <td>kodjo@eyram.com</td>
                                             <td>
-                                                <button class="view_btn"><i class="fas fa-eye"></i></button>
+                                                <!-- <button class="view_btn"><i class="fas fa-eye"></i></button> -->
                                                 <button class="edit_btn"><i class="fas fa-edit"></i></button>
                                                 <button class="delete_btn"><i class="fas fa-trash"></i></button>
                                             </td>
@@ -119,7 +119,7 @@
                         <proper-modal v-show="isModalVisible" modalName="create_user">
                             <template v-slot:header>
                                 <h4>Create Users</h4>
-                                <i @click="closeModal()" class="far fa-times-circle" data-dismiss="modal" aria-label="Close"></i>
+                                <i @click="closeModal()" class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
                                 <div class="input_form mb_3">
@@ -154,7 +154,7 @@
                         <proper-modal v-show="isModalVisible" modalName="edit_user">
                             <template v-slot:header>
                                 <h4>Edit Users</h4>
-                                <i @click="closeModal()" class="far fa-times-circle" data-dismiss="modal" aria-label="Close"></i>
+                                <i @click="closeModal()" class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -290,26 +290,6 @@
 
 <style scoped>
     /***************************************************/
-    i{
-        font-size: 20px;
-        cursor: pointer;
-    }
-    i:hover{
-        color: #de3333;
-    }
-    /****************Pagination-begin*********************/
-    .disabled{
-        background: red;
-    }
-    .no-cursor {
-        cursor: default !important;
-        pointer-events: none;
-    }
-    .pagination_btn{
-        background-color: rgb(81, 79, 79);
-        padding: 2px 10px;
-        border-radius: 5px;
-        color: #fff;
-        font-weight: 600;
-    }
+    
+    
 </style>
