@@ -1,4 +1,22 @@
-
+.input_form{
+    border: 1px solid #2f3640;
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.input_form_item{
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 8px 15px;
+    
+}
+.mb_3{
+    margin-bottom: 0.5rem;
+}
+.error_txt{
+    color: #dd3333;
+}
 /********************************DELETE-BTN********************************/
 .mdl-btn-danger{
     margin-left: 1rem;

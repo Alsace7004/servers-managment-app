@@ -64,15 +64,30 @@
     
 </template>
 
-<script setup>
-    import ContentHeader from "../components/ContentHeader.vue"
-    import vTable from "../components/vTable/vTable.vue"
-    let columns =[
-        {label:'~#',name:''},
-        {label:'Roles',name:''},
-        {label:'Ajouté Le',name:''},
-        {label:'Actions',name:''},
-    ]
+<script>
+    import ContentHeader from "../components/ContentHeader.vue";
+    import vTable from "../components/vTable/vTable.vue";
+    export default {
+        name:'roles',
+        components:{
+            ContentHeader,vTable
+        },
+        props: ['self'],
+        data(){
+            let columns =[
+                    {label:'~#',name:'id'},
+                    {label:'Roles',name:'role'},
+                    {label:'Ajouté Le',name:'created_at'},
+                    {label:'Actions',name:'action'},
+            ];
+            return{
+                columns: columns,
+            }
+        },
+        methods:{
+
+        }
+    }
 </script>
 
 <style scoped>

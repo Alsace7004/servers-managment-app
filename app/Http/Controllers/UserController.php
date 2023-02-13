@@ -19,19 +19,20 @@ class UserController extends Controller
     }
     public function store(Request $request){
         $data = $request->only(['name','email','password']);
+        //dd($data);
         $validator = Validator::make($data,[
             'name'=>'required|string|min:2|max:100',
             'email'=>'required|email|unique:users',
             'password'=>'required|string|min:8',
         ],[
-            'name.required'=>'Ce champ est obligatoire',
+            'name.required'=>'Veuillez remplir ce champ',
             'name.string'=>'Veuillez entrer des chaines de caractère',
             'name.min'=>'Trop court...',
             'name.max'=>'Trop long...',
-            'email.required'=>'Ce champ est obligatoire',
+            'email.required'=>'Veuillez remplir ce champ',
             'email.email'=>'Veuillez entrer une adresse mail valide',
             'email.unique'=>'Mail déjà utilisé.',
-            'password.required'=>'Ce champ est obligatoire',
+            'password.required'=>'Veuillez remplir ce champ',
             'password.string'=>'Veuillez entrer des chaines de caractère',
             'password.min'=>'Trop court...',
         ]);

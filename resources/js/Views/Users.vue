@@ -1,6 +1,6 @@
 <template>
             <ContentHeader message="Users Page !!!"/>
-                        <button style="margin-right:1rem" @click="toggleModal">Create Modal</button>
+                        <button style="margin-right:1rem" @click="showModal">Create Modal</button>
                         <button @click="toggleModal2">Edit Modal</button>
                         <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#create_user">Open Modal</button> -->
                         <div class="data_box">
@@ -122,17 +122,32 @@
                                 <i @click="closeModal()" class="far fa-times-circle" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
-                                <p>Arcu cursus vitae congue mauris rhoncus aenean. Tempor id eu nisl nunc mi. Pharetra diam sit amet nisl suscipit adipiscing bibendum. 
-                                    Ut faucibus pulvinar elementum integer enim. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. 
-                                    Eu non diam phasellus vestibulum lorem sed risus. Porttitor rhoncus dolor purus non enim praesent. 
-                                    Sit amet mauris commodo quis imperdiet. Lobortis feugiat vivamus at augue eget. Nibh tellus molestie nunc non blandit. 
-                                    Tellus mauris a diam maecenas sed enim ut. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat pretium. 
-                                    Mattis aliquam faucibus purus in massa.</p>
+                                <div class="input_form mb_3">
+                                    <input type="text" class="input_form_item" v-model="user.name" placeholder="Nom...">
+                                </div>
+                                <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <div class="input_form mb_3">
+                                    <input type="email" class="input_form_item" v-model="user.email" placeholder="Email...">
+                                </div>
+                                <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
+                                <div class="input_form mb_3">
+                                    <input type="password" class="input_form_item" v-model="user.password" placeholder="Password...">
+                                </div>
+                                <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
+                                <div class="input_form">
+                                    <select name="" id="" class="input_form_item">
+                                        <option value="">Choisir un role</option>
+                                        <option value="">role1</option>
+                                        <option value="">role2</option>
+                                        <option value="">role3</option>
+                                    </select>
+                                </div>
+                                
                             </template>
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" @click="closeModal()">Save</button>
+                                    <button class="mdl-btn-primary" @click="saveUser">Save</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -184,10 +199,24 @@
         let to = ref()
         let total = ref()
         let next_page_url = ref()
-        let prev_page_url = ref()        
+        let prev_page_url = ref()
+    /*************************************************/
+    let user = reactive({
+        name:'',
+        email:'',
+        password:''
+    })
+    let errors = ref([])
     /*************************************************/
     let modalActive = ref(false)
     //modalActive.value = !modalActive.value
+    const showModal = ()=>{
+        errors.value = []
+        user.name = ""
+        user.email = ""
+        user.password =""
+        $("#create_user").modal("show")
+    }
     const toggleModal = ()=>{
         $("#create_user").modal("show")
     }
@@ -219,6 +248,20 @@
             configPagination(content)
         }).catch((err)=>{
             console.log("Valeur de err dans getUsers:",err)
+        })
+    }
+    const saveUser = ()=>{
+        errors.value = []
+        axios.post("api/users",user).then((res)=>{
+            //console.log("valeur de res:",res)
+            if(res.data.status){
+                $('#create_user').modal('hide'); 
+                getUsers()
+                Swal.fire('Créer!','Nouvelle Utilisateur Ajouter avec success.','success') ;
+            }
+        }).catch((err)=>{
+            console.log("Valeur de err dans saveUser:",err.response.data.errors)
+            errors.value = err.response.data.errors
         })
     }
     const configPagination = (data)=>{
