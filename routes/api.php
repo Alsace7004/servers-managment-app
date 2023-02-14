@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PermmissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('users',UserController::class);
 Route::apiResource('roles',RoleController::class);
+Route::apiResource('permissions',PermmissionController::class);

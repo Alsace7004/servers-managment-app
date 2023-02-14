@@ -11,7 +11,7 @@ class UserController extends Controller
     //
 
     public function index(){
-        $users = User::query()->select('id','name','email','created_at');
+        $users = User::query()->select('id','name','email','created_at')->orderBy('id','desc');
         return response()->json([
             'status'=>true,
             'users'=>$users->paginate(3),
@@ -45,6 +45,34 @@ class UserController extends Controller
         $user->password = bcrypt($data['password']);
         if($user->save()){
             return ['status'=>true];
+        }
+        return ['status'=>false];
+    }
+
+    public function show(User $user)
+    {
+        //
+        return $user;
+    }
+    public function update(Request $request, User $user)
+    {
+        //
+        $this->validate($request,[
+            'name'=>'required',
+            'email'=>'required|email',
+        ]);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        if($user->save()){
+            return ["status"=>true];
+        }
+        return ["status"=>false];
+    }
+    public function destroy(User $user)
+    {
+        //
+        if($user->delete()){
+            return ['status'=>true,];
         }
         return ['status'=>false];
     }

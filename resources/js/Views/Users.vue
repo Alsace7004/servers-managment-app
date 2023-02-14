@@ -1,7 +1,7 @@
 <template>
             <ContentHeader message="Users Page !!!"/>
                         <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Add User</button>
-                        <button @click="toggleModal2">Edit Modal</button>
+                        <!-- <button @click="toggleModal2">Edit Modal</button> -->
                         <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#create_user">Open Modal</button> -->
                         <div class="data_box">
                             <div class="data_box_header">
@@ -19,15 +19,17 @@
                             <div class="data_box_content">
                                 <v-table :columns="columns">
                                     <tbody>
+                                        <tr v-if="!users.length">
+                                            <td>Pas d'utilisateur disponibles</td>
+                                        </tr>
                                         <tr v-for="(user,key) in users" :key="key">
                                             <td>{{user.id}}</td>
                                             <td>{{user.name}}</td>
                                             <td>{{user.email}}</td>
-                                            <td>kodjo@eyram.com</td>
                                             <td>
                                                 <!-- <button class="view_btn"><i class="fas fa-eye"></i></button> -->
-                                                <button class="edit_btn"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn"><i class="fas fa-trash"></i></button>
+                                                <button class="edit_btn" @click="editUser(user.id)"><i class="fas fa-edit"></i></button>
+                                                <button class="delete_btn" @click="deleteUser(user.id)"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                         <!--<tr>
@@ -115,10 +117,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Proper Modal Begin -->
+                        <!-- Proper Create Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="create_user">
                             <template v-slot:header>
-                                <h4>Create Users</h4>
+                                <h4>Create User</h4>
                                 <i @click="closeModal()" class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -151,31 +153,31 @@
                                 </div>
                             </template>
                         </proper-modal>
+                        <!-- Proper Create Modal End -->
+                        <!-- Proper Edit Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="edit_user">
                             <template v-slot:header>
-                                <h4>Edit Users</h4>
+                                <h4>Edit User</h4>
                                 <i @click="closeModal()" class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                    Nunc sed velit dignissim sodales ut eu sem integer vitae. Id aliquet lectus proin nibh nisl condimentum. 
-                                    Fringilla urna porttitor rhoncus dolor purus. Nam aliquam sem et tortor. Nisl vel pretium lectus quam id. 
-                                    Cras pulvinar mattis nunc sed. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. 
-                                    Tristique magna sit amet purus. Fermentum et sollicitudin ac orci phasellus egestas tellus. 
-                                    Erat pellentesque adipiscing commodo elit at imperdiet dui accumsan. Felis eget nunc lobortis mattis aliquam faucibus. 
-                                    Tincidunt eget nullam non nisi est sit amet facilisis. Mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. 
-                                    Vitae proin sagittis nisl rhoncus mattis rhoncus urna neque. Eget nunc scelerisque viverra mauris in aliquam sem fringilla ut. 
-                                    Nec nam aliquam sem et tortor consequat id. Commodo nulla facilisi nullam vehicula ipsum a. Elementum tempus egestas sed sed. 
-                                    Faucibus purus in massa tempor nec feugiat nisl pretium fusce.</p>
+                                 <div class="input_form mb_3">
+                                    <input type="text" class="input_form_item" v-model="user.name" placeholder="Nom...">
+                                </div>
+                                <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <div class="input_form mb_3">
+                                    <input type="email" class="input_form_item" v-model="user.email" placeholder="Email...">
+                                </div>
+                                <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
                             </template>
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" @click="closeModal()">Update</button>
+                                    <button class="mdl-btn-primary" @click="updateUser">Update</button>
                                 </div>
                             </template>
                         </proper-modal>
-                        <!-- Proper Modal End -->
+                        <!-- Proper Edit Modal End -->
 </template>
 
 <script setup>
@@ -190,7 +192,6 @@
     let columns =[
         {label:'~#',name:''},
         {label:'Nom',name:''},
-        {label:'Prenom',name:''},
         {label:'Email',name:''},
         {label:'Actions',name:''},
     ]
@@ -207,6 +208,8 @@
         password:''
     })
     let errors = ref([])
+    let edit_id = ref()
+    let is_Editing= ref(false)
     /*************************************************/
     let modalActive = ref(false)
     //modalActive.value = !modalActive.value
@@ -247,7 +250,7 @@
             //console.log("Valeur de res dans getUsers:",res)
             configPagination(content)
         }).catch((err)=>{
-            console.log("Valeur de err dans getUsers:",err)
+            console.log("Valeur de err dans getUsers:",err.response)
         })
     }
     const saveUser = ()=>{
@@ -285,6 +288,56 @@
             }else return "page-item";
         }
         //console.log("valeur de item dans getClass:",item)
+    }
+    const editUser = (id)=>{
+                errors.value = [];
+                axios.get(`api/users/${id}`).then((res)=>{
+                    $("#edit_user").modal("show")
+                    console.log('valeur de res dans edit user:',res)
+                    edit_id.value = res.data.id;
+                    user.name  = res.data.name;
+                    user.email  = res.data.email;
+                    is_Editing.value = true;
+                })
+    }
+    const updateUser = ()=>{
+                    axios.put(`api/users/${edit_id.value}`,user).then((res)=>{
+                        $('#edit_user').modal('hide');
+                        if(res.data.status){
+                            Swal.fire('Mise à jour!','Utilisateur mise à jour avec success.','success')    
+                            getUsers();
+                            edit_id.value = "";
+                            is_Editing.value = false;
+                        }
+                    }).catch((err)=>{
+                        console.log("Valeur de err dans updateUser:",err.response)
+                        errors.value = err.response.data.errors
+                    })
+            }
+    const deleteUser = (id)=>{
+                    Swal.fire({
+                    title: 'Etes-vous sûr?',
+                    text: "Vous ne pourrez pas annuler cette action !!!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Annuler!',
+                    confirmButtonText: 'Oui, supprimez-le!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                                axios.delete(`api/users/${id}`).then((res)=>{
+                                    if(res.data.status){
+                                        Swal.fire('Supprimé!','L\'utilisateur a été supprimé.','success') 
+                                        getUsers()
+                                    }
+                                }).catch((err)=>{
+                                    Swal.fire('Erreur !!!',"Une erreur s'est produite !!!",'error')
+                                })
+                        }else{
+                            Swal.fire('Conserver !!!',"L\'utilisateur est toujours disponible !!!",'success')
+                        }
+                    })
     }
 </script>
 

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
-class RoleController extends Controller
+class PermmissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +16,10 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $roles = Role::query()->select('id','name','created_at')->orderBy('id','desc');
+        $permissions = Permission::query()->select('id','name','created_at')->orderBy('id','desc');
         return response()->json([
             'status'=>true,
-            'roles'=>$roles->paginate(3)
+            'permissions'=>$permissions->paginate(3)
         ]);
     }
 
@@ -34,7 +33,6 @@ class RoleController extends Controller
     {
         //
         $data = $request->only(['name']);
-        //dd($data);
         $validator = Validator::make($data,[
             'name'=>'required|string|unique:roles|min:2|max:20'
         ],[
@@ -46,8 +44,7 @@ class RoleController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
-        $r = Role::create($data);
-        if($r){
+        if(Permission::create($data)){
             return ['status'=>true];
         }
         return ['status'=>false];
@@ -56,26 +53,25 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Permission $permission)
     {
         //
-        return $role;
+        return $permission;
     }
 
     /**
      * Update the specified resource in storage.
-     * //Rule::unique('roles')->ignore($role->id)
+     *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Permission $permission)
     {
         //
-        //dd($role->toArray());
         $message = [
             'name.required'=>'Veuillez remplir ce champ',
             'name.min'=>'Trop court',
@@ -86,8 +82,8 @@ class RoleController extends Controller
                 'required','string','min:2','max:20'
             ],
         ],$message);
-        $role->name = $request->input('name');
-        if($role->save()){
+        $permission->name = $request->input('name');
+        if($permission->save()){
             return ["status"=>true];
         }
         return ["status"=>false];
@@ -96,13 +92,13 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Permission $permission)
     {
         //
-        if($role->delete()){
+        if($permission->delete()){
             return ['status'=>true,];
         }
         return ['status'=>false];

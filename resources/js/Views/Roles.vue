@@ -18,6 +18,9 @@
                             <div class="data_box_content">
                                 <v-table :columns="columns">
                                     <tbody>
+                                        <tr v-if="!roles.length">
+                                            <td>Pas de roles disponibles</td>
+                                        </tr>
                                         <tr v-for="(role,key) in roles" :key="key">
                                             <td>{{role.id}}</td>
                                             <td>{{role.name}}</td>
@@ -59,8 +62,8 @@
                             </template>
                             <template v-slot:footer>
                                 <div>
-                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" @click="saveRole">Save</button>
+                                    <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Cancel</button>
+                                    <button class="mdl-btn-primary" id="send_role" :class="loading ? 'disabled' :''" @click="saveRole">Save</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -80,7 +83,7 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" @click="updateRole">Update</button>
+                                    <button class="mdl-btn-primary" id="update_role" :class="loading ? 'disabled' :''" @click="updateRole">Update</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -92,6 +95,7 @@
     import ContentHeader from "../components/ContentHeader.vue";
     import vTable from "../components/vTable/vTable.vue";
     import ProperModal from "../components/ProperModal.vue";
+
     export default {
         name:'roles',
         components:{
@@ -124,12 +128,14 @@
                 },
                 edit_id:'',
                 is_Editing:false,
+                loading:false,
             }
         },
         created(){
             this.getRoles()
         },
         methods:{
+            
             convert(jour){
                 let  date =  new Date(jour);
                 return  date.toLocaleDateString('en-GB') // "day-month-year"
@@ -140,29 +146,42 @@
                 $("#create_role").modal("show")
             },
             getRoles(pageGet){
+                
                 this.tData.page = pageGet
                 axios.get("api/roles",{params:this.tData}).then((res)=>{
                     let content = res.data.roles
-                    console.log("Valeur de res dans getRoles:",res)
+                    //console.log("Valeur de res dans getRoles:",res)
                     this.roles = content.data
                     this.configPagination(content)
                     //console.log("Valeur de res.data dans getRoles:",res.data)
                 }).catch((err)=>{
-                    console.log("Valeur de err dans getRoles:",err)
+                    console.log("Valeur de err dans getRoles:",err.response)
                 })
             },
             saveRole(){
                 this.errors = []
+                let send_role = document.querySelector("#send_role")
+                send_role.innerHTML = "Envoie en cours..."
+                this.loading = true;
                 axios.post("api/roles",this.role).then((res)=>{
-                    console.log("Valeur de res dans saveRole:",res)
+                    send_role.innerHTML = "Save"
+                    this.loading = false;
+                    //console.log("Valeur de res dans saveRole:",res)
                     if(res.data.status){
                         $('#create_role').modal('hide'); 
                         this.getRoles()
                         Swal.fire('Créer!','Nouveau Role Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
-                    //console.log("Valeur de err dans saveRole:",err)
-                    this.errors = err.response.data.errors
+                    send_role.innerHTML = "Save"
+                    this.loading = false;
+                    //console.log("Valeur de err dans saveRole:",err.response)
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors
+                    }else{
+                        //console.log("erreur: probleme de connexion")
+                        Swal.fire('Erreur!','Probleme de connexion.','error') ;
+                    }
                 })
             },
             configPagination(data){
@@ -185,15 +204,11 @@
                 }
             },
             editRole(id){
-                /* this.errors = [];
-                this.role = { ...el }
-                console.log("Valeur de this.role:",this.role) */
-                
-                //Swal.fire('Editer!',`Editer Role qui a l\'id ${id}.`,'success') ;
+                this.errors = [];
                 axios.get(`api/roles/${id}`).then((res)=>{
                     //$('#create_role').modal('show');
                     $("#edit_role").modal("show")
-                    console.log('valeur de res dans edit role:',res)
+                    //console.log('valeur de res dans edit role:',res)
                     this.edit_id    = res.data.id;
                     this.role.name  = res.data.name;
                     this.is_Editing = true;
@@ -212,8 +227,10 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                                 axios.delete(`api/roles/${id}`).then((res)=>{
-                                    Swal.fire('Supprimé!','Le Role a été supprimé.','success') 
-                                    this.getRoles()
+                                    if(res.data.status){
+                                        Swal.fire('Supprimé!','Le Role a été supprimé.','success') 
+                                        this.getRoles()
+                                    }
                                 }).catch((err)=>{
                                     Swal.fire('Erreur !!!',"Une erreur s'est produite !!!",'error')
                                 })
@@ -223,14 +240,29 @@
                     })
             },
             updateRole(){
-                    axios.put(`api/roles/${this.edit_id}`,this.role).then(()=>{
-                        $('#edit_role').modal('hide');
-                        Swal.fire('Updated!','Role mise à jour avec success.','success')    
-                        this.getRoles();
-                        this.edit_id = "";
-                        this.is_Editing = false;
+                    let update_role = document.querySelector("#update_role")
+                    update_role.innerHTML = "Mise à jour en cours..."
+                    this.loading = true;
+                    axios.put(`api/roles/${this.edit_id}`,this.role).then((res)=>{
+                        update_role.innerHTML = "Update"
+                        this.loading = false;
+                        if(res.data.status){
+                            $('#edit_role').modal('hide');
+                            Swal.fire('Mise à jour!','Role mise à jour avec success.','success')    
+                            this.getRoles();
+                            this.edit_id = "";
+                            this.is_Editing = false;
+                        }
                     }).catch((err)=>{
-                        Swal.fire('Error !!!','Une Erreur Survenue !!!','error')
+                        update_role.innerHTML = "Update"
+                        this.loading = false;
+                        console.log("Valeur de err dans updateRole:",err.response)
+                        if(err.response.status === 422){
+                            this.errors = err.response.data.errors
+                        }else{
+                            //console.log("erreur: probleme de connexion")
+                            Swal.fire('Erreur!','Probleme de connexion.','error') ;
+                        }
                     })
             }
         }
@@ -238,5 +270,5 @@
 </script>
 
 <style scoped>
-
+    
 </style>

@@ -28,9 +28,6 @@
     color: #dd3333;
 }
 /********************Pagination-begin*************************/
-.disabled{
-    background: red;
-}
 .no-cursor {
     cursor: default !important;
     pointer-events: none;
@@ -41,6 +38,14 @@
     border-radius: 5px;
     color: #fff;
     font-weight: 600;
+}
+.disabled{
+    background-color: rgb(81, 79, 79);
+    opacity: 0.6;
+    pointer-events: none;
+}
+.active{
+    background-color:#dd3333 ;
 }
 /*******************Pagination-end-here************************/
 /********************************DELETE-BTN-BEGIN********************************/
