@@ -256,7 +256,7 @@
                     }).catch((err)=>{
                         update_role.innerHTML = "Update"
                         this.loading = false;
-                        console.log("Valeur de err dans updateRole:",err.response)
+                        //console.log("Valeur de err dans updateRole:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors
                         }else{

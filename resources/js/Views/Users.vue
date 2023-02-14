@@ -20,7 +20,16 @@
                                 <v-table :columns="columns">
                                     <tbody>
                                         <tr v-if="!users.length">
-                                            <td>Pas d'utilisateur disponibles</td>
+                                            <td>
+                                                Pas d'utilisateur disponibles
+                                                <div class="spinner-border" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                                <div class="spinner-border" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </td>
+                                            
                                         </tr>
                                         <tr v-for="(user,key) in users" :key="key">
                                             <td>{{user.id}}</td>
@@ -149,7 +158,7 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" @click="saveUser">Save</button>
+                                    <button class="mdl-btn-primary" id="send_user" :class="loading ? 'disabled' :''" @click="saveUser">Save</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -173,7 +182,7 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" @click="updateUser">Update</button>
+                                    <button class="mdl-btn-primary" id="update_user" :class="loading ? 'disabled' :''" @click="updateUser">Update</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -210,6 +219,7 @@
     let errors = ref([])
     let edit_id = ref()
     let is_Editing= ref(false)
+    let loading= ref(false)
     /*************************************************/
     let modalActive = ref(false)
     //modalActive.value = !modalActive.value
@@ -255,7 +265,12 @@
     }
     const saveUser = ()=>{
         errors.value = []
+        let send_user = document.querySelector("#send_user")
+        send_user.innerHTML = "Envoie en cours..."
+        loading.value = true;
         axios.post("api/users",user).then((res)=>{
+            send_user.innerHTML = "Save"
+            loading.value = false;
             //console.log("valeur de res:",res)
             if(res.data.status){
                 $('#create_user').modal('hide'); 
@@ -263,8 +278,15 @@
                 Swal.fire('Créer!','Nouvelle Utilisateur Ajouter avec success.','success') ;
             }
         }).catch((err)=>{
-            console.log("Valeur de err dans saveUser:",err.response.data.errors)
-            errors.value = err.response.data.errors
+            send_user.innerHTML = "Save"
+            loading.value = false;
+            //console.log("Valeur de err dans saveUser:",err.response.data.errors)
+            if(err.response.status === 422){
+                errors.value = err.response.data.errors
+            }else{
+                //console.log("erreur: probleme de connexion")
+                Swal.fire('Erreur!','Probleme de connexion.','error') ;
+            }
         })
     }
     const configPagination = (data)=>{
@@ -293,15 +315,20 @@
                 errors.value = [];
                 axios.get(`api/users/${id}`).then((res)=>{
                     $("#edit_user").modal("show")
-                    console.log('valeur de res dans edit user:',res)
+                    //console.log('valeur de res dans edit user:',res)
                     edit_id.value = res.data.id;
                     user.name  = res.data.name;
                     user.email  = res.data.email;
                     is_Editing.value = true;
                 })
     }
-    const updateUser = ()=>{
+        const updateUser = ()=>{
+                    let update_user = document.querySelector("#update_user")
+                    update_user.innerHTML = "Mise à jour en cours..."
+                    loading.value = true;
                     axios.put(`api/users/${edit_id.value}`,user).then((res)=>{
+                        update_user.innerHTML = "Update"
+                        loading.value = false;
                         $('#edit_user').modal('hide');
                         if(res.data.status){
                             Swal.fire('Mise à jour!','Utilisateur mise à jour avec success.','success')    
@@ -310,8 +337,15 @@
                             is_Editing.value = false;
                         }
                     }).catch((err)=>{
-                        console.log("Valeur de err dans updateUser:",err.response)
-                        errors.value = err.response.data.errors
+                        update_user.innerHTML = "Update"
+                        loading.value = false;
+                        //console.log("Valeur de err dans updateUser:",err.response)
+                        if(err.response.status === 422){
+                            errors.value = err.response.data.errors
+                        }else{
+                            //console.log("erreur: probleme de connexion")
+                            Swal.fire('Erreur!','Probleme de connexion.','error') ;
+                        }
                     })
             }
     const deleteUser = (id)=>{
