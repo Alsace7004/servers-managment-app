@@ -37,13 +37,20 @@ export default {
             login_btn.innerHTML = "Connexion en cours..."
             this.loading =  true
             axios.post('api/login',this.user).then((res)=>{
+                localStorage.clear(); 
                 login_btn.innerHTML ="Se connecter"
                 this.loading =  false
                 console.log("Valeur de res dans loginUser:",res)
 
                 if(res.data.status){
-                    Swal.fire('Success!','Connexion reussie !!!.','success') ;
+                    let token = res.data.access_token
+                    let user = res.data.user
+                    localStorage.setItem("jwt",token)
+                    localStorage.setItem("user_info",user)
+                    Swal.fire('Success!','Connexion reussie !!!.','success');
+                    this.$router.push("/");
                 }
+                //17|Qq5qDR6r3GgVF0iSgLhVpOV4C7rgYe37qTbI1PVS
             }).catch((err)=>{
                 login_btn.innerHTML ="Se connecter"
                 this.loading =  false

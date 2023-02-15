@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,7 +47,12 @@ class AuthController extends Controller
     //logout
     public function logout(Request $request)
     {
-        if(auth()->user()->tokens()->delete()){
+        //auth()->user()->token()->delete()
+        //dd(Auth::user());
+        //dd($request->user()->tokens()->delete());
+        //dd(auth()->user()->tokens()->delete());
+
+        if($request->user()->tokens()->delete()){
             return ['status'=>true];
         }
         return ['status'=>false];

@@ -24,17 +24,22 @@ use Illuminate\Support\Facades\Route;
     Route::apiResource('roles',RoleController::class);
 }); */
 Route::post("login",[AuthController::class,'login'])->name('login');
+
 Route::middleware('auth:sanctum')->group(function () {
-    //return $request->user();
-    //return "salut";
-    Route::apiResource('roles',RoleController::class);
     Route::get('/me', function(){
         return auth()->user();
     });
+    //logout
+    Route::post("logout",[AuthController::class,'logout'])->name('logout');
+
+    //Others    
+    Route::apiResource('roles',RoleController::class);
+
+    Route::apiResource('users',UserController::class);
+    Route::apiResource('permissions',PermmissionController::class);
+    Route::apiResource('servers',ServerController::class);
 });
 
-Route::apiResource('users',UserController::class);
-Route::apiResource('permissions',PermmissionController::class);
-Route::apiResource('servers',ServerController::class);
+
 
 

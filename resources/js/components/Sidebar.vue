@@ -35,7 +35,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/logout" class="item">
+                        <router-link to="/logout" @click="logout" class="item">
                             <span class="icon"><i class="fas fa-power-off"></i></span>
                             <span>Logout</span>
                         </router-link>
@@ -45,8 +45,23 @@
 </template>
 
 <script setup>
+    import axiosClient from "../axios/index"
 
-
+    const logout =() =>{
+        alert("hited !!!")
+        axiosClient.post("api/logout").then((res)=>{
+            console.log("Valeur de res dans logout:",res)
+            if(res.data.status){
+                Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success') ;
+                localStorage.removeItem("jwt");
+                localStorage.removeItem("user_info");
+                localStorage.clear(); 
+                this.$router.push("/login");
+            }
+        }).catch((err)=>{
+            console.log("Valeur de error dans logout:",err.response)
+        })
+    }
 </script>
 
 <style scoped>

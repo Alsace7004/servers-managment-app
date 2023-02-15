@@ -99,6 +99,7 @@
     import vTable from "../components/vTable/vTable.vue";
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader2.vue"
+    import axiosClient from "../axios/index"
     export default {
         name:'roles',
         components:{
@@ -151,7 +152,7 @@
             getRoles(pageGet){
                 
                 this.tData.page = pageGet
-                axios.get("api/roles",{params:this.tData}).then((res)=>{
+                axiosClient.get("api/roles",{params:this.tData}).then((res)=>{
                     let content = res.data.roles
                     //console.log("Valeur de res dans getRoles:",res)
                     this.roles = content.data
