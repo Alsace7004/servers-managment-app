@@ -25,7 +25,7 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
-        <script src="{{asset('admin/script.js')}}" defer></script>
+        
         @vite(['resources/js/app.js','resources/css/app.css'])
         <link rel="stylesheet" href="{{asset('admin/style.css')}}">
         <link rel="stylesheet" href="{{asset('admin/login_style.css')}}">
@@ -141,5 +141,13 @@
             </div>
         </div> --}}
         <div id="app"></div>
+        {{-- {{dd(Auth::user())}} --}}
+        @if (Auth::check())
+            <script>window.authUser={!! json_encode(Auth::user()); !!};</script>
+        @else
+            <script>window.authUser=null;</script>
+        @endif
+        {{-- <script src="{{asset('admin/script.js')}}" defer></script> --}}
+        
     </body>
 </html>

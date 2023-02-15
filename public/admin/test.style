@@ -21,7 +21,7 @@
     width: 330px;
     border-radius: 5px;
 }
-.login_form_input{
+.input_form{
     border: 1px solid red;
     width: 100%;
     padding: 10px;

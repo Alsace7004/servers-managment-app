@@ -190,6 +190,7 @@
     import Modal from "../components/Modal.vue"
     import vTable from "../components/vTable/vTable.vue";
     import loader from "../components/loader2.vue"
+    import axiosClient from "../axios"
     import {onMounted, ref,reactive} from "vue";
     /****************GDialog*****Begin*****************/
     let isModalVisible = ref(false)
@@ -250,7 +251,7 @@
     /*************************************************/
     const getUsers = (pageGet)=>{
         tData.page = pageGet
-        axios.get("api/users",{params:tData}).then((res)=>{
+        axiosClient.get("api/users",{params:tData}).then((res)=>{
             let content = res.data.users;
             users.value = content.data;
             //console.log("Valeur de res dans getUsers:",res)
@@ -264,7 +265,7 @@
         let send_user = document.querySelector("#send_user")
         send_user.innerHTML = "Envoie en cours..."
         loading.value = true;
-        axios.post("api/users",user).then((res)=>{
+        axiosClient.post("api/users",user).then((res)=>{
             send_user.innerHTML = "Save"
             loading.value = false;
             //console.log("valeur de res:",res)
@@ -309,7 +310,7 @@
     }
     const editUser = (id)=>{
                 errors.value = [];
-                axios.get(`api/users/${id}`).then((res)=>{
+                axiosClient.get(`api/users/${id}`).then((res)=>{
                     $("#edit_user").modal("show")
                     //console.log('valeur de res dans edit user:',res)
                     edit_id.value = res.data.id;
@@ -322,7 +323,7 @@
                     let update_user = document.querySelector("#update_user")
                     update_user.innerHTML = "Mise à jour en cours..."
                     loading.value = true;
-                    axios.put(`api/users/${edit_id.value}`,user).then((res)=>{
+                    axiosClient.put(`api/users/${edit_id.value}`,user).then((res)=>{
                         update_user.innerHTML = "Update"
                         loading.value = false;
                         $('#edit_user').modal('hide');
@@ -356,7 +357,7 @@
                     confirmButtonText: 'Oui, supprimez-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                                axios.delete(`api/users/${id}`).then((res)=>{
+                                axiosClient.delete(`api/users/${id}`).then((res)=>{
                                     if(res.data.status){
                                         Swal.fire('Supprimé!','L\'utilisateur a été supprimé.','success') 
                                         getUsers()

@@ -1,15 +1,15 @@
 <template>
     <div class="login_container">
         <div class="login_text">Se connecter</div>
-        <div class="input_form_control">
-            <input type="text" class="input_form" v-model="user.email" placeholder="Email">
+        <div class="login_form_input_control">
+            <input type="text" class="login_form_input" v-model="user.email" placeholder="Email">
         </div>
         <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
-        <div class="input_form_control">
-            <input type="password" class="input_form" v-model="user.password" name="" id="" placeholder="Password">
+        <div class="login_form_input_control">
+            <input type="password" class="login_form_input" v-model="user.password" name="" id="" placeholder="Password">
         </div>
         <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
-        <div class="input_form_control">
+        <div class="login_form_input_control">
             <button class="login_btn" :class="loading ? 'disabled':''" @click="loginUser">Se connecter</button>
         </div>
     </div>
@@ -48,7 +48,9 @@ export default {
                     localStorage.setItem("jwt",token)
                     localStorage.setItem("user_info",user)
                     Swal.fire('Success!','Connexion reussie !!!.','success');
-                    this.$router.push("/");
+                    //this.$router.push("/users");
+                    this.$router.replace("/users");
+                    //window.location.href("/users");
                 }
                 //17|Qq5qDR6r3GgVF0iSgLhVpOV4C7rgYe37qTbI1PVS
             }).catch((err)=>{

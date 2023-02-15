@@ -166,6 +166,7 @@
     import vTable from "../components/vTable/vTable.vue"
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader2.vue"
+    import axiosClient from "../axios/index"
     export default {
         name:'servers',
         components:{
@@ -224,7 +225,7 @@
             },
             getServers(pageGet){
                 this.tData.page = pageGet
-                axios.get("api/servers",{params:this.tData}).then((res)=>{
+                axiosClient.get("api/servers",{params:this.tData}).then((res)=>{
                     let content = res.data.servers
                     //console.log("Valeur de res dans getServers:",res)
                     this.servers = content.data
@@ -239,7 +240,7 @@
                 let send_server = document.querySelector("#send_server")
                 send_server.innerHTML = "Envoie en cours..."
                 this.loading = true;
-                axios.post("api/servers",this.server).then((res)=>{
+                axiosClient.post("api/servers",this.server).then((res)=>{
                     send_server.innerHTML = "Save"
                     this.loading = false;
                     //console.log("Valeur de res dans saveServer:",res)
@@ -281,7 +282,7 @@
             },
             editServer(id){
                 this.errors = [];
-                axios.get(`api/servers/${id}`).then((res)=>{
+                axiosClient.get(`api/servers/${id}`).then((res)=>{
                     $("#edit_server").modal("show")
                     //console.log('valeur de res dans edit server:',res)
                     this.edit_id    = res.data.id;
@@ -294,7 +295,7 @@
             },
             viewServer(id){
                 this.errors = [];
-                axios.get(`api/servers/${id}`).then((res)=>{
+                axiosClient.get(`api/servers/${id}`).then((res)=>{
                     $("#view_server").modal("show")
                     //console.log('valeur de res dans edit server:',res)
                     //this.edit_id    = res.data.id;
@@ -309,7 +310,7 @@
                     let update_server = document.querySelector("#update_server")
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
-                    axios.put(`api/servers/${this.edit_id}`,this.server).then((res)=>{
+                    axiosClient.put(`api/servers/${this.edit_id}`,this.server).then((res)=>{
                         update_server.innerHTML = "Update"
                         this.loading = false;
                         if(res.data.status){
@@ -343,7 +344,7 @@
                     confirmButtonText: 'Oui, supprimez-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                                axios.delete(`api/servers/${id}`).then((res)=>{
+                                axiosClient.delete(`api/servers/${id}`).then((res)=>{
                                     if(res.data.status){
                                         Swal.fire('Supprimé!','Le Serveur a été supprimé.','success') 
                                         this.getServers()

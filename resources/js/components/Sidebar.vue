@@ -35,10 +35,10 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/logout" @click="logout" class="item">
+                        <a to="/logout" @click="logout" class="item">
                             <span class="icon"><i class="fas fa-power-off"></i></span>
                             <span>Logout</span>
-                        </router-link>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -46,9 +46,11 @@
 
 <script setup>
     import axiosClient from "../axios/index"
+    import { useRouter} from 'vue-router'
+    const router = useRouter();
 
     const logout =() =>{
-        alert("hited !!!")
+        //alert("hited !!!")
         axiosClient.post("api/logout").then((res)=>{
             console.log("Valeur de res dans logout:",res)
             if(res.data.status){
@@ -56,10 +58,12 @@
                 localStorage.removeItem("jwt");
                 localStorage.removeItem("user_info");
                 localStorage.clear(); 
-                this.$router.push("/login");
+                //this.$router.push("/login");   
+                router.push({ path: '/login' }) 
+                window.location.reload(true);
             }
         }).catch((err)=>{
-            console.log("Valeur de error dans logout:",err.response)
+            console.log("Valeur de error dans logout:",err)
         })
     }
 </script>

@@ -102,6 +102,7 @@
     import vTable from "../components/vTable/vTable.vue"
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader2.vue"
+    import axiosClient from "../axios/index"
     export default {
         name:'permissions',
         components:{
@@ -148,7 +149,7 @@
             },
             getPermissions(pageGet){
                 this.tData.page = pageGet
-                axios.get("api/permissions",{params:this.tData}).then((res)=>{
+                axiosClient.get("api/permissions",{params:this.tData}).then((res)=>{
                     let content = res.data.permissions
                     //console.log("Valeur de res dans getPermissions:",res)
                     this.permissions = content.data
@@ -163,7 +164,7 @@
                 let send_permission = document.querySelector("#send_permission")
                 send_permission.innerHTML = "Envoie en cours..."
                 this.loading = true;
-                axios.post("api/permissions",this.permission).then((res)=>{
+                axiosClient.post("api/permissions",this.permission).then((res)=>{
                     send_permission.innerHTML = "Save"
                     this.loading = false;
                     //console.log("Valeur de res dans savePermission:",res)
@@ -205,7 +206,7 @@
             },
             editPermission(id){
                 this.errors = [];
-                axios.get(`api/permissions/${id}`).then((res)=>{
+                axiosClient.get(`api/permissions/${id}`).then((res)=>{
                     $("#edit_permission").modal("show")
                     //console.log('valeur de res dans edit permission:',res)
                     this.edit_id    = res.data.id;
@@ -217,7 +218,7 @@
                     let update_permission = document.querySelector("#update_permission")
                     update_permission.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
-                    axios.put(`api/permissions/${this.edit_id}`,this.permission).then((res)=>{
+                    axiosClient.put(`api/permissions/${this.edit_id}`,this.permission).then((res)=>{
                         update_permission.innerHTML = "Update"
                         this.loading = false;
                         if(res.data.status){
@@ -251,7 +252,7 @@
                     confirmButtonText: 'Oui, supprimez-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                                axios.delete(`api/permissions/${id}`).then((res)=>{
+                                axiosClient.delete(`api/permissions/${id}`).then((res)=>{
                                     if(res.data.status){
                                         Swal.fire('Supprimé!','La Permission a été supprimé.','success') 
                                         this.getPermissions()

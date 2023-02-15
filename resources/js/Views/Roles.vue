@@ -159,7 +159,7 @@
                     this.configPagination(content)
                     //console.log("Valeur de res.data dans getRoles:",res.data)
                 }).catch((err)=>{
-                    console.log("Valeur de err dans getRoles:",err.response)
+                    console.log("Valeur de err dans getRoles:",err)
                 })
             },
             saveRole(){
@@ -167,7 +167,7 @@
                 let send_role = document.querySelector("#send_role")
                 send_role.innerHTML = "Envoie en cours..."
                 this.loading = true;
-                axios.post("api/roles",this.role).then((res)=>{
+                axiosClient.post("api/roles",this.role).then((res)=>{
                     send_role.innerHTML = "Save"
                     this.loading = false;
                     //console.log("Valeur de res dans saveRole:",res)
@@ -209,7 +209,7 @@
             },
             editRole(id){
                 this.errors = [];
-                axios.get(`api/roles/${id}`).then((res)=>{
+                axiosClient.get(`api/roles/${id}`).then((res)=>{
                     //$('#create_role').modal('show');
                     $("#edit_role").modal("show")
                     //console.log('valeur de res dans edit role:',res)
@@ -230,7 +230,7 @@
                     confirmButtonText: 'Oui, supprimez-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                                axios.delete(`api/roles/${id}`).then((res)=>{
+                                axiosClient.delete(`api/roles/${id}`).then((res)=>{
                                     if(res.data.status){
                                         Swal.fire('Supprimé!','Le Role a été supprimé.','success') 
                                         this.getRoles()
@@ -247,7 +247,7 @@
                     let update_role = document.querySelector("#update_role")
                     update_role.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
-                    axios.put(`api/roles/${this.edit_id}`,this.role).then((res)=>{
+                    axiosClient.put(`api/roles/${this.edit_id}`,this.role).then((res)=>{
                         update_role.innerHTML = "Update"
                         this.loading = false;
                         if(res.data.status){

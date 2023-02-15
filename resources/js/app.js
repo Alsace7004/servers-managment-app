@@ -2,6 +2,7 @@ import './bootstrap';
 import { createApp } from 'vue';
 import App from './App.vue'
 import router from './router';
+
 /*************SWEET-ALERT-2-CONFIG-BEGIN******************/
 import Swal from 'sweetalert2';
 import "sweetalert2/dist/sweetalert2.min.css"
@@ -26,6 +27,7 @@ import "vue-loading-overlay/dist/css/index.css";
                         /******************************/
                         if(to.matched.some(record=>record.meta.requiresAuth)){
                                 if (localStorage.getItem("jwt")!=null) {
+                                        
                                         next()
                                         return;
                                 }
@@ -41,6 +43,5 @@ import "vue-loading-overlay/dist/css/index.css";
 const app = createApp(App)
 //app.component("Login_view", PopupWindow); // global registration - can be used anywhere
     app.use(useLoading)
-
     .use(router)
     .mount('#app')

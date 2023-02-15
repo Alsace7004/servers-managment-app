@@ -27,7 +27,7 @@ const routes = [
         name:'roles',
         component:()=>import("../Views/Roles.vue"),
         meta:{
-            requiresAuth:false
+            requiresAuth:true
         }
     },
     {
