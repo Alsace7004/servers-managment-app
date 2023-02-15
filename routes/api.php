@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\PermmissionController;
 use App\Http\Controllers\RoleController;
@@ -16,12 +18,23 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+/* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    //return $request->user();
+    //return "salut";
+    Route::apiResource('roles',RoleController::class);
+}); */
+Route::post("login",[AuthController::class,'login'])->name('login');
+Route::middleware('auth:sanctum')->group(function () {
+    //return $request->user();
+    //return "salut";
+    Route::apiResource('roles',RoleController::class);
+    Route::get('/me', function(){
+        return auth()->user();
+    });
 });
 
 Route::apiResource('users',UserController::class);
-Route::apiResource('roles',RoleController::class);
 Route::apiResource('permissions',PermmissionController::class);
 Route::apiResource('servers',ServerController::class);
+
+

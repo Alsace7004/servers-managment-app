@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -47,4 +48,23 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    protected function unauthenticated($request,AuthenticationException $exception)
+    {
+        /* if($request->expectsJson()){
+            return response()->json(['error'=>'Unauthenticated..'],401);
+        }
+        return redirect()->guest(route('auth.login')); */
+        abort(response()->json([
+            'status' => false,
+            'error' => 'Unauthenticated...'], 401));
+
+    }
+    // Add new method 
+    /* protected function unauthenticated($request, array $guards)
+    {
+         abort(response()->json([
+             'status' => 'false',
+             'message' => 'Token missing... You are not authorized to perform this action',], 401));
+    } */
 }

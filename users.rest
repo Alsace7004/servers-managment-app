@@ -1,6 +1,11 @@
 
 ### GET ALL USER
 GET http://localhost:8000/api/users
+
+### GET ALL ROLES
+GET http://localhost:8000/api/roles
+Content-Type: application/json
+Authorization: Bearer 6|5NN4aZRTHwfJkO90ILD5yjmQL393M3NSAMtU1eFt
 ### ADD NEW USER
 POST http://localhost:8000/api/users
 Content-Type: application/json
@@ -11,3 +16,7 @@ Content-Type: application/json
     "password":"123456789"
 }
 ### Another Action
+
+### GET ALL USER
+GET http://localhost:8000/api/me
+Authorization: Bearer 9|lP0NF4aOaVIt13ZwEoJ2EHJGT6gKMSKucbTOn0BS
