@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import "sweetalert2/dist/sweetalert2.min.css"
 window.Swal = Swal
 /***************************************************/
+/* import loader from "vue-ui-preloader"; */
+
 import { useLoading } from 'vue-loading-overlay';
 import "vue-loading-overlay/dist/css/index.css";
     const $loading = useLoading({
@@ -43,5 +45,6 @@ import "vue-loading-overlay/dist/css/index.css";
 //createApp(App)
 const app = createApp(App)
     app.use(useLoading)
+
     .use(router)
     .mount('#app')

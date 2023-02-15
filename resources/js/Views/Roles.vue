@@ -19,7 +19,10 @@
                                 <v-table :columns="columns">
                                     <tbody>
                                         <tr v-if="!roles.length">
-                                            <td>Pas de roles disponibles</td>
+                                            <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
+                                                Chargement des roles en cours...
+                                                <loader></loader>
+                                            </p>
                                         </tr>
                                         <tr v-for="(role,key) in roles" :key="key">
                                             <td>{{role.id}}</td>
@@ -95,11 +98,11 @@
     import ContentHeader from "../components/ContentHeader.vue";
     import vTable from "../components/vTable/vTable.vue";
     import ProperModal from "../components/ProperModal.vue";
-
+    import loader from "../components/loader2.vue"
     export default {
         name:'roles',
         components:{
-            ContentHeader,vTable,ProperModal
+            ContentHeader,vTable,ProperModal,loader
         },
         props: ['self'],
         data(){

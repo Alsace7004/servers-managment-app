@@ -21,7 +21,10 @@
                                 <v-table :columns="columns">
                                     <tbody>
                                         <tr v-if="!permissions.length">
-                                            <td>Pas de Permission disponibles</td>
+                                            <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
+                                                Chargement des Permissions en cours...
+                                                <loader></loader>
+                                            </p>
                                         </tr>
                                         <tr v-for="(item,key) in permissions" :key="key">
                                             <td>{{item.id}}</td>
@@ -98,10 +101,11 @@
     import ContentHeader from "../components/ContentHeader.vue"
     import vTable from "../components/vTable/vTable.vue"
     import ProperModal from "../components/ProperModal.vue";
+    import loader from "../components/loader2.vue"
     export default {
         name:'permissions',
         components:{
-            ContentHeader,vTable,ProperModal
+            ContentHeader,vTable,ProperModal,loader
         },
         data(){
             let columns = [

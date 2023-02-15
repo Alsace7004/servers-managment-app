@@ -20,15 +20,10 @@
                                 <v-table :columns="columns">
                                     <tbody>
                                         <tr v-if="!users.length">
-                                            <td>
-                                                Pas d'utilisateur disponibles
-                                                <div class="spinner-border" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                                <div class="spinner-border" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                            </td>
+                                            <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
+                                                Chargement des utilisateurs en cours...
+                                                <loader></loader>
+                                            </p>
                                             
                                         </tr>
                                         <tr v-for="(user,key) in users" :key="key">
@@ -194,6 +189,7 @@
     import ProperModal from "../components/ProperModal.vue"
     import Modal from "../components/Modal.vue"
     import vTable from "../components/vTable/vTable.vue";
+    import loader from "../components/loader2.vue"
     import {onMounted, ref,reactive} from "vue";
     /****************GDialog*****Begin*****************/
     let isModalVisible = ref(false)
