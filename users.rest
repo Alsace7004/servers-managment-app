@@ -19,4 +19,8 @@ Content-Type: application/json
 
 ### GET ALL USER
 GET http://localhost:8000/api/me
-Authorization: Bearer 9|lP0NF4aOaVIt13ZwEoJ2EHJGT6gKMSKucbTOn0BS
+Authorization: Bearer 49|OnMuowZyIbziNM50N2DVL1C4ybgg9MrLcyXlVzv3
+
+### GET PERMISSION
+GET http://localhost:8000/api/get-permissions
+Authorization: Bearer 3|myEcL1ZJkNRD4xWBr6dciUatgtUE6Oii7efcklbI

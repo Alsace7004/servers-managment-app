@@ -1,7 +1,12 @@
 <template>
     
         <ContentHeader message="Serveurs Page !!!"/>
-        <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Add New Server</button>
+        <!-- <div v-if="can('server-create')"> -->
+        <div>
+            <!-- Edit post form -->
+            <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Add New Server</button>
+        </div>
+        
                         <div class="data_box">
                             <div class="data_box_header">
                                 <div class="per_page">

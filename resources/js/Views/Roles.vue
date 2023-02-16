@@ -1,7 +1,7 @@
 <template>
     
         <ContentHeader message="Roles Page !!!"/>
-                        <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Add New Role</button>
+                        <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
                         <div class="data_box">
                             <div class="data_box_header">
                                 <div class="per_page">
@@ -29,7 +29,7 @@
                                             <td>{{role.name}}</td>
                                             <td>{{convert(role.created_at)}}</td>
                                             <td>
-                                                <!-- <button class="view_btn"><i class="fas fa-eye"></i></button> -->
+                                                <button class="view_btn" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
                                                 <button class="edit_btn"><i class="fas fa-edit" @click="editRole(role.id)"></i></button>
                                                 <button class="delete_btn" @click="deleteRole(role.id)"><i class="fas fa-trash"></i></button>
                                             </td>
@@ -54,7 +54,7 @@
                         <!-- Adding Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="create_role">
                             <template v-slot:header>
-                                <h4>Create Users</h4>
+                                <h4>Ajouter un role</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -65,8 +65,8 @@
                             </template>
                             <template v-slot:footer>
                                 <div>
-                                    <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" id="send_role" :class="loading ? 'disabled' :''" @click="saveRole">Save</button>
+                                    <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
+                                    <button class="mdl-btn-primary" id="send_role" :class="loading ? 'disabled' :''" @click="saveRole">Sauvegarder</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -74,7 +74,7 @@
                         <!-- Editing Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="edit_role">
                             <template v-slot:header>
-                                <h4>Edit Role:</h4>
+                                <h4>Editer un role:</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -85,12 +85,33 @@
                             </template>
                             <template v-slot:footer>
                                 <div>
-                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" id="update_role" :class="loading ? 'disabled' :''" @click="updateRole">Update</button>
+                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
+                                    <button class="mdl-btn-primary" id="update_role" :class="loading ? 'disabled' :''" @click="updateRole">Mettre à jour</button>
                                 </div>
                             </template>
                         </proper-modal>
                         <!-- Editing Modal End -->
+                        <!-- view Modal Begin -->
+                        <proper-modal v-show="isModalVisible" modalName="view_role">
+                            <template v-slot:header>
+                                <h4>Les details du role: {{role.name}}</h4>
+                                <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
+                            </template>
+                            <template v-slot:body>
+                                <label for="">Nom du role : <strong>{{role.name}}</strong></label>
+                                <p>Liste des permissions du role : </p>
+                                <ul style="list-style-type:none">
+                                    <li style="color:#dd3333" v-if="!rolePermissions.length">Pas de permission disponible...</li>
+                                    <li v-for="(item,key) in rolePermissions" :key="key"><strong>{{item.name}}</strong></li>
+                                </ul>
+                            </template>
+                            <template v-slot:footer>
+                                <div>
+                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
+                                </div>
+                            </template>
+                        </proper-modal>
+                        <!-- view Modal End -->
     
 </template>
 
@@ -116,6 +137,7 @@
             return{
                 columns: columns,
                 roles:[],
+                rolePermissions:[],
                 errors:[],
                 links:[],
                 role:{
@@ -159,16 +181,16 @@
                     this.configPagination(content)
                     //console.log("Valeur de res.data dans getRoles:",res.data)
                 }).catch((err)=>{
-                    console.log("Valeur de err dans getRoles:",err)
+                    console.log("Valeur de err dans getRoles:",err.response)
                 })
             },
             saveRole(){
                 this.errors = []
                 let send_role = document.querySelector("#send_role")
-                send_role.innerHTML = "Envoie en cours..."
+                send_role.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
                 axiosClient.post("api/roles",this.role).then((res)=>{
-                    send_role.innerHTML = "Save"
+                    send_role.innerHTML = "Sauvegarder"
                     this.loading = false;
                     //console.log("Valeur de res dans saveRole:",res)
                     if(res.data.status){
@@ -177,7 +199,7 @@
                         Swal.fire('Créer!','Nouveau Role Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
-                    send_role.innerHTML = "Save"
+                    send_role.innerHTML = "Sauvegarder"
                     this.loading = false;
                     //console.log("Valeur de err dans saveRole:",err.response)
                     if(err.response.status === 422){
@@ -207,6 +229,16 @@
                     }else return "page-item";
                 }
             },
+            viewRole(id){
+                axiosClient.get(`api/roles/${id}`).then((res)=>{
+                    $("#view_role").modal("show")
+                    console.log('valeur de res dans view role:',res)
+                    //this.edit_id    = res.data.id;
+                    this.role.name  = res.data.role.name;
+                    this.rolePermissions = res.data.rolePermissions
+                    //this.is_Editing = true;
+                })
+            },
             editRole(id){
                 this.errors = [];
                 axiosClient.get(`api/roles/${id}`).then((res)=>{
@@ -214,7 +246,7 @@
                     $("#edit_role").modal("show")
                     //console.log('valeur de res dans edit role:',res)
                     this.edit_id    = res.data.id;
-                    this.role.name  = res.data.name;
+                    this.role.name  = res.data.role.name;
                     this.is_Editing = true;
                 })
             },
@@ -248,7 +280,7 @@
                     update_role.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
                     axiosClient.put(`api/roles/${this.edit_id}`,this.role).then((res)=>{
-                        update_role.innerHTML = "Update"
+                        update_role.innerHTML = "Mettre à jour"
                         this.loading = false;
                         if(res.data.status){
                             $('#edit_role').modal('hide');
@@ -258,7 +290,7 @@
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
-                        update_role.innerHTML = "Update"
+                        update_role.innerHTML = "Mettre à jour"
                         this.loading = false;
                         //console.log("Valeur de err dans updateRole:",err.response)
                         if(err.response.status === 422){

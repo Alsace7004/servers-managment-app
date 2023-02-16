@@ -29,7 +29,7 @@
         @vite(['resources/js/app.js','resources/css/app.css'])
         <link rel="stylesheet" href="{{asset('admin/style.css')}}">
         <link rel="stylesheet" href="{{asset('admin/login_style.css')}}">
-        
+        <script src="{{asset('admin/script.js')}}"></script>
         {{-- <script src="{{asset('admin/script_modal.js')}}" defer></script> --}}
     </head>
     <body class="antialiased">

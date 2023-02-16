@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
@@ -62,7 +63,13 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         //
-        return $role;
+        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
+        ->where("role_has_permissions.role_id",$role->id)
+        ->get();
+        return response()->json([
+            'role'=>$role,
+            'rolePermissions'=>$rolePermissions
+        ]);
     }
 
     /**

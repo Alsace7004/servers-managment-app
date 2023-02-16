@@ -26,18 +26,22 @@ use Illuminate\Support\Facades\Route;
 Route::post("login",[AuthController::class,'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/me', function(){
-        return auth()->user();
-    });
+   
     //logout
     Route::post("logout",[AuthController::class,'logout'])->name('logout');
-
+    Route::get('user', function(){
+        return auth()->user();
+        //return dd(auth()->user());
+    });
     //Others    
     Route::apiResource('roles',RoleController::class);
     //
     Route::apiResource('users',UserController::class);
     Route::apiResource('permissions',PermmissionController::class);
     Route::apiResource('servers',ServerController::class);
+    Route::get('/get-permissions', function () {
+        return auth()->check()?auth()->user()->jsPermissions():0;
+    });
 });
 
 
