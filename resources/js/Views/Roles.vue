@@ -62,6 +62,18 @@
                                     <input type="text" class="input_form_item" v-model="role.name" placeholder="Role name...">
                                 </div>
                                 <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+
+                                <div class="col-md-12">
+                                    <label for=""><strong>Choisir une permission :</strong></label>
+                                    <div class="row col-md-6" style="">
+                                        <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
+                                            <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
+                                            <label style="margin-left:0.5rem" >{{ permi.name }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span v-if="errors.permission" class="error_txt">{{errors.permission[0]}}</span>
+
                             </template>
                             <template v-slot:footer>
                                 <div>
@@ -82,6 +94,31 @@
                                     <input type="text" class="input_form_item" v-model="role.name" placeholder="Role name...">
                                 </div>
                                 <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <!-- update part begin-->
+                                <div class="col-md-12">
+                                    <label for=""><strong>Choisir une permission :</strong></label>
+                                    <div class="row col-md-6" style="">
+
+                                        <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
+                                            <!-- <div v-for="permi2 in role.permission" :key="permi2.id"> -->
+                                                <!-- <span v-if="permi.id === permi2.id">correspond</span> -->
+                                                <input  type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
+                                                <label style="margin-left:0.5rem" >{{ permi.name }}</label>
+
+                                            <!-- </div> -->
+                                        </div>
+
+                                        <!-- <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
+                                            <div v-for="permi2 in role.permission" :key="permi2.permission_id">
+                                                <input v-if="permi2.permission_id === permi.id ? 'checked' : ''"  type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
+                                                <label style="margin-left:0.5rem" >{{ permi.name }}</label>
+                                            </div>
+                                        </div> -->
+
+                                    </div>
+                                </div>
+                                <span v-if="errors.permission" class="error_txt">{{errors.permission[0]}}</span>
+                                <!-- update part end -->
                             </template>
                             <template v-slot:footer>
                                 <div>
@@ -138,10 +175,13 @@
                 columns: columns,
                 roles:[],
                 rolePermissions:[],
+                permissions:[],
                 errors:[],
                 links:[],
                 role:{
-                    name:''
+                    name:'',
+                    guard_name:'web',
+                    permission:[]
                 },
                 isModalVisible:false,
                 tData:{
@@ -159,6 +199,7 @@
         },
         created(){
             this.getRoles()
+            this.getPermissions()
         },
         methods:{
             
@@ -169,6 +210,8 @@
             showModal(){
                 this.errors = []
                 this.role.name = ""
+                this.role.guard_name='web',
+                this.role.permission = []
                 $("#create_role").modal("show")
             },
             getRoles(pageGet){
@@ -182,6 +225,16 @@
                     //console.log("Valeur de res.data dans getRoles:",res.data)
                 }).catch((err)=>{
                     console.log("Valeur de err dans getRoles:",err.response)
+                })
+            },
+            getPermissions(){
+                axiosClient.get("api/getAllPermissions").then((res)=>{
+                    let content = res.data.permissions
+                    //console.log("Valeur de res dans getPermissions dans role:",res)
+                    this.permissions = content
+                    //console.log("Valeur de res.data dans getPermissions:",res.data)
+                }).catch((err)=>{
+                    console.log("Valeur de err dans getPermissions dans Role:",err.response)
                 })
             },
             saveRole(){
@@ -241,13 +294,14 @@
             },
             editRole(id){
                 this.errors = [];
-                axiosClient.get(`api/roles/${id}`).then((res)=>{
+                axiosClient.get(`api/getRoleAndPermission/${id}`).then((res)=>{
                     //$('#create_role').modal('show');
                     $("#edit_role").modal("show")
-                    //console.log('valeur de res dans edit role:',res)
-                    this.edit_id    = res.data.id;
-                    this.role.name  = res.data.role.name;
-                    this.is_Editing = true;
+                    console.log('valeur de res dans edit role:',res)
+                    this.edit_id            = res.data.role.id;
+                    this.role.name          = res.data.role.name;
+                    this.role.permission    = res.data.rolePermissions
+                    this.is_Editing         = true;
                 })
             },
             deleteRole(id){

@@ -35,12 +35,15 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     //Others    
     Route::apiResource('roles',RoleController::class);
+    Route::get('getRoleAndPermission/{role}',[RoleController::class,'showRole']);
     //
     Route::apiResource('users',UserController::class);
     Route::apiResource('permissions',PermmissionController::class);
+    Route::get('getAllPermissions',[PermmissionController::class,'permissionList']);
     Route::apiResource('servers',ServerController::class);
+
     Route::get('/get-permissions', function () {
-        return auth()->check()?auth()->user()->jsPermissions():0;
+        //return auth()->check()?auth()->user()->jsPermissions():0;
     });
 });
 

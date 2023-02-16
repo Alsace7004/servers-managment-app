@@ -22,6 +22,13 @@ class PermmissionController extends Controller
             'permissions'=>$permissions->paginate(3)
         ]);
     }
+    public function permissionList(){
+        $permissions = Permission::query()->select('id','name')->orderBy('id','desc')->get();
+        return response()->json([
+            'status'=>true,
+            'permissions'=>$permissions
+        ]);
+    }
 
     /**
      * Store a newly created resource in storage.
