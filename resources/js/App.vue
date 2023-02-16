@@ -1,29 +1,9 @@
 <template>
-    <div>
-        <!-- Begin -->
-        <div class="wrapper">
-            <!-- The Sidebar -->
-            <div v-if="authenticated">
-                <Sidebar/>
-            </div>
-                
-            <!-- The Section -->
-            <div class="section">
-                <!-- The navbar -->
-                <div v-if="authenticated" >
-                    <Navbar />
-                </div>
-                <!-- The Content -->
-                <div class="content">
-                    <div class="content_body">
+    
+                  
                         <router-view/>
-                    </div>
-                </div>
-                <!-- End -->
-            </div>
-        </div>
-        <!-- End -->
-    </div>
+               
+              
 </template>
 
 <script setup>

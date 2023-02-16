@@ -22,12 +22,12 @@
                             <span>Roles</span>
                         </router-link>
                     </li>
-                    <li>
+                    <!-- <li>
                         <router-link :to="{name:'permissions'}" class="item">
                             <span class="icon"><i class="fas fa-user-shield"></i></span>
                             <span>Permissions</span>
                         </router-link>
-                    </li>
+                    </li> -->
                     <li>
                         <router-link :to="{name:'serveurs'}" class="item">
                             <span class="icon"><i class="fas fa-server"></i></span>
@@ -35,9 +35,9 @@
                         </router-link>
                     </li>
                     <li>
-                        <a to="/logout" @click="logout" class="item">
+                        <a  @click="logout" class="item deconnexion_btn">
                             <span class="icon"><i class="fas fa-power-off"></i></span>
-                            <span>Logout</span>
+                            <span>Deconnexion</span>
                         </a>
                     </li>
                 </ul>
@@ -60,7 +60,7 @@
                 localStorage.clear(); 
                 //this.$router.push("/login");   
                 router.push({ path: '/login' }) 
-                window.location.reload(true);
+                //window.location.reload(true);
             }
         }).catch((err)=>{
             console.log("Valeur de error dans logout:",err)
@@ -75,10 +75,11 @@
     background: #dd3333;
     color: #fff;
 }
-
 /* .sidebar ul li a.router-link-exact-active:hover {
   
 } */
-
+.deconnexion_btn{
+    cursor: pointer;
+}
 
 </style>

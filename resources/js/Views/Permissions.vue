@@ -1,6 +1,6 @@
 <template>
     
-        <ContentHeader message="Permissions Page !!!"/>
+        <ContentHeader message="Page des Permissions  !!!"/>
         <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Add New Permission</button>
                         <div class="data_box">
                             <!-- header -->

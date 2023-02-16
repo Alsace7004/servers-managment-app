@@ -1,6 +1,18 @@
 <template>
-            <ContentHeader message="Users Page !!!"/>
-                        <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Add User</button>
+        <!-- Begin -->
+        <div class="wrapper">
+            <!-- The Sidebar -->
+                <Sidebar/>
+            <!-- The Section -->
+            <div class="section">
+                <!-- The navbar -->
+                    <Navbar />
+                <!-- The Content -->
+                <div class="content">
+                    <div class="content_body">
+                        <!-- router-view-begin -->
+                        <ContentHeader message="Page des utilisateurs !!!"/>
+                        <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Utilisateur</button>
                         <!-- <button @click="toggleModal2">Edit Modal</button> -->
                         <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#create_user">Open Modal</button> -->
                         <div class="data_box">
@@ -36,72 +48,7 @@
                                                 <button class="delete_btn" @click="deleteUser(user.id)"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
-                                        <!--<tr>
-                                            <td>02</td>
-                                            <td>Komlan</td>
-                                            <td>ETONAM</td>
-                                            <td>Komlan@ETONAM.com</td>
-                                            <td>
-                                                <button class="view_btn"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>03</td>
-                                            <td>Kokou</td>
-                                            <td>ESSENAM</td>
-                                            <td>Kokou@ESSENAM.com</td>
-                                            <td>
-                                                <button class="view_btn"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>04</td>
-                                            <td>Yao</td>
-                                            <td>ELOLO</td>
-                                            <td>Yao@ELOLO.com</td>
-                                            <td>
-                                                <button class="view_btn"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>05</td>
-                                            <td>Koffi</td>
-                                            <td>VIGNON</td>
-                                            <td>Koffi@VIGNON.com</td>
-                                            <td>
-                                                <button class="view_btn"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>06</td>
-                                            <td>Komi</td>
-                                            <td>GAGNON</td>
-                                            <td>Komi@GAGNON.com</td>
-                                            <td>
-                                                <button class="view_btn"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>07</td>
-                                            <td>Kossi</td>
-                                            <td>EDJODJINAM</td>
-                                            <td>Kossi@EDJODJINAM.com</td>
-                                            <td>
-                                                <button class="view_btn"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>-->
+                                        <!---->
                                     </tbody>
                                 </v-table>
                             </div>
@@ -110,9 +57,6 @@
                                     ({{from}}-{{to}} sur {{total}})
                                 </div>
                                 <div>
-                                    <!-- <button class="previous_btn">Previous</button>
-                                    1 2 3 ... 59
-                                    <button class="next_btn">Next</button> -->
                                     <button class="pagination_btn" style="margin-right:0.5rem;cursor:pointer" v-for="(link,key) in links" :key="key" :class="getClass(link)">
                                         <a @click.prevent="navigation(link)">
                                             {{link.label}}
@@ -121,10 +65,18 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- router-view-end -->
+                    </div>
+                </div>
+                <!-- End -->
+            </div>
+        </div>
+        <!--  -->
+                        
                         <!-- Proper Create Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="create_user">
                             <template v-slot:header>
-                                <h4>Create User</h4>
+                                <h4>Ajouter Un Utilisateur</h4>
                                 <i @click="closeModal()" class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -141,19 +93,17 @@
                                 </div>
                                 <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
                                 <div class="input_form">
-                                    <select name="" id="" class="input_form_item">
-                                        <option value="">Choisir un role</option>
-                                        <option value="">role1</option>
-                                        <option value="">role2</option>
-                                        <option value="">role3</option>
+                                    <select  v-model="user.roles" id="" class="input_form_item">
+                                        <option value="Selectionner un Role">Selectionner un Role</option>
+                                        <option v-for="role in roles" :key="role.id" :value="role.id">{{role.name}}</option>
                                     </select>
                                 </div>
-                                
+                                <span v-if="errors.roles" class="error_txt">{{errors.roles[0]}}</span>
                             </template>
                             <template v-slot:footer>
                                 <div>
-                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" id="send_user" :class="loading ? 'disabled' :''" @click="saveUser">Save</button>
+                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
+                                    <button class="mdl-btn-primary" id="send_user" :class="loading ? 'disabled' :''" @click="saveUser">Sauvegarder</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -161,7 +111,7 @@
                         <!-- Proper Edit Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="edit_user">
                             <template v-slot:header>
-                                <h4>Edit User</h4>
+                                <h4>Editer un utilisateur</h4>
                                 <i @click="closeModal()" class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -173,11 +123,18 @@
                                     <input type="email" class="input_form_item" v-model="user.email" placeholder="Email...">
                                 </div>
                                 <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
+                                <div class="input_form">
+                                    <select  v-model="user.roles" id="" class="input_form_item">
+                                        <option value="Selectionner un Role">Selectionner un Role</option>
+                                        <option v-for="role in roles" :key="role.id" :value="role.id">{{role.name}}</option>
+                                    </select>
+                                </div>
+                                <span v-if="errors.roles" class="error_txt">{{errors.roles[0]}}</span>
                             </template>
                             <template v-slot:footer>
                                 <div>
-                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" id="update_user" :class="loading ? 'disabled' :''" @click="updateUser">Update</button>
+                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
+                                    <button class="mdl-btn-primary" id="update_user" :class="loading ? 'disabled' :''" @click="updateUser">Mettre à jour</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -185,6 +142,9 @@
 </template>
 
 <script setup>
+    import Sidebar from "../components/Sidebar.vue"
+    import Navbar from "../components/Navbar.vue"
+    
     import ContentHeader from "../components/ContentHeader.vue"
     import ProperModal from "../components/ProperModal.vue"
     import Modal from "../components/Modal.vue"
@@ -211,7 +171,8 @@
     let user = reactive({
         name:'',
         email:'',
-        password:''
+        password:'',
+        roles:''
     })
     let errors = ref([])
     let edit_id = ref()
@@ -238,6 +199,7 @@
     }
     /********************WORKING-ON-TABLE-REFS********************/
     let users = ref([])
+    let roles = ref([])
     let links = ref([])
     const tData = reactive({
         page:0,
@@ -247,6 +209,7 @@
     /*************************************************/
     onMounted(()=>{
         getUsers()
+        getRoles()
     })
     /*************************************************/
     const getUsers = (pageGet)=>{
@@ -260,13 +223,23 @@
             console.log("Valeur de err dans getUsers:",err.response)
         })
     }
+    //getAllRoles
+    const getRoles = ()=>{
+        axiosClient.get("api/getAllRoles").then((res)=>{
+            let content = res.data.roles;
+            roles.value = content;
+            //console.log("Valeur de res dans getUsers:",res)
+        }).catch((err)=>{
+            console.log("Valeur de err dans getRoles dans Users:",err.response)
+        })
+    }
     const saveUser = ()=>{
         errors.value = []
         let send_user = document.querySelector("#send_user")
-        send_user.innerHTML = "Envoie en cours..."
+        send_user.innerHTML = "Sauvegarde en cours..."
         loading.value = true;
         axiosClient.post("api/users",user).then((res)=>{
-            send_user.innerHTML = "Save"
+            send_user.innerHTML = "Sauvegarder"
             loading.value = false;
             //console.log("valeur de res:",res)
             if(res.data.status){
@@ -275,7 +248,7 @@
                 Swal.fire('Créer!','Nouvelle Utilisateur Ajouter avec success.','success') ;
             }
         }).catch((err)=>{
-            send_user.innerHTML = "Save"
+            send_user.innerHTML = "Sauvegarder"
             loading.value = false;
             //console.log("Valeur de err dans saveUser:",err.response.data.errors)
             if(err.response.status === 422){
@@ -312,19 +285,20 @@
                 errors.value = [];
                 axiosClient.get(`api/users/${id}`).then((res)=>{
                     $("#edit_user").modal("show")
-                    //console.log('valeur de res dans edit user:',res)
+                    console.log('valeur de res dans edit user:',res)
                     edit_id.value = res.data.id;
-                    user.name  = res.data.name;
-                    user.email  = res.data.email;
+                        user.name  = res.data.name;
+                        user.email  = res.data.email;
+                        user.roles  = res.data.role_id;
                     is_Editing.value = true;
                 })
     }
-        const updateUser = ()=>{
+    const updateUser = ()=>{
                     let update_user = document.querySelector("#update_user")
                     update_user.innerHTML = "Mise à jour en cours..."
                     loading.value = true;
                     axiosClient.put(`api/users/${edit_id.value}`,user).then((res)=>{
-                        update_user.innerHTML = "Update"
+                        update_user.innerHTML = "Mettre à jour"
                         loading.value = false;
                         $('#edit_user').modal('hide');
                         if(res.data.status){
@@ -334,7 +308,7 @@
                             is_Editing.value = false;
                         }
                     }).catch((err)=>{
-                        update_user.innerHTML = "Update"
+                        update_user.innerHTML = "Mettre à jour"
                         loading.value = false;
                         //console.log("Valeur de err dans updateUser:",err.response)
                         if(err.response.status === 422){
@@ -344,7 +318,7 @@
                             Swal.fire('Erreur!','Probleme de connexion.','error') ;
                         }
                     })
-            }
+    }
     const deleteUser = (id)=>{
                     Swal.fire({
                     title: 'Etes-vous sûr?',

@@ -1,6 +1,17 @@
 <template>
-    
-        <ContentHeader message="Roles Page !!!"/>
+    <!-- Begin -->
+        <div class="wrapper">
+            <!-- The Sidebar -->
+                <Sidebar/>
+            <!-- The Section -->
+            <div class="section">
+                <!-- The navbar -->
+                    <Navbar />
+                <!-- The Content -->
+                <div class="content">
+                    <div class="content_body">
+                        <!-- router-view-begin -->
+                        <ContentHeader message="Page Roles  !!!"/>
                         <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
                         <div class="data_box">
                             <div class="data_box_header">
@@ -50,7 +61,13 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- router-view-end -->
+                    </div>
+                </div>
+                <!-- End -->
+            </div>
+        </div>
+    <!-- End -->
                         <!-- Adding Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="create_role">
                             <template v-slot:header>
@@ -153,6 +170,8 @@
 </template>
 
 <script>
+    import Navbar from "../components/Navbar.vue";
+    import Sidebar from "../components/Sidebar.vue";
     import ContentHeader from "../components/ContentHeader.vue";
     import vTable from "../components/vTable/vTable.vue";
     import ProperModal from "../components/ProperModal.vue";
@@ -161,7 +180,7 @@
     export default {
         name:'roles',
         components:{
-            ContentHeader,vTable,ProperModal,loader
+            ContentHeader,vTable,ProperModal,loader,Navbar,Sidebar
         },
         props: ['self'],
         data(){

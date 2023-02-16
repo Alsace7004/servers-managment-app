@@ -1,69 +1,86 @@
 <template>
-    
-        <ContentHeader message="Serveurs Page !!!"/>
-        <!-- <div v-if="can('server-create')"> -->
-        <div>
-            <!-- Edit post form -->
-            <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Add New Server</button>
+    <!-- Begin -->
+        <div class="wrapper">
+            <!-- The Sidebar -->
+                <Sidebar/>
+            <!-- The Section -->
+            <div class="section">
+                <!-- The navbar -->
+                    <Navbar />
+                <!-- The Content -->
+                <div class="content">
+                    <div class="content_body">
+                        <!-- router-view-begin -->
+                            <ContentHeader message="Serveurs Page !!!"/>
+                            <!-- <div v-if="can('server-create')"> -->
+                            <div>
+                                <!-- Edit post form -->
+                                <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
+                            </div>
+            
+                            <div class="data_box">
+                                <div class="data_box_header">
+                                    <div class="per_page">
+                                        <select name="" id="" class="select_option_form">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                        </select>
+                                    </div>
+                                    <div class="search_bar">
+                                        <input type="text" class="search_bar_form" name="" id="" placeholder="Rechercher...">
+                                    </div>
+                                </div>
+                                <div class="data_box_content">
+                                    <v-table :columns="columns">
+                                        <tbody>
+                                            <tr v-if="!servers.length">
+                                                <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
+                                                    Chargement des serveurs en cours...
+                                                    <loader></loader>
+                                                </p>
+                                            </tr>
+                                            <tr v-for="(item,key) in servers" :key="key">
+                                                <td>{{item.id}}</td>
+                                                <td>{{item.name}}</td>
+                                                <td>{{item.username}}</td>
+                                                <td>{{item.url_connexion}}</td>
+                                                <td>{{convert(item.created_at)}}</td>
+                                                <td>
+                                                    <button class="view_btn" @click="viewServer(item.id)"><i class="fas fa-eye"></i></button>
+                                                    <button class="edit_btn"  @click="editServer(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" @click="deleteServer(item.id)"><i class="fas fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                            
+                                            
+                                        </tbody>
+                                    </v-table>
+                                </div>
+                                <div class="data_box_footer">
+                                    <div>
+                                        ({{pagination.from}}-{{pagination.to}} sur {{pagination.total}})
+                                    </div>
+                                    <div>
+                                        <button class="pagination_btn" style="margin-right:0.5rem;cursor:pointer" v-for="(link,key) in links" :key="key" :class="getClass(link)">
+                                            <a @click.prevent="navigation(link)">
+                                                {{link.label}}
+                                            </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- router-view-end -->
+                    </div>
+                </div>
+                <!-- End -->
+            </div>
         </div>
-        
-                        <div class="data_box">
-                            <div class="data_box_header">
-                                <div class="per_page">
-                                    <select name="" id="" class="select_option_form">
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                    </select>
-                                </div>
-                                <div class="search_bar">
-                                    <input type="text" class="search_bar_form" name="" id="" placeholder="Rechercher...">
-                                </div>
-                            </div>
-                            <div class="data_box_content">
-                                <v-table :columns="columns">
-                                    <tbody>
-                                        <tr v-if="!servers.length">
-                                            <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
-                                                Chargement des serveurs en cours...
-                                                <loader></loader>
-                                            </p>
-                                        </tr>
-                                        <tr v-for="(item,key) in servers" :key="key">
-                                            <td>{{item.id}}</td>
-                                            <td>{{item.name}}</td>
-                                            <td>{{item.username}}</td>
-                                            <td>{{item.url_connexion}}</td>
-                                            <td>{{convert(item.created_at)}}</td>
-                                            <td>
-                                                <button class="view_btn" @click="viewServer(item.id)"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn"  @click="editServer(item.id)"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn" @click="deleteServer(item.id)"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        
-                                        
-                                    </tbody>
-                                </v-table>
-                            </div>
-                            <div class="data_box_footer">
-                                <div>
-                                    ({{pagination.from}}-{{pagination.to}} sur {{pagination.total}})
-                                </div>
-                                <div>
-                                    <button class="pagination_btn" style="margin-right:0.5rem;cursor:pointer" v-for="(link,key) in links" :key="key" :class="getClass(link)">
-                                        <a @click.prevent="navigation(link)">
-                                            {{link.label}}
-                                        </a>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
+    <!-- End -->
                         <!-- Adding Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="create_server">
                             <template v-slot:header>
-                                <h4>Create Server</h4>
+                                <h4>Ajouter un serveur</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -83,15 +100,16 @@
                                     <input type="url" class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
                                 </div>
                                 <span v-if="errors.url_connexion" class="error_txt">{{errors.url_connexion[0]}}</span>
-                                <div class="input_form mb_3">
+                                <!-- <div class="input_form mb_3">
                                     <textarea name="" id="" cols="30" rows="3" class="input_form_item" v-model="server.description" placeholder="Server description..."></textarea>
-                                </div>
+                                </div> -->
+                                <ckeditor :editor="editor" v-model="server.description" :config="editorConfig"></ckeditor>
                                 <span v-if="errors.description" class="error_txt">{{errors.description[0]}}</span>
                             </template>
                             <template v-slot:footer>
                                 <div>
-                                    <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveServer">Save</button>
+                                    <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
+                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveServer">Sauvegarder</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -99,7 +117,7 @@
                         <!-- Editing Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="edit_server">
                             <template v-slot:header>
-                                <h4>Edit Server:</h4>
+                                <h4>Editer un serveur :</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -119,15 +137,14 @@
                                     <input type="url" class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
                                 </div>
                                 <span v-if="errors.url_connexion" class="error_txt">{{errors.url_connexion[0]}}</span>
-                                <div class="input_form mb_3">
-                                    <textarea name="" id="" cols="30" rows="3" class="input_form_item" v-model="server.description" placeholder="Server description..."></textarea>
-                                </div>
+                                <!-- editor -->
+                                <ckeditor :editor="editor" v-model="server.description" :config="editorConfig"></ckeditor>
                                 <span v-if="errors.description" class="error_txt">{{errors.description[0]}}</span>
                             </template>
                             <template v-slot:footer>
                                 <div>
-                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
-                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateServer">Update</button>
+                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
+                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateServer">Mettre à jour</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -135,7 +152,7 @@
                         <!-- Editing Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="view_server">
                             <template v-slot:header>
-                                <h4>View Server:</h4>
+                                <h4>Les details d'un serveur:</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -158,7 +175,7 @@
                             </template>
                             <template v-slot:footer>
                                 <div>
-                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
+                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -167,15 +184,20 @@
 </template>
 
 <script>
+    import Sidebar from "../components/Sidebar.vue";
+    import Navbar from "../components/Navbar.vue";
     import ContentHeader from "../components/ContentHeader.vue"
     import vTable from "../components/vTable/vTable.vue"
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader2.vue"
     import axiosClient from "../axios/index"
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     export default {
         name:'servers',
         components:{
-            ContentHeader,vTable,ProperModal,loader
+            ContentHeader,vTable,ProperModal,
+            loader,Sidebar,Navbar,
+            ClassicEditor
         },
         data(){
             let columns =[
@@ -196,7 +218,7 @@
                     username:'',
                     password:'',
                     url_connexion:'',
-                    description:''
+                    description:'<p>Content of the editor.</p>',
                 },
                 isModalVisible:false,
                 tData:{
@@ -210,6 +232,12 @@
                 edit_id:'',
                 is_Editing:false,
                 loading:false,
+
+                editor: ClassicEditor,
+                editorData: '<p>Content of the editor.</p>',
+                editorConfig: {
+                    // The configuration of the editor.
+                }
             }
         },
         methods:{
@@ -243,10 +271,10 @@
             saveServer(){
                 this.errors = []
                 let send_server = document.querySelector("#send_server")
-                send_server.innerHTML = "Envoie en cours..."
+                send_server.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
                 axiosClient.post("api/servers",this.server).then((res)=>{
-                    send_server.innerHTML = "Save"
+                    send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
                     //console.log("Valeur de res dans saveServer:",res)
                     if(res.data.status){
@@ -255,7 +283,7 @@
                         Swal.fire('Créer!','Nouveau Serveur Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
-                    send_server.innerHTML = "Save"
+                    send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
                     //console.log("Valeur de err dans saveServer:",err.response)
                     if(err.response.status === 422){
@@ -316,7 +344,7 @@
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
                     axiosClient.put(`api/servers/${this.edit_id}`,this.server).then((res)=>{
-                        update_server.innerHTML = "Update"
+                        update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
                         if(res.data.status){
                             $('#edit_server').modal('hide');
@@ -326,7 +354,7 @@
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
-                        update_server.innerHTML = "Update"
+                        update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
                         console.log("Valeur de err dans updateServer:",err.response)
                         if(err.response.status === 422){

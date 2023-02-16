@@ -27,6 +27,14 @@ class RoleController extends Controller
         ]);
     }
 
+    public function roleList(){
+        $roles = Role::query()->select('id','name')->get();
+        return response()->json([
+            'status'=>true,
+            'roles'=>$roles
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

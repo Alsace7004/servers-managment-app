@@ -12,6 +12,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^36.0.1",
+        "@ckeditor/ckeditor5-vue": "^4.0.1",
         "@vitejs/plugin-vue": "^4.0.0",
         "laravel-permission-to-vuejs": "^3.0.1",
         "pinia": "^2.0.30",

@@ -11,6 +11,7 @@ axiosClient.get('api/get-permissions').then(
 import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 import App from './App.vue'
 import router from './router';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 /*********************************************************/
 import {createPinia} from 'pinia';
 const pinia = createPinia()
@@ -56,6 +57,7 @@ import "vue-loading-overlay/dist/css/index.css";
 const app = createApp(App)
 //app.component("Login_view", PopupWindow); // global registration - can be used anywhere
     app.use(useLoading)
+    .use( CKEditor )
     .use(LaravelPermissionToVueJS)
     .use(pinia)
     .use(router)
