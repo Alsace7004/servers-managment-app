@@ -16,10 +16,8 @@
                         <div class="data_box">
                             <div class="data_box_header">
                                 <div class="per_page">
-                                    <select name="" id="" class="select_option_form">
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
+                                    <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
+                                        <option v-for="(pp,key) in perPage" :key="key" :value="pp">{{pp}}</option>
                                     </select>
                                 </div>
                                 <div class="search_bar">
@@ -191,6 +189,7 @@
                     {label:'Actions',   name:'action'},
             ];
             return{
+                perPage : ['5','10','20','30'],
                 columns: columns,
                 roles:[],
                 rolePermissions:[],
@@ -204,7 +203,8 @@
                 },
                 isModalVisible:false,
                 tData:{
-                    page:0
+                    page:0,
+                    length:'5',
                 },
                 pagination:{
                     from:'',
@@ -255,6 +255,9 @@
                 }).catch((err)=>{
                     console.log("Valeur de err dans getPermissions dans Role:",err.response)
                 })
+            },
+            getPerPage(){
+                this.getRoles()
             },
             saveRole(){
                 this.errors = []

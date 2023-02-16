@@ -17,13 +17,14 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $length = $request->input('length');
         $roles = Role::query()->select('id','name','created_at')->orderBy('id','desc');
         return response()->json([
             'status'=>true,
-            'roles'=>$roles->paginate(3)
+            'roles'=>$roles->paginate($length)
         ]);
     }
 

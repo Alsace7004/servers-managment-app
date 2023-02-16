@@ -14,13 +14,14 @@ class ServerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $length = $request->input('length');
         $servers = Server::query()->select('id','name','username','url_connexion','created_at')->orderBy('id','desc');
         return response()->json([
             'status'=>true,
-            'servers'=>$servers->paginate(3)
+            'servers'=>$servers->paginate($length)
         ]);
     }
 

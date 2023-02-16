@@ -11,7 +11,8 @@ class UserController extends Controller
 {
     //
 
-    public function index(){
+    public function index(Request $request){
+        $length = $request->input('length');
         /* $users = DB::SELECT("SELECT 
         DISTINCT u.id,u.name,u.email,r.name as role_name 
         FROM users u inner join roles r inner join model_has_roles 
@@ -23,7 +24,7 @@ class UserController extends Controller
         $users = User::query()->select('id','name','email','created_at')->orderBy('id','desc');
         return response()->json([
             'status'=>true,
-            'users'=>$users->paginate(3),
+            'users'=>$users->paginate($length),
         ]);
     }
     public function store(Request $request){

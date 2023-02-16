@@ -18,10 +18,8 @@
                         <div class="data_box">
                             <div class="data_box_header">
                                 <div class="per_page">
-                                    <select name="" id="" class="select_option_form">
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
+                                    <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
+                                        <option v-for="(pp,key) in perPage" :key="key" :value="pp">{{pp}}</option>
                                     </select>
                                 </div>
                                 <div class="search_bar">
@@ -144,7 +142,7 @@
 <script setup>
     import Sidebar from "../components/Sidebar.vue"
     import Navbar from "../components/Navbar.vue"
-    
+
     import ContentHeader from "../components/ContentHeader.vue"
     import ProperModal from "../components/ProperModal.vue"
     import Modal from "../components/Modal.vue"
@@ -155,6 +153,7 @@
     /****************GDialog*****Begin*****************/
     let isModalVisible = ref(false)
     /****************GDialog*****End*******************/
+    let perPage = ref(['5','10','20','30'])
     let columns =[
         {label:'~#',name:''},
         {label:'Nom',name:''},
@@ -222,6 +221,9 @@
         }).catch((err)=>{
             console.log("Valeur de err dans getUsers:",err.response)
         })
+    }
+    const getPerPage = ()=>{
+        getUsers()
     }
     //getAllRoles
     const getRoles = ()=>{
