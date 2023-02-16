@@ -11,7 +11,7 @@
                 <div class="content">
                     <div class="content_body">
                         <!-- router-view-begin -->
-                        <ContentHeader message="Page Roles  !!!"/>
+                        <ContentHeader message="Page des Roles  !!!"/>
                         <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
                         <div class="data_box">
                             <div class="data_box_header">
@@ -21,7 +21,7 @@
                                     </select>
                                 </div>
                                 <div class="search_bar">
-                                    <input type="text" class="search_bar_form" name="" id="" placeholder="Rechercher...">
+                                    <input type="text" class="search_bar_form" name="" id="" v-model="tData.search" @input="getSearch" placeholder="Rechercher...">
                                 </div>
                             </div>
                             <div class="data_box_content">
@@ -205,6 +205,7 @@
                 tData:{
                     page:0,
                     length:'5',
+                    search:'',
                 },
                 pagination:{
                     from:'',
@@ -257,6 +258,9 @@
                 })
             },
             getPerPage(){
+                this.getRoles()
+            },
+            getSearch(){
                 this.getRoles()
             },
             saveRole(){

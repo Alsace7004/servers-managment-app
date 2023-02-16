@@ -21,7 +21,13 @@ class RoleController extends Controller
     {
         //
         $length = $request->input('length');
+        $searchValue = $request->input('search');
         $roles = Role::query()->select('id','name','created_at')->orderBy('id','desc');
+        if($searchValue){
+            $roles->where(function($query) use ($searchValue){
+                $query->where('name','like','%'.$searchValue.'%');
+            });
+        }
         return response()->json([
             'status'=>true,
             'roles'=>$roles->paginate($length)

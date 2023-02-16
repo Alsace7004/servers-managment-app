@@ -11,7 +11,7 @@
                 <div class="content">
                     <div class="content_body">
                         <!-- router-view-begin -->
-                            <ContentHeader message="Serveurs Page !!!"/>
+                            <ContentHeader message="Page des Serveurs !!!"/>
                             <!-- <div v-if="can('server-create')"> -->
                             <div>
                                 <!-- Edit post form -->
@@ -26,7 +26,7 @@
                                         </select>
                                     </div>
                                     <div class="search_bar">
-                                        <input type="text" class="search_bar_form" name="" id="" placeholder="Rechercher...">
+                                        <input type="text" class="search_bar_form" name="" id="" v-model="tData.search" @input="getSearch" placeholder="Rechercher...">
                                     </div>
                                 </div>
                                 <div class="data_box_content">
@@ -223,6 +223,7 @@
                 tData:{
                     page:0,
                     length:'5',
+                    search:'',
                 },
                 pagination:{
                     from:'',
@@ -295,6 +296,9 @@
                 })
             },
             getPerPage(){
+                this.getServers()
+            },
+            getSearch(){
                 this.getServers()
             },
             configPagination(data){

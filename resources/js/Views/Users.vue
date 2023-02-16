@@ -23,7 +23,7 @@
                                     </select>
                                 </div>
                                 <div class="search_bar">
-                                    <input type="text" class="search_bar_form" name="" id="" placeholder="Rechercher...">
+                                    <input type="text" class="search_bar_form" name="" id="" v-model="tData.search" @input="getSearch" placeholder="Rechercher...">
                                 </div>
                             </div>
                             <div class="data_box_content">
@@ -223,6 +223,9 @@
         })
     }
     const getPerPage = ()=>{
+        getUsers()
+    }
+    const getSearch = ()=>{
         getUsers()
     }
     //getAllRoles

@@ -13,6 +13,7 @@ class UserController extends Controller
 
     public function index(Request $request){
         $length = $request->input('length');
+        $searchValue = $request->input('search');
         /* $users = DB::SELECT("SELECT 
         DISTINCT u.id,u.name,u.email,r.name as role_name 
         FROM users u inner join roles r inner join model_has_roles 
@@ -22,6 +23,12 @@ class UserController extends Controller
         /***************************************************/
         /***************************************************/
         $users = User::query()->select('id','name','email','created_at')->orderBy('id','desc');
+        if($searchValue){
+            $users->where(function($query) use ($searchValue){
+                $query->where('name','like','%'.$searchValue.'%')
+                      ->orWhere('email','like','%'.$searchValue.'%');
+            });
+        }
         return response()->json([
             'status'=>true,
             'users'=>$users->paginate($length),

@@ -18,7 +18,17 @@ class ServerController extends Controller
     {
         //
         $length = $request->input('length');
+        $searchValue = $request->input('search');
+
         $servers = Server::query()->select('id','name','username','url_connexion','created_at')->orderBy('id','desc');
+        
+        if($searchValue){
+            $servers->where(function($query) use ($searchValue){
+                $query->where('name','like','%'.$searchValue.'%')
+                        ->orWhere('username','like','%'.$searchValue.'%')
+                        ->orWhere('url_connexion','like','%'.$searchValue.'%');
+            });
+        }
         return response()->json([
             'status'=>true,
             'servers'=>$servers->paginate($length)
