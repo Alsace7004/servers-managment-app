@@ -237,7 +237,7 @@
             roles.value = content;
             //console.log("Valeur de res dans getUsers:",res)
         }).catch((err)=>{
-            console.log("Valeur de err dans getRoles dans Users:",err.response)
+            console.log("Valeur de err dans getRoles dans Users:",err)
         })
     }
     const saveUser = ()=>{

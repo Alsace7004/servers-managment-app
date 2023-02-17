@@ -105,4 +105,15 @@ class UserController extends Controller
         }
         return ['status'=>false];
     }
+
+    public function getAuthUserInfo(){
+        $id = auth()->user()->id;
+        $user =  DB::SELECT("SELECT 
+        DISTINCT u.id,u.name,u.email,r.name as role_name 
+        FROM users u inner join roles r inner join model_has_roles 
+        WHERE u.id = model_has_roles.model_id and r.id = model_has_roles.role_id
+        and u.id =$id");
+        $user = $user[0];
+        return $user;
+    }
 }

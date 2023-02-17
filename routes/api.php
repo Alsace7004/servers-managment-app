@@ -26,13 +26,9 @@ use Illuminate\Support\Facades\Route;
 Route::post("login",[AuthController::class,'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-   
     //logout
     Route::post("logout",[AuthController::class,'logout'])->name('logout');
-    Route::get('user', function(){
-        return auth()->user();
-        //return dd(auth()->user());
-    });
+    Route::get('user', [UserController::class,'getAuthUserInfo']);
     //Others    
     Route::apiResource('roles',RoleController::class);
     Route::get('getRoleAndPermission/{role}',[RoleController::class,'showRole']);
@@ -43,9 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('getAllPermissions',[PermmissionController::class,'permissionList']);
     Route::apiResource('servers',ServerController::class);
 
-    Route::get('/get-permissions', function () {
-        //return auth()->check()?auth()->user()->jsPermissions():0;
-    });
+
+    Route::get('/get-permissions',[PermmissionController::class,'getAuthUserPermissionAndRole']);
 });
 
 

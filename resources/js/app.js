@@ -1,14 +1,9 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
-/* import axiosClient from './axios';
-axiosClient.get('api/get-permissions').then(
-        response => {
-          window.Laravel.jsPermissions = response.data;
-        }
-      );
- */
-import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
+
+
+//import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 import App from './App.vue'
 import router from './router';
 import CKEditor from '@ckeditor/ckeditor5-vue';
@@ -55,7 +50,7 @@ const app = createApp(App)
     app.use(useLoading)
     .use( helper )
     .use( CKEditor )
-    .use(LaravelPermissionToVueJS)
+    //.use(LaravelPermissionToVueJS)
     .use(pinia)
     .use(router)
     .mount('#app')

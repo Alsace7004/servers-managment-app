@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use LaravelAndVueJS\Traits\LaravelPermissionToVueJS;
+use App\Http\Traits\LaravelPermissionToVueJsTrait;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles,LaravelPermissionToVueJS;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles,LaravelPermissionToVueJsTrait;
 
     /**
      * The attributes that are mass assignable.

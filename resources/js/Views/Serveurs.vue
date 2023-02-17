@@ -12,9 +12,13 @@
                     <div class="content_body">
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Serveurs !!!"/>
-                            <!-- <div v-if="can('server-create')"> -->
-                            <div>
-                                <div v-on:click="globalHelper">Click me</div>
+                            <div v-if="$can('server-create & server-list')">
+                                yes you can create the server !!!
+                            </div>
+                            <!-- <div v-if="$can('server-view')">
+                                yes you can view the server !!!
+                            </div> -->
+                            <div v-if="$is('Admin')">
                                 <!-- Edit post form -->
                                 <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
                             </div>
@@ -208,6 +212,7 @@
                 {label:'Actions',name:''},
             ];
             return{
+                
                 perPage : ['5','10','20','30'],
                 columns: columns,
                 servers:[],

@@ -17,7 +17,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{name:'roles'}" class="item">
+                        <router-link v-if="$is('Admin')" :to="{name:'roles'}" class="item">
                             <span class="icon"><i class="fas fa-lock"></i></span>
                             <span>Roles</span>
                         </router-link>

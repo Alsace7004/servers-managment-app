@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -109,5 +108,9 @@ class PermmissionController extends Controller
             return ['status'=>true,];
         }
         return ['status'=>false];
+    }
+
+    public function getAuthUserPermissionAndRole(){
+        return auth()->check()?auth()->user()->jsPermissions():0;
     }
 }
