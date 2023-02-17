@@ -40,6 +40,7 @@
                                             <td>{{user.id}}</td>
                                             <td>{{user.name}}</td>
                                             <td>{{user.email}}</td>
+                                            <td>{{convert(user.created_at)}}</td>
                                             <td>
                                                 <!-- <button class="view_btn"><i class="fas fa-eye"></i></button> -->
                                                 <button class="edit_btn" @click="editUser(user.id)"><i class="fas fa-edit"></i></button>
@@ -158,6 +159,7 @@
         {label:'~#',name:''},
         {label:'Nom',name:''},
         {label:'Email',name:''},
+        {label:'Crée le',name:''},
         {label:'Actions',name:''},
     ]
 

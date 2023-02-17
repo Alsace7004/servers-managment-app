@@ -243,10 +243,6 @@
             }
         },
         methods:{
-            /* convert(jour){
-                let  date =  new Date(jour);
-                return  date.toLocaleDateString('en-GB') // "day-month-year"
-            }, */
             showModal(){
                 this.errors = []
                 this.server={

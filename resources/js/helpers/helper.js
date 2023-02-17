@@ -8,7 +8,7 @@ export default {
         app.mixin({      
             data() {        
                 return {          
-                    featuredLink: "https://learnvue.co",        
+                    //featuredLink: "https://learnvue.co",        
                 };      
             },
             methods:{
@@ -19,7 +19,7 @@ export default {
                 },
             },   
             created() {        
-                console.log("Printing from created.");      
+                console.log("Printing from created in helper.js");      
             },    
         });
     },
