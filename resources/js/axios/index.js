@@ -8,6 +8,17 @@ axiosClient.interceptors.request.use(config=>{
     return config;
 })
 //end
-
+axiosClient.interceptors.response.use(response=>{
+    return response;
+},err=>{
+    console.log("valeur de err dans axios:",err.response)
+    if (err.response.status === 401) {
+        //alert("Votre Token est Desactiver, nous allons vider le local Storage")
+        localStorage.clear();
+        //alert("local Storage vider, nous allons vous rediriger vers la page de login")
+        this.$router.push("/login");
+    }
+       return err;
+})
 
 export default axiosClient;

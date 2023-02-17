@@ -14,6 +14,7 @@
                             <ContentHeader message="Page des Serveurs !!!"/>
                             <!-- <div v-if="can('server-create')"> -->
                             <div>
+                                <div v-on:click="globalHelper">Click me</div>
                                 <!-- Edit post form -->
                                 <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
                             </div>
@@ -242,10 +243,10 @@
             }
         },
         methods:{
-            convert(jour){
+            /* convert(jour){
                 let  date =  new Date(jour);
                 return  date.toLocaleDateString('en-GB') // "day-month-year"
-            },
+            }, */
             showModal(){
                 this.errors = []
                 this.server={
