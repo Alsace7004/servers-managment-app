@@ -16,7 +16,10 @@
 </template>
 
 <script>
+    import {useAuthStore} from "../store/index"
+    const userStore = useAuthStore();
 export default {
+   
     components:{
 
     },
@@ -44,11 +47,11 @@ export default {
 
                 if(res.data.status){
                     let token = res.data.access_token
-                    let user = res.data.user
                     localStorage.setItem("jwt",token)
-                    localStorage.setItem("user_info",user)
                     Swal.fire('Success!','Connexion reussie !!!.','success');
                     //this.$router.push("/users");
+                    userStore.setUserDetails(res)
+
                     this.$router.replace("/users");
                     //window.location.href("/users");
                 }

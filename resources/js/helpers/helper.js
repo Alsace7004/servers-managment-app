@@ -84,7 +84,7 @@ export default {
                             //console.log("Valeur de window.Laravel.jsPermissions from app.js: ",this.Permissions)
                         }
                     ).catch((err)=>{
-                        console.log("Valeur de err from app.js:",err)
+                        console.log("Valeur de err from app.js:",err.response)
                     });
                 },
                 getAuthUser(){
@@ -103,9 +103,13 @@ export default {
             },   
             created() {     
                 //this.getAuthUser()  
-                this.getPermission() 
-                console.log("Printing from created in helper.js");     
+                /* this.getPermission() 
+                console.log("Printing from created in helper.js");   */   
             },    
+            mounted(){
+                this.getPermission() 
+                console.log("Printing from mounted in helper.js");  
+            }
         });
     },
 };

@@ -60,7 +60,6 @@
                 localStorage.clear(); 
                 //this.$router.push("/login");   
                 router.push({ path: '/login' }) 
-                //window.location.reload(true);
             }
         }).catch((err)=>{
             console.log("Valeur de error dans logout:",err)

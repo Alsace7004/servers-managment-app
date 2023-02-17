@@ -36,15 +36,15 @@
                                             </p>
                                             
                                         </tr>
-                                        <tr v-for="(user,key) in users" :key="key">
+                                        <tr v-for="(user,key) in users" :key="key" :class="user.id === id ? 'holla' : ''">
                                             <td>{{user.id}}</td>
                                             <td>{{user.name}}</td>
                                             <td>{{user.email}}</td>
                                             <td>{{convert(user.created_at)}}</td>
                                             <td>
                                                 <!-- <button class="view_btn"><i class="fas fa-eye"></i></button> -->
-                                                <button class="edit_btn" @click="editUser(user.id)"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn" @click="deleteUser(user.id)"><i class="fas fa-trash"></i></button>
+                                                <button v-if="$is('Admin')" class="edit_btn" @click="editUser(user.id)"><i  class="fas fa-edit"></i></button>
+                                                <button v-if="user.id != id && $is('Admin')" class="delete_btn" @click="deleteUser(user.id)"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                         <!---->
@@ -151,6 +151,9 @@
     import loader from "../components/loader2.vue"
     import axiosClient from "../axios"
     import {onMounted, ref,reactive} from "vue";
+
+    import {useAuthStore} from "../store/index"
+    const {id}=useAuthStore()
     /****************GDialog*****Begin*****************/
     let isModalVisible = ref(false)
     /****************GDialog*****End*******************/
@@ -356,5 +359,8 @@
 <style scoped>
     /***************************************************/
     
-    
+    .holla{
+        background-color: grey;
+        color: #fff;
+    }
 </style>

@@ -1,23 +1,22 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
-
-
-//import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
 import App from './App.vue'
 import router from './router';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import helper from "./helpers/helper"
-/*********************************************************/
+/*****************************************************************/
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import {createPinia} from 'pinia';
 const pinia = createPinia()
-/*********************************************************/
-/*************SWEET-ALERT-2-CONFIG-BEGIN******************/
+pinia.use(piniaPluginPersistedstate)
+/****************************************************************/
+/*************SWEET-ALERT-2-CONFIG-BEGIN*************************/
 import Swal from 'sweetalert2';
 import "sweetalert2/dist/sweetalert2.min.css"
 window.Swal = Swal
-/*************SWEET-ALERT-2-CONFIG-END******************/
-/***************************************************/
+/*************SWEET-ALERT-2-CONFIG-END***************************/
+/****************************************************************/
 import { useLoading } from 'vue-loading-overlay';
 import "vue-loading-overlay/dist/css/index.css";
         const $loading = useLoading({
@@ -50,7 +49,6 @@ const app = createApp(App)
     app.use(useLoading)
     .use( helper )
     .use( CKEditor )
-    //.use(LaravelPermissionToVueJS)
     .use(pinia)
     .use(router)
     .mount('#app')

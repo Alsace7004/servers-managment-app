@@ -5,8 +5,8 @@
                     </div>
                     <div class="user_profile" style="display:flex;">
                         <div style="margin-right:1rem">
-                            <p><strong>{{_AuthUserEmail}}</strong></p>
-                            <p><strong>{{_AuthUserRole}}</strong></p>
+                            <p><strong>{{email}}</strong></p>
+                            <p><strong>{{name}}</strong></p>
                         </div>
                         <div class="profile_img">
                             <img src="" alt="" srcset="">
@@ -16,8 +16,12 @@
 </template>
 
 <script setup>
-
-
+    import { onMounted } from "@vue/runtime-core"
+    import {useAuthStore} from "../store/index"
+    const {name,email}=useAuthStore()
+    onMounted(()=>{
+        //console.log("Valeur de name:",email)
+    })
 </script>
 
 <style scoped>
