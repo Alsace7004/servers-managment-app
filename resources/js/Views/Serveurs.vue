@@ -12,13 +12,13 @@
                     <div class="content_body">
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Serveurs !!!"/>
-                            <div v-if="$can('server-create & server-list')">
+                            <!-- <div v-if="$can('server-create & server-list')">
                                 yes you can create the server !!!
-                            </div>
+                            </div> -->
                             <!-- <div v-if="$can('server-view')">
                                 yes you can view the server !!!
                             </div> -->
-                            <div v-if="$is('Admin')">
+                            <div v-if="$is('Admin') || $can('server-create & server-list')">
                                 <!-- Edit post form -->
                                 <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
                             </div>

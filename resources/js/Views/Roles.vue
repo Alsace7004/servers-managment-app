@@ -115,12 +115,15 @@
                                     <div class="row col-md-6" style="">
 
                                         <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
-                                            <!-- <div v-for="permi2 in role.permission" :key="permi2.id"> -->
-                                                <!-- <span v-if="permi.id === permi2.id">correspond</span> -->
-                                                <input  type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
-                                                <label style="margin-left:0.5rem" >{{ permi.name }}</label>
+                                                <!-- <div v-for="permi2 in role.permission" :key="permi2.id">
+                                                    <span v-if="permi.id === permi2.permission_id ?'hello' :''">*</span>
+                                                </div> -->
+                                                <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.name }}
 
-                                            <!-- </div> -->
+                                                <!-- <input  type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
+                                                <label style="margin-left:0.5rem" >{{ permi.name }}</label> -->
+
+                                           
                                         </div>
 
                                         <!-- <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
@@ -199,7 +202,8 @@
                 role:{
                     name:'',
                     guard_name:'web',
-                    permission:[]
+                    permission:[],
+                 
                 },
                 isModalVisible:false,
                 tData:{
@@ -220,6 +224,7 @@
         created(){
             this.getRoles()
             this.getPermissions()
+            
         },
         methods:{
             
@@ -324,6 +329,8 @@
                     this.role.name          = res.data.role.name;
                     this.role.permission    = res.data.rolePermissions
                     this.is_Editing         = true;
+
+                    console.log("Valeur de this.role.permission:",this.role.permission)
                 })
             },
             deleteRole(id){
@@ -355,7 +362,8 @@
                     let update_role = document.querySelector("#update_role")
                     update_role.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
-                    axiosClient.put(`api/roles/${this.edit_id}`,this.role).then((res)=>{
+                    
+                    axiosClient.put(`api/roles/${this.edit_id}`,{role:this.role,role2:this.hasCar}).then((res)=>{
                         update_role.innerHTML = "Mettre à jour"
                         this.loading = false;
                         if(res.data.status){
@@ -376,8 +384,25 @@
                             Swal.fire('Erreur!','Probleme de connexion.','error') ;
                         }
                     })
-            }
-        }
+            },
+            
+        },
+        computed: {
+                hasCar(){
+                    let userCars = this.role.permission
+                    let cars = this.permissions
+                    let ret = []
+                    for(let i = 0; i < userCars.length; i++){
+                        for(let j = 0; j < cars.length; j++){
+                            if(cars[j].id == userCars[i].permission_id){
+                                ret[cars[j].id] = true
+                            }
+                        }
+                    }
+                    console.log("Valeur de ret:",ret)
+                    return ret
+                }
+        },
     }
 </script>
 

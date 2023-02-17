@@ -126,26 +126,45 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         //
+        $data = $request->role;
+        //dd($data);
         //dd($role->toArray());
-        //dd($request->all());
-        $message = [
-            'name.required'=>'Veuillez remplir ce champ',
-            'name.min'=>'Trop court',
-            'name.max'=>'Trop long',
-            'permission.max'=>'Veuillez choisir une permission',
-        ];
-        $this->validate($request,[
-            'name'=>[
-                'required','string','min:2','max:20'
-            ],
+       // dd($request->role['permission']);
+        //dd($request->role2);
+        $tab = $request->role2; //les permissions
+        //$b = array_values($tab);
+        $a=array();
+        foreach ($tab as $key => $value) { 
+            if ($value == true) {
+                array_push($a,$key);
+                //echo $key . "<br/>";
+            }
+        } 
+        // dd($a);
+        //die();
+        //dd($request->role['permission']);
+        //dd($request->role['guard_name']);
+
+        $validator = Validator::make($data,[
+            'name'          =>'required|string|min:2|max:20',
             'guard_name'=>'required|string',
-            'permission'=>'required'
-        ],$message);
-        $role->name = $request->input('name');
-        $role->guard_name = $request->input('guard_name');
+        ],[
+            'name.required' =>'Veuillez remplir ce champ',
+            'name.unique'   =>'Cette valeur existe déjà',
+            'name.min'      =>'Trop court',
+            'name.max'      =>'Trop long',
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
+        /* $role->name = $request->input('name');
+        $role->guard_name = $request->input('guard_name'); */
+        $role->name = $request->role['name'];
+        $role->guard_name = $request->role['guard_name'];
 
         if($role->save()){
-            $role->syncPermissions($request->input('permission'));
+            //$role->syncPermissions($request->input('permission'));
+            $role->syncPermissions($a);
             return ["status"=>true];
         }
         return ["status"=>false];
