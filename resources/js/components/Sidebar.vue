@@ -7,7 +7,7 @@
                     <li>
                         <router-link :to="{name:'dashboard'}" class="item">
                             <span class="icon"><i class="fas fa-home"></i></span>
-                            <span>Dashboard</span>
+                            <span>Tableau de bord</span>
                         </router-link>
                     </li>
                     <li>

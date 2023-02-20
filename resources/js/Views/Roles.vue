@@ -12,7 +12,7 @@
                     <div class="content_body">
                         <!-- router-view-begin -->
                         <ContentHeader message="Page des Roles  !!!"/>
-                        <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
+                        <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
                         <div class="data_box">
                             <div class="data_box_header">
                                 <div class="per_page">
@@ -39,8 +39,8 @@
                                             <td>{{convert(role.created_at)}}</td>
                                             <td>
                                                 <button class="view_btn" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn"><i class="fas fa-edit" @click="editRole(role.id)"></i></button>
-                                                <button class="delete_btn" @click="deleteRole(role.id)"><i class="fas fa-trash"></i></button>
+                                                <button class="edit_btn" v-if="$can('role-edit')"><i class="fas fa-edit" @click="editRole(role.id)"></i></button>
+                                                <button class="delete_btn" v-if="$can('role-delete')" @click="deleteRole(role.id)"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>

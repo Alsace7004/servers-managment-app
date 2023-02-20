@@ -42,7 +42,7 @@
                                             <td>{{user.email}}</td>
                                             <td>{{convert(user.created_at)}}</td>
                                             <td>
-                                                <!-- <button class="view_btn"><i class="fas fa-eye"></i></button> -->
+                                                <button class="view_btn" @click="viewUser(user.id)"><i class="fas fa-eye"></i></button>
                                                 <button v-if="$is('Admin')" class="edit_btn" @click="editUser(user.id)"><i  class="fas fa-edit"></i></button>
                                                 <button v-if="user.id != id && $is('Admin')" class="delete_btn" @click="deleteUser(user.id)"><i class="fas fa-trash"></i></button>
                                             </td>
@@ -138,6 +138,29 @@
                             </template>
                         </proper-modal>
                         <!-- Proper Edit Modal End -->
+                        <!-- Proper View Modal Begin -->
+                        <proper-modal v-show="isModalVisible" modalName="view_user">
+                            <template v-slot:header>
+                                <h4>Voir les details un utilisateur</h4>
+                                <i @click="closeModal()" class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
+                            </template>
+                            <template v-slot:body>
+                                <p><strong>Nom :</strong> {{user.name}} </p>
+                                <p><strong>Email :</strong>{{user.email}}</p>
+                                <p><strong>Role :</strong>{{user_role_name}} </p>
+                                <ul style="list-style-type:none">
+                                    <strong>Permissions :</strong> 
+                                    <li style="color:#dd3333" v-if="!user_permissions.length">Pas de permission disponible...</li>
+                                    <li v-for="(item,key) in user_permissions" :key="key">{{item.name}}</li>
+                                </ul>
+                            </template>
+                            <template v-slot:footer>
+                                <div>
+                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
+                                </div>
+                            </template>
+                        </proper-modal>
+                        <!-- Proper Voew Modal End -->
 </template>
 
 <script setup>
@@ -178,6 +201,8 @@
         password:'',
         roles:''
     })
+    let user_role_name = ref()
+    let user_permissions = ref([])
     let errors = ref([])
     let edit_id = ref()
     let is_Editing= ref(false)
@@ -302,6 +327,16 @@
                         user.roles  = res.data.role_id;
                     is_Editing.value = true;
                 })
+    }
+    const viewUser = (id)=>{
+        $("#view_user").modal("show")
+        axiosClient.get("api/getUserRoleAndPermission/"+id).then((res)=>{
+            console.log("Valeur de res dans viewUser:",res)
+            user.name  = res.data.user.name;
+            user.email  = res.data.user.email;
+            user_role_name.value  = res.data.user.role_name;
+            user_permissions.value = res.data.rolePermissions
+        })
     }
     const updateUser = ()=>{
                     let update_user = document.querySelector("#update_user")

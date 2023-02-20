@@ -18,7 +18,7 @@
                             <!-- <div v-if="$can('server-view')">
                                 yes you can view the server !!!
                             </div> -->
-                            <div v-if="$is('Admin') || $can('server-create & server-list')">
+                            <div v-if="$is('Admin') || $can('server-create')">
                                 <!-- Edit post form -->
                                 <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
                             </div>
@@ -51,8 +51,8 @@
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>
                                                     <button class="view_btn" @click="viewServer(item.id)"><i class="fas fa-eye"></i></button>
-                                                    <button class="edit_btn"  @click="editServer(item.id)"><i class="fas fa-edit"></i></button>
-                                                    <button class="delete_btn" @click="deleteServer(item.id)"><i class="fas fa-trash"></i></button>
+                                                    <button class="edit_btn" v-if="$can('server-edit')"  @click="editServer(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" v-if="$can('server-delete')" @click="deleteServer(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                             

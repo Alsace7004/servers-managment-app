@@ -135,10 +135,7 @@ class RoleController extends Controller
         //$b = array_values($tab);
         $a=array();
         foreach ($tab as $key => $value) { 
-            if ($value == true) {
-                array_push($a,$key);
-                //echo $key . "<br/>";
-            }
+            if ($value == true) array_push($a,$key);
         } 
         // dd($a);
         //die();

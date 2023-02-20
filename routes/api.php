@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //logout
     Route::post("logout",[AuthController::class,'logout'])->name('logout');
     Route::get('user', [UserController::class,'getAuthUserInfo']);
+    Route::get('getUserRoleAndPermission/{user}',[UserController::class,'showUser']);
     //Others    
     Route::apiResource('roles',RoleController::class);
     Route::get('getRoleAndPermission/{role}',[RoleController::class,'showRole']);

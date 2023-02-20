@@ -260,3 +260,16 @@ table th,td{
     je gagne 1.000.000 d'ici le 30 Mars 2023
     je conduit une moto haojue d'ici Avril 2023
 */
+
+@media only screen and (max-width: 680px) {
+    .sidebar{
+        background-color: red;
+        display: none;
+    }
+    .section{
+        /* border: 1px solid gold; */
+        width: calc(100% -250px);
+        margin-left: 0px;
+        transition: all 0.5s ease;
+    }
+}

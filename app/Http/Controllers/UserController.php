@@ -81,6 +81,30 @@ class UserController extends Controller
         $user = $user[0];
         return $user;
     }
+    public function showUser(User $user){
+        //get user+his role
+        $user = DB::SELECT("SELECT u.id,u.name,
+        u.email,r.id as role_id,
+        r.name as role_name from roles r,users u, model_has_roles 
+        where u.id = $user->id AND 
+        r.id = model_has_roles.role_id 
+        and model_has_roles.model_id = $user->id");
+        $user = $user[0];
+        $role_id = $user->role_id;
+        //get that role Permissions
+        $rolePermissions  = DB::SELECT("SELECT
+            role_has_permissions.permission_id,
+            permissions.name
+            FROM role_has_permissions,roles,permissions    
+            WHERE roles.id = role_has_permissions.role_id 
+            AND permissions.id = role_has_permissions.permission_id
+            AND role_has_permissions.role_id =('.$role_id.')");
+        //return results
+        return response()->json([
+            'user'=>$user,
+            'rolePermissions'=>$rolePermissions
+        ]);
+    }
     public function update(Request $request, User $user)
     {
         //
