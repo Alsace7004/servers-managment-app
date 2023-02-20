@@ -27,6 +27,9 @@
     import Navbar from "../components/Navbar.vue"
     import ContentHeader from "../components/ContentHeader.vue"
 
+    /* import {useAuthStore} from "../store/index"
+    const userStore  = useAuthStore();
+    console.log("From dashboard:",userStore.getUserRoleAndPermission()) */
 </script>
 
 <style scoped>

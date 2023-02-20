@@ -21,7 +21,13 @@
     const {name,email}=useAuthStore()
     onMounted(()=>{
         //console.log("Valeur de name:",email)
+        let hambuger = document.querySelector(".hambuger")
+        hambuger.addEventListener('click',()=>{
+            document.querySelector("body").classList.toggle('actives')
+        })
     })
+
+
 </script>
 
 <style scoped>

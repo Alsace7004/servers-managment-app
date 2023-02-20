@@ -1,10 +1,12 @@
 import {defineStore} from "pinia";
+import axiosClient from "../axios";
 //import axiosClient from "../store";
 
 
 export const useAuthStore = defineStore("auth",{
     state:()=>({
-        authUser:null,
+        U_roles:[],
+        U_permissions:[],
         id:null,
         token:null,
         name:null,
@@ -15,10 +17,18 @@ export const useAuthStore = defineStore("auth",{
         
     },
     actions:{
-        async getUser(){
+        /* async getUser(){
             const data = await axios.get("api/user");
             console.log("Valeur de data depuis getUser dans pinia store:",data)
             this.authUser = data
+        }, */
+        async getUserRoleAndPermission(){
+            await axiosClient.get("api/get-permissions").then((res)=>{
+                console.log("Valeur de data depuis getUserRoleAndPermission dans pinia store:",res)
+                this.$state.U_permissions  = res.data.permissions;
+                this.$state.U_roles        = res.data.roles;
+            });
+            
         },
         async  setUserDetails(res){
             console.log("valeur de setUserDetails:",res.data)

@@ -34,7 +34,6 @@ import "vue-loading-overlay/dist/css/index.css";
                         /******************************/
                         if(to.matched.some(record=>record.meta.requiresAuth)){
                                 if (localStorage.getItem("jwt")!=null) {
-                                        
                                         next()
                                         return;
                                 }
@@ -47,8 +46,9 @@ import "vue-loading-overlay/dist/css/index.css";
 const app = createApp(App)
 //app.component("Login_view", PopupWindow); // global registration - can be used anywhere
     app.use(useLoading)
-    .use( helper )
+    
     .use( CKEditor )
     .use(pinia)
+    .use( helper )
     .use(router)
     .mount('#app')

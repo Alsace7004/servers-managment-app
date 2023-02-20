@@ -10,6 +10,7 @@
                 <!-- The Content -->
                 <div class="content">
                     <div class="content_body">
+                        
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Serveurs !!!"/>
                             <!-- <div v-if="$can('server-create & server-list')">
@@ -192,7 +193,7 @@
     import ContentHeader from "../components/ContentHeader.vue"
     import vTable from "../components/vTable/vTable.vue"
     import ProperModal from "../components/ProperModal.vue";
-    import loader from "../components/loader2.vue"
+    import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     export default {
@@ -244,7 +245,7 @@
                 editorData: '<p>Content of the editor.</p>',
                 editorConfig: {
                     // The configuration of the editor.
-                }
+                },
             }
         },
         methods:{

@@ -34,7 +34,6 @@
                                                 Chargement des utilisateurs en cours...
                                                 <loader></loader>
                                             </p>
-                                            
                                         </tr>
                                         <tr v-for="(user,key) in users" :key="key" :class="user.id === id ? 'holla' : ''">
                                             <td>{{user.id}}</td>
@@ -141,7 +140,7 @@
                         <!-- Proper View Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="view_user">
                             <template v-slot:header>
-                                <h4>Voir les details un utilisateur</h4>
+                                <h4>Voir les details de l'utilisateur</h4>
                                 <i @click="closeModal()" class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -171,7 +170,7 @@
     import ProperModal from "../components/ProperModal.vue"
     import Modal from "../components/Modal.vue"
     import vTable from "../components/vTable/vTable.vue";
-    import loader from "../components/loader2.vue"
+    import loader from "../components/loader3.vue"
     import axiosClient from "../axios"
     import {onMounted, ref,reactive} from "vue";
 
@@ -182,11 +181,11 @@
     /****************GDialog*****End*******************/
     let perPage = ref(['5','10','20','30'])
     let columns =[
-        {label:'~#',name:''},
-        {label:'Nom',name:''},
-        {label:'Email',name:''},
-        {label:'Crée le',name:''},
-        {label:'Actions',name:''},
+        {label:'~#',name:'id'},
+        {label:'Nom',name:'name'},
+        {label:'Email',name:'email'},
+        {label:'Crée le',name:'created_at'},
+        {label:'Actions',name:'actions'},
     ]
 
         let from = ref()
@@ -207,6 +206,7 @@
     let edit_id = ref()
     let is_Editing= ref(false)
     let loading= ref(false)
+
     /*************************************************/
     let modalActive = ref(false)
     //modalActive.value = !modalActive.value

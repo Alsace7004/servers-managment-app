@@ -10,6 +10,7 @@
                 <!-- The Content -->
                 <div class="content">
                     <div class="content_body">
+                        
                         <!-- router-view-begin -->
                         <ContentHeader message="Page des Roles  !!!"/>
                         <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>

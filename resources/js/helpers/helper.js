@@ -1,6 +1,10 @@
 
 import axiosClient from "../axios";
-
+import { useAuthStore } from "../store/index";
+//const userStore  = useAuthStore();
+   
+//const {U_permissions} = useAuthStore();
+//const {U_permissions} = useAuthStore();
 export default {  
     install: (app, options) => {    
         /*  our code for the plugin goes here
@@ -11,8 +15,8 @@ export default {
                 return {     
                     Permissions : [],  
                     Roles : [],
-                    _AuthUserEmail:'', 
-                    _AuthUserRole:'',     
+                    /* _AuthUserEmail:'', 
+                    _AuthUserRole:'',    */  
                     //featuredLink: "https://learnvue.co",      
                 };      
             },
@@ -87,7 +91,7 @@ export default {
                         console.log("Valeur de err from app.js:",err.response)
                     });
                 },
-                getAuthUser(){
+                /* getAuthUser(){
                     axiosClient.get("api/user").then((res)=>{
                         if(res.status === 200){
                             let content = res.data;
@@ -99,7 +103,7 @@ export default {
                     }).catch((err)=>{
                         console.log("Valeur de err dans getAuthUser:",err)
                     })
-                },
+                }, */
             },   
             created() {     
                 //this.getAuthUser()  
@@ -109,6 +113,8 @@ export default {
             mounted(){
                 this.getPermission() 
                 console.log("Printing from mounted in helper.js");  
+                //console.log("From dashboard:",userStore.getUserRoleAndPermission())
+               // console.log("Valeur de U_permissions:",userStore.U_permissions)
             }
         });
     },

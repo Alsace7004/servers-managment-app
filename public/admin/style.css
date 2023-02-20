@@ -155,10 +155,10 @@ body{
 }
 
 /*********************SHOW/HIDE-SIDE-BAR***************************************/
-body.active .wrapper .sidebar{
+body.actives .wrapper .sidebar{
     left: -250px;
 }
-body.active .wrapper .section{
+body.actives .wrapper .section{
     margin-left: 0px;
     width: 100%;
 }
@@ -263,7 +263,6 @@ table th,td{
 
 @media only screen and (max-width: 680px) {
     .sidebar{
-        background-color: red;
         display: none;
     }
     .section{

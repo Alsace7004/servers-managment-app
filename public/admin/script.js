@@ -1,8 +1,8 @@
 
-let hambuger = document.querySelector(".hambuger")
+/* let hambuger = document.querySelector(".hambuger")
 hambuger.addEventListener('click',()=>{
     document.querySelector("body").classList.toggle('active')
-})
+}) */
 
 
 /****************************************************************/

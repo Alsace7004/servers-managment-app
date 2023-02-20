@@ -13,7 +13,7 @@
                     <li>
                         <router-link :to="{name:'users'}" class="item">
                             <span class="icon"><i class="fas fa-users"></i></span>
-                            <span>Users</span>
+                            <span>Utilisateurs</span>
                         </router-link>
                     </li>
                     <li>
@@ -31,7 +31,7 @@
                     <li>
                         <router-link :to="{name:'serveurs'}" class="item">
                             <span class="icon"><i class="fas fa-server"></i></span>
-                            <span>Servers</span>
+                            <span>Serveurs</span>
                         </router-link>
                     </li>
                     <li>
