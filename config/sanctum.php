@@ -45,8 +45,9 @@ return [
     | not expire. This won't tweak the lifetime of first-party sessions.
     |  525600 min = 8760 h
         8760 h = 365 jour
+        60==> 1h
     */
-    'expiration' => 120,
+    'expiration' => 180,
 
     /*
     |--------------------------------------------------------------------------

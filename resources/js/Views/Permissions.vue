@@ -204,10 +204,10 @@
                 this.errors = [];
                 axiosClient.get(`api/permissions/${id}`).then((res)=>{
                     $("#edit_permission").modal("show")
-                    //console.log('valeur de res dans edit permission:',res)
-                    this.edit_id    = res.data.id;
+                    console.log('valeur de res dans edit permission:',res)
+                    this.edit_id        = res.data.id;
                     this.permission.name  = res.data.name;
-                    this.is_Editing = true;
+                    this.is_Editing     = true;
                 })
             },
             updatePermission(){

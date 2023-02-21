@@ -17,7 +17,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link v-if="$is('Admin')" :to="{name:'roles'}" class="item">
+                        <router-link v-if="$is('Admin') || $can('role-list')" :to="{name:'roles'}" class="item">
                             <span class="icon"><i class="fas fa-lock"></i></span>
                             <span>Roles</span>
                         </router-link>
@@ -29,7 +29,7 @@
                         </router-link>
                     </li> -->
                     <li>
-                        <router-link :to="{name:'serveurs'}" class="item">
+                        <router-link v-if="$can('server-list')" :to="{name:'serveurs'}" class="item">
                             <span class="icon"><i class="fas fa-server"></i></span>
                             <span>Serveurs</span>
                         </router-link>

@@ -14,7 +14,13 @@
                         <!-- router-view-begin -->
                         <ContentHeader message="Page des Roles  !!!"/>
                         <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
-                        <div class="data_box">
+                        <div class="data_box" v-if="!$can('role-list')">
+                                <p style="display:flex;justify-content:center;align-items:center;">
+                                                    Chargement des roles en cours...
+                                                    <loader></loader>
+                                </p>
+                        </div>
+                        <div class="data_box" v-if="$can('role-list')">
                             <div class="data_box_header">
                                 <div class="per_page">
                                     <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
@@ -40,7 +46,7 @@
                                             <td>{{convert(role.created_at)}}</td>
                                             <td>
                                                 <button class="view_btn" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn" v-if="$can('role-edit')"><i class="fas fa-edit" @click="editRole(role.id)"></i></button>
+                                                <button class="edit_btn" v-if="$can('role-edit')" @click="editRole(role.id)"><i class="fas fa-edit"></i></button>
                                                 <button class="delete_btn" v-if="$can('role-delete')" @click="deleteRole(role.id)"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
@@ -177,12 +183,12 @@
     import ContentHeader from "../components/ContentHeader.vue";
     import vTable from "../components/vTable/vTable.vue";
     import ProperModal from "../components/ProperModal.vue";
-    import loader from "../components/loader2.vue"
+    import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
     export default {
         name:'roles',
         components:{
-            ContentHeader,vTable,ProperModal,loader,Navbar,Sidebar
+            Navbar,Sidebar,ContentHeader,vTable,ProperModal,loader
         },
         props: ['self'],
         data(){

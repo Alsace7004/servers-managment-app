@@ -77,9 +77,9 @@ export default {
                     }
                     return _return;
                 },
-                getPermission(){
-                        axiosClient.get('api/get-permissions').then((response) => {
-                            //console.log("Valeur de response from app.js: ",response)
+                async getPermission(){
+                    await axiosClient.get('api/get-permissions').then( (response) => {
+                            //console.log("Valeur de response from helper.js: ",response)
                             //window.Laravel.jsPermissions = response.data;
                             if(response.status){
                                 this.Permissions= response.data.permissions;
@@ -88,9 +88,17 @@ export default {
                             //console.log("Valeur de window.Laravel.jsPermissions from app.js: ",this.Permissions)
                         }
                     ).catch((err)=>{
-                        console.log("Valeur de err from app.js:",err.response)
+                        //console.log("Valeur de err from app.js:",err.response)
+                        console.log(err)
                     });
                 },
+                /* async getPermission(){
+                    const res = await axiosClient.get('api/get-permissions');
+                    //console.log("Valeur de res from helper.js: ",res)
+                    this.Permissions = await res.data.permissions;
+                    this.Roles= await res.data.roles;
+                    //return await res.json();
+                 } */
                 /* getAuthUser(){
                     axiosClient.get("api/user").then((res)=>{
                         if(res.status === 200){

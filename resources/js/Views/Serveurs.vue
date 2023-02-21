@@ -23,8 +23,14 @@
                                 <!-- Edit post form -->
                                 <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
                             </div>
-            
-                            <div class="data_box">
+
+                            <div class="data_box" v-if="!$can('server-list')">
+                                <p style="display:flex;justify-content:center;align-items:center;">
+                                                    Chargement des serveurs en cours...
+                                                    <loader></loader>
+                                </p>
+                            </div>
+                            <div class="data_box" v-if="$can('server-list')">
                                 <div class="data_box_header">
                                     <div class="per_page">
                                         <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
@@ -35,7 +41,7 @@
                                         <input type="text" class="search_bar_form" name="" id="" v-model="tData.search" @input="getSearch" placeholder="Rechercher...">
                                     </div>
                                 </div>
-                                <div class="data_box_content">
+                                <div class="data_box_content" >
                                     <v-table :columns="columns">
                                         <tbody>
                                             <tr v-if="!servers.length">
@@ -56,8 +62,6 @@
                                                     <button class="delete_btn" v-if="$can('server-delete')" @click="deleteServer(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
-                                            
-                                            
                                         </tbody>
                                     </v-table>
                                 </div>
