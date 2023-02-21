@@ -406,7 +406,7 @@
                             }
                         }
                     }
-                    console.log("Valeur de ret:",ret)
+                    //console.log("Valeur de ret:",ret)
                     return ret
                 }
         },
