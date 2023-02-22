@@ -26,7 +26,7 @@ const routes = [
                 //verifier la permission
                 next()
             }else{
-                next({name:'notFound'})
+                next({name:'notAuthorised'})
             }
         } */
     },
@@ -51,7 +51,7 @@ const routes = [
                 //verifier la permission
                 next()
             }else{
-                next({name:'notFound'})
+                next({name:'notAuthorised'})
             }
         }
     },
@@ -71,7 +71,7 @@ const routes = [
                 //verifier la permission
                 next()
             }else{
-                next({name:'notFound'})
+                next({name:'notAuthorised'})
             }
         }
     },
@@ -99,13 +99,18 @@ const routes = [
                 //verifier la permission
                 next()
             }else{
-                next({name:'notFound'})
+                next({name:'notAuthorised'})
             }
         }
     },
     {
-        path:'/notFound',
-        name:'notFound',
+        path:'/notAuthorised',
+        name:'notAuthorised',
+        component:()=>import("../components/notAuthorised.vue")
+    },
+    {
+        path:'/:pathMatch(.*)*',
+        name:'NotFound',
         component:()=>import("../components/NotFound.vue")
     }
 ];
