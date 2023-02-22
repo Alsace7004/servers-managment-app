@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('domaines', function (Blueprint $table) {
             $table->id();
+            $table->string('nom_domaine');
+            $table->string('hebergeur');
+            $table->string('registre');
+            $table->string('date_expiration');
             $table->timestamps();
         });
     }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Domaine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DomaineController extends Controller
 {
@@ -11,9 +13,25 @@ class DomaineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $length = $request->input('length');
+        $searchValue = $request->input('search');
+
+        $domaines = Domaine::query()->select('id','nom_domaine','hebergeur','registre','date_expiration','created_at')
+                    ->orderBy('id','desc');
+        if($searchValue){
+            $domaines->where(function($query) use ($searchValue){
+                $query->where('nom_domaine','like','%'.$searchValue.'%')
+                    ->orWhere('hebergeur','like','%'.$searchValue.'%')
+                    ->orWhere('registre','like','%'.$searchValue.'%');
+            });
+        }
+        return response()->json([
+            'status'=>true,
+            'domaines'=>$domaines->paginate($length)
+        ]);
     }
 
     /**
@@ -25,6 +43,33 @@ class DomaineController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->only(['nom_domaine','hebergeur','registre','date_expiration']);
+        $validator = Validator::make($data,[
+            'nom_domaine'       =>'required|string|min:2|max:75',
+            'hebergeur'         =>'required|string|min:2|max:75',
+            'registre'          =>'required|string|min:2|max:75',
+            'date_expiration'   =>'required|date|after:yesterday',
+        ],[
+            'nom_domaine.required'  =>'Veuillez remplir ce champ',
+            'nom_domaine.min'       =>'Trop court',
+            'nom_domaine.required'  =>'Trop long',
+            'hebergeur.required'    =>'Veuillez remplir ce champ',
+            'hebergeur.min'             =>'Trop court',
+            'hebergeur.required'        =>'Trop long',
+            'registre.required'         =>'Veuillez remplir ce champ',
+            'registre.min'              =>'Trop court',
+            'registre.required'         =>'Trop long',
+            'date_expiration.required'  =>'Veuillez remplir ce champ',
+            'date_expiration.date'      =>'Veuillez entrer une date',
+            'date_expiration.after'     =>"Cette date doit etre ulterieure à la date d'aujourd'hui",
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
+        if(Domaine::create($data)){
+            return ['status'=>true];
+        }
+        return ['status'=>false];
     }
 
     /**
@@ -33,9 +78,10 @@ class DomaineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Domaine $domaine)
     {
         //
+        return $domaine;
     }
 
     /**
@@ -45,9 +91,37 @@ class DomaineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Domaine $domaine)
     {
         //
+        $data = $request->only(['nom_domaine','hebergeur','registre','date_expiration']);
+        $validator = Validator::make($data,[
+            'nom_domaine'       =>'required|string|min:2|max:75',
+            'hebergeur'         =>'required|string|min:2|max:75',
+            'registre'          =>'required|string|min:2|max:75',
+            'date_expiration'   =>'required|date|after:yesterday',
+        ],[
+            'nom_domaine.required'  =>'Veuillez remplir ce champ',
+            'nom_domaine.min'       =>'Trop court',
+            'nom_domaine.required'  =>'Trop long',
+            'hebergeur.required'    =>'Veuillez remplir ce champ',
+            'hebergeur.min'             =>'Trop court',
+            'hebergeur.required'        =>'Trop long',
+            'registre.required'         =>'Veuillez remplir ce champ',
+            'registre.min'              =>'Trop court',
+            'registre.required'         =>'Trop long',
+            'date_expiration.required'  =>'Veuillez remplir ce champ',
+            'date_expiration.date'      =>'Veuillez entrer une date',
+            'date_expiration.after'     =>"Cette date doit etre ulterieure à la date d'aujourd'hui",
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
+        if($domaine->update()){
+            return ['status'=>true];
+        }
+        return ['status'=>false];
+
     }
 
     /**
@@ -56,8 +130,12 @@ class DomaineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Domaine $domaine)
     {
         //
+        if($domaine->delete()){
+            return ['status'=>true];
+        }
+        return ['status'=>false];
     }
 }

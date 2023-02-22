@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\PermmissionController;
 use App\Http\Controllers\RoleController;
@@ -39,6 +40,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('permissions',PermmissionController::class);
     Route::get('getAllPermissions',[PermmissionController::class,'permissionList']);
     Route::apiResource('servers',ServerController::class);
+    //Domaines
+    Route::apiResource('domaines',DomaineController::class);
 
 
     Route::get('/get-permissions',[PermmissionController::class,'getAuthUserPermissionAndRole']);
