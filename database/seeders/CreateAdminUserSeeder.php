@@ -18,26 +18,22 @@ class CreateAdminUserSeeder extends Seeder
     public function run()
     {
         //
-        /* $server_list = Permission::create(['name'=>'server.list']);
-        $server_view = Permission::create(['name'=>'server.view']);
-        $server_create = Permission::create(['name'=>'server.create']);
-        $server_update = Permission::create(['name'=>'server.update']);
-        $server_delete = Permission::create(['name'=>'server.delete']); */
-        /*************************************************/
+        
+        /***********************************************************/
         $user_admin = User::create([
-            'name' => 'admin', 
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('123456789')
+            'name'      => 'admin', 
+            'email'     => 'admin@admin.com',
+            'password'  => bcrypt('123456789')
         ]);
         $user_secretaire = User::create([
-            'name' => 'secretaire', 
-            'email' => 'secretaire@secretaire.com',
-            'password' => bcrypt('123456789')
+            'name'      => 'secretaire', 
+            'email'     => 'secretaire@secretaire.com',
+            'password'  => bcrypt('123456789')
         ]);
         $user_utilisateur = User::create([
-            'name' => 'utilisateur', 
-            'email' => 'utilisateur@utilisateur.com',
-            'password' => bcrypt('123456789')
+            'name'      => 'utilisateur', 
+            'email'     => 'utilisateur@utilisateur.com',
+            'password'  => bcrypt('123456789')
         ]);
         /************************************************************/
         $role_admin         = Role::create(['name' => 'Admin']);
@@ -66,9 +62,6 @@ class CreateAdminUserSeeder extends Seeder
         $role_utilisateur->givePermissionTo([
             $server_view,
         ]); */
-
-     
         /************************************************************/
-        
     }
 }

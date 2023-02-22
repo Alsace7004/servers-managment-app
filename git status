@@ -1,0 +1,185 @@
+[33mcommit 14775eeb24b197984e13f3f5406900e7884c7589[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Tue Feb 21 10:07:50 2023 +0100
+
+    mise à jours
+
+[33mcommit 6f4492530ffc1a6b1cb776511625b87750e8fae4[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Tue Feb 21 09:57:38 2023 +0100
+
+    mise à jours
+
+[33mcommit 561de3472c0b5751059797df7c0bedcf5023b239[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Mon Feb 20 13:59:10 2023 +0100
+
+    resolve hambuger problem
+
+[33mcommit 1cf746ba33637ee0d5f62dcfdc585183cc627a9e[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Mon Feb 20 10:29:30 2023 +0100
+
+    show users details
+
+[33mcommit 67c26b589fb33662171ee7048ad87e512adf23c3[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Fri Feb 17 19:44:09 2023 +0100
+
+    role update working
+
+[33mcommit 561cacb0a7d41bbe9c78df2ff6d21933b2400ed2[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Fri Feb 17 17:12:38 2023 +0100
+
+    persist auth user data in pinia state
+
+[33mcommit e70621f93aa5dcdf6bb8d44082e3b436bb92f637[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Fri Feb 17 13:58:19 2023 +0100
+
+    helper function in vuejs setup
+
+[33mcommit 45656a16bb29d45f2dd1feb617653dd3a59ab48a[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Fri Feb 17 10:13:07 2023 +0100
+
+    applied convert function
+
+[33mcommit 5a461085591a421228827a130fcbb61514a4c979[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Fri Feb 17 10:07:17 2023 +0100
+
+    added plugin for global function
+
+[33mcommit de961424c6f9cc36bd4dcbc7380c9fb8d2e19fec[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Thu Feb 16 19:59:07 2023 +0100
+
+    search on users,roles,servers
+
+[33mcommit 78f9ad87077c78e29ab1830759972ada83a1c077[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Thu Feb 16 19:25:39 2023 +0100
+
+    get data perPage in users,roles,servers
+
+[33mcommit 2f1649d32ad1cb5033cda370a5c48e3288acd2f0[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Thu Feb 16 19:03:19 2023 +0100
+
+    user,roles,servers,deconnexion,template refractoring
+
+[33mcommit b0ac32cd4f04ec63b3d61dad106414b3ec681d5e[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Thu Feb 16 15:51:34 2023 +0100
+
+    permission add when creating role
+
+[33mcommit 53c6f2156cda572a09f5afa729ee5413f26f23de[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Thu Feb 16 11:12:51 2023 +0100
+
+    working on role part
+
+[33mcommit 3162d11a24e8c89d7127f8101b0549ba443cfd35[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Wed Feb 15 19:49:24 2023 +0100
+
+    some changes
+
+[33mcommit 362cff348b9ab15d73ab837cb9f1a96edb5fcf71[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Wed Feb 15 16:53:27 2023 +0100
+
+    added axios interceptor for authentication managment
+
+[33mcommit b03daf6e02a73fb8af9a2a9585da422c4ae474b7[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Wed Feb 15 14:14:02 2023 +0100
+
+    working on login part
+
+[33mcommit 87e2c96fd75861ff6aad287cce281d71e3886478[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Wed Feb 15 09:50:41 2023 +0100
+
+    loader on tables
+
+[33mcommit da91415d33e4e4867649bad905b45eb601d21f4b[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Tue Feb 14 19:15:12 2023 +0100
+
+    servers
+
+[33mcommit fbc869efde1c55014989ba5c548530a993c4f192[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Tue Feb 14 14:13:22 2023 +0100
+
+    permission part
+
+[33mcommit 36013f9e1e86c4f6947d04735ac9b8a84f06d36e[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Mon Feb 13 20:50:08 2023 +0100
+
+    role update working
+
+[33mcommit 9064381d214a4dec40c5779d04390c80eacb2c70[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Mon Feb 13 17:20:40 2023 +0100
+
+    user add working...going to work on roles
+
+[33mcommit 73bfcf65d62a71e4d1533be17ec8132146188d0b[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Mon Feb 13 13:41:34 2023 +0100
+
+    modal working
+
+[33mcommit 50759c28784e9da0a13cc5cd8c45936af77bc4c6[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Mon Feb 13 11:20:10 2023 +0100
+
+    beautiful pagination
+
+[33mcommit 4be8d9e80c3039fb09d0047eafad34882952f254[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Sun Feb 12 22:12:18 2023 +0100
+
+    have added a kind of modal
+
+[33mcommit fff98c0cc1d9bd972a330259c7264028d3bc24f7[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Sat Feb 11 00:07:52 2023 +0100
+
+    Now its good
+
+[33mcommit 3536d3b6342be3cecc2451d48a62524a0995b79d[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Sat Feb 11 00:00:32 2023 +0100
+
+    router-link-exact-active handling
+
+[33mcommit d67795ba5c6b576f6511795ea7992f2021e047e9[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Fri Feb 10 19:31:20 2023 +0100
+
+    each page with it view
+
+[33mcommit da7350f14f7d40f7d0c0cb29aa85185b8e4b2bbe[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Fri Feb 10 19:04:34 2023 +0100
+
+    added vTable Component for table managment
+
+[33mcommit 9f27dba54694eebbda5f35a95e6078dd08e3b771[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Wed Feb 8 09:04:50 2023 +0100
+
+    ProperModal adding
+
+[33mcommit 6410bb4cebb2c031dbe3d92bf842dabf36cd4cc2[m
+Author: Alsace7004 <alabibamidele14@gmail.com>
+Date:   Thu Feb 2 19:47:54 2023 +0100
+
+    Here is my first commit

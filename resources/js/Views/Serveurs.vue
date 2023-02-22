@@ -23,7 +23,7 @@
                                 <!-- Edit post form -->
                                 <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
                             </div>
-
+                            <span>{{ errorMsg }}</span>
                             <div class="data_box" v-if="!$can('server-list')">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                                     Chargement des serveurs en cours...
@@ -250,6 +250,7 @@
                 editorConfig: {
                     // The configuration of the editor.
                 },
+                errorMsg: null,
             }
         },
         methods:{
@@ -405,6 +406,17 @@
                     })
             },
         },
+        /* beforeRouteEnter(to, from, next) {
+            if (to.query.redirectFrom) {
+            next(vm => {
+                vm.errorMsg =
+                "Sorry, you don't have the right access to reach the route requested"
+            })
+            } else {
+            next()
+            }
+        }, */
+
         created(){
             this.getServers()
         },

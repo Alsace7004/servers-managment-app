@@ -30,6 +30,8 @@ class AuthController extends Controller
         if(auth()->attempt($data)){
             return response()->json([
                 'status'=>true,
+                'user_role'=>auth()->user()->roles->pluck('name'),
+                'user_permission'=>Auth::user()->getPermissionsViaRoles()->pluck('name'),
                 'user'=>auth()->user(),
                 'access_token'=>auth()->user()->createToken("Token")->plainTextToken
                 //'access_token'=>auth()->user()->createToken('authToken')->accessToken

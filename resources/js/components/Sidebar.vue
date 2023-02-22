@@ -11,7 +11,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{name:'users'}" class="item">
+                        <router-link v-if="$can('user-list')" :to="{name:'users'}" class="item">
                             <span class="icon"><i class="fas fa-users"></i></span>
                             <span>Utilisateurs</span>
                         </router-link>
@@ -48,15 +48,17 @@
     import axiosClient from "../axios/index"
     import { useRouter} from 'vue-router'
     const router = useRouter();
+    import {useAuthStore} from "../store/index"
+    const userStore = useAuthStore();
 
     const logout =() =>{
         //alert("hited !!!")
         axiosClient.post("api/logout").then((res)=>{
             console.log("Valeur de res dans logout:",res)
             if(res.data.status){
-                Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success') ;
+                Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success');
+                //userStore.clearUser();
                 localStorage.removeItem("jwt");
-                localStorage.removeItem("user_info");
                 localStorage.clear(); 
                 //this.$router.push("/login");   
                 router.push({ path: '/login' }) 

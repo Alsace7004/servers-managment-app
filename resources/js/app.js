@@ -46,9 +46,9 @@ import "vue-loading-overlay/dist/css/index.css";
 const app = createApp(App)
 //app.component("Login_view", PopupWindow); // global registration - can be used anywhere
     app.use(useLoading)
-    
-    .use( CKEditor )
-    .use(pinia)
-    .use( helper )
-    .use(router)
-    .mount('#app')
+        .use(CKEditor)
+        .use(helper)
+        .use(pinia)
+        .use(router)
+        
+        .mount('#app')

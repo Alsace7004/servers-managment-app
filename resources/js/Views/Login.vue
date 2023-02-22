@@ -52,7 +52,7 @@ export default {
                     //this.$router.push("/users");
                     userStore.setUserDetails(res)
 
-                    this.$router.replace("/users");
+                    this.$router.replace("/");
                     //window.location.href("/users");
                 }
                 //17|Qq5qDR6r3GgVF0iSgLhVpOV4C7rgYe37qTbI1PVS

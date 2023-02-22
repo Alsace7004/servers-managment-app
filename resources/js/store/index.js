@@ -11,6 +11,7 @@ export const useAuthStore = defineStore("auth",{
         token:null,
         name:null,
         email:null,
+        role:null
     }),
     getters:{
         user:(state)=>state.authUser,
@@ -32,16 +33,21 @@ export const useAuthStore = defineStore("auth",{
         },
         async  setUserDetails(res){
             console.log("valeur de setUserDetails:",res.data)
-            this.$state.id          = res.data.user.id
-            this.$state.token       = res.data.access_token
-            this.$state.name        = res.data.user.name
-            this.$state.email       = res.data.user.email
+            this.$state.id              = res.data.user.id
+            this.$state.token           = res.data.access_token
+            this.$state.name            = res.data.user.name
+            this.$state.email           = res.data.user.email
+            this.$state.role            = res.data.user_role
+            this.$state.U_permissions   = res.data.user_permission;
         },
         clearUser(){
-            this.$state.id          = null
-            this.$state.token       = null
-            this.$state.name        = null
-            this.$state.email       = null
+            this.$state.id              = null
+            this.$state.token           = null
+            this.$state.name            = null
+            this.$state.email           = null
+            this.$state.U_roles         = null
+            this.$state.U_permissions   = null
+            this.$state.role            = null
         },
     },
     persist: true,
