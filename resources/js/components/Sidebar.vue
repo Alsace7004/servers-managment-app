@@ -35,6 +35,12 @@
                         </router-link>
                     </li>
                     <li>
+                        <router-link  :to="{name:'domaines'}" class="item">
+                            <span class="icon"><i class="fas fa-globe"></i></span>
+                            <span>Domaines</span>
+                        </router-link>
+                    </li>
+                    <li>
                         <a  @click="logout" class="item deconnexion_btn">
                             <span class="icon"><i class="fas fa-power-off"></i></span>
                             <span>Deconnexion</span>
@@ -47,7 +53,7 @@
 <script setup>
     import axiosClient from "../axios/index"
     import { useRouter} from 'vue-router'
-    const router = useRouter();
+            const router = useRouter();
     import {useAuthStore} from "../store/index"
     const userStore = useAuthStore();
 
@@ -57,10 +63,10 @@
             console.log("Valeur de res dans logout:",res)
             if(res.data.status){
                 Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success');
-                userStore.clearUser();
-                localStorage.removeItem('auth')
-                localStorage.clear(); 
-                //this.$router.push("/login");   
+                    userStore.clearUser();
+                    localStorage.removeItem('auth')
+                    localStorage.clear(); 
+                    //this.$router.push("/login");   
                 router.push({ path: '/login' }) 
             }
         }).catch((err)=>{
@@ -83,6 +89,14 @@
     cursor: pointer;
 }
 /* 
+Module domaine
 
+-nom de domaine
+-hebergeur
+-registre personne chez qui on prend le domaine
+-date expirartion
+
+    arrive dans une semaine on envoi notification mail pour informer que la date arrive a expirartion 
+    et on donne la date d'expirartion
 */
 </style>

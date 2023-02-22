@@ -12,7 +12,7 @@
                     <div class="content_body">
                         
                         <!-- router-view-begin -->
-                            <ContentHeader message="Page des Serveurs !!!"/>
+                            <ContentHeader message="Page des Domaines !!!"/>
                             <div v-if="$is('Admin') || $can('server-create')">
                                 <!-- Edit post form -->
                                 <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
@@ -20,7 +20,7 @@
                             <span>{{ errorMsg }}</span>
                             <div class="data_box" v-if="!$can('server-list')">
                                 <p style="display:flex;justify-content:center;align-items:center;">
-                                                    Chargement des serveurs en cours...
+                                                    Chargement des domaines en cours...
                                                     <loader></loader>
                                 </p>
                             </div>
@@ -40,7 +40,7 @@
                                         <tbody>
                                             <tr v-if="!servers.length">
                                                 <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
-                                                    Chargement des serveurs en cours...
+                                                    Chargement des domaines en cours...
                                                     <loader></loader>
                                                 </p>
                                             </tr>
@@ -195,7 +195,7 @@
     import axiosClient from "../axios/index"
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     export default {
-        name:'servers',
+        name:'domaines',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,
@@ -400,6 +400,7 @@
                     })
             },
         },
+
 
         created(){
             this.getServers()

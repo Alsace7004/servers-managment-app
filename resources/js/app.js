@@ -53,5 +53,4 @@ const app = createApp(App)
         .use(helper)
         .use(pinia)
         .use(router)
-        
         .mount('#app')

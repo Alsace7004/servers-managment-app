@@ -101,6 +101,23 @@ const routes = [
         }
     },
     {
+        path:'/domaines',
+        name:'domaines',
+        component:()=>import("../Views/Domaines.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        /* beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('server-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        } */
+    },
+    {
         path:'/notAuthorised',
         name:'notAuthorised',
         component:()=>import("../components/notAuthorised.vue")
