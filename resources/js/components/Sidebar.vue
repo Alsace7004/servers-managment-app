@@ -57,8 +57,8 @@
             console.log("Valeur de res dans logout:",res)
             if(res.data.status){
                 Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success');
-                //userStore.clearUser();
-                localStorage.removeItem("jwt");
+                userStore.clearUser();
+                localStorage.removeItem('auth')
                 localStorage.clear(); 
                 //this.$router.push("/login");   
                 router.push({ path: '/login' }) 
@@ -82,5 +82,7 @@
 .deconnexion_btn{
     cursor: pointer;
 }
+/* 
 
+*/
 </style>

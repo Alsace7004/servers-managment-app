@@ -2,9 +2,6 @@ import { createRouter,createWebHistory } from "vue-router";
 import { useAuthStore } from "../store";
 
 //
-
-
-let a = true
 const routes = [
     {
         path:'/',
@@ -43,10 +40,7 @@ const routes = [
             requiresAuth:true
         },
         beforeEnter(to,from,next){
-            let {U_roles,U_permissions,role}=useAuthStore()
-            console.log("valeur de U_roles from router/index.js:",U_roles)
-            console.log("valeur de U_permissions from router/index.js:",U_permissions)
-            console.log("valeur de role from router/index.js:",role[0])
+            let {U_permissions}=useAuthStore()
             if(U_permissions.includes('user-list')){
                 //verifier la permission
                 next()
@@ -63,10 +57,7 @@ const routes = [
             requiresAuth:true
         },
         beforeEnter(to,from,next){
-            let {U_roles,U_permissions,role}=useAuthStore()
-            console.log("valeur de U_roles from router/index.js:",U_roles)
-            console.log("valeur de U_permissions from router/index.js:",U_permissions)
-            console.log("valeur de role from router/index.js:",role[0])
+            let {U_permissions}=useAuthStore()
             if(U_permissions.includes('role-list')){
                 //verifier la permission
                 next()
@@ -81,6 +72,15 @@ const routes = [
         component:()=>import("../Views/Permissions.vue"),
         meta:{
             requiresAuth:true
+        },
+        beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('permission-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
         }
     },
     {
@@ -91,10 +91,7 @@ const routes = [
             requiresAuth:true
         },
         beforeEnter(to,from,next){
-            let {U_roles,U_permissions,role}=useAuthStore()
-            console.log("valeur de U_roles from router/index.js:",U_roles)
-            console.log("valeur de U_permissions from router/index.js:",U_permissions)
-            console.log("valeur de role from router/index.js:",role[0])
+            let {U_permissions}=useAuthStore()
             if(U_permissions.includes('server-list')){
                 //verifier la permission
                 next()

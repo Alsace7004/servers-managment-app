@@ -16,6 +16,8 @@ import Swal from 'sweetalert2';
 import "sweetalert2/dist/sweetalert2.min.css"
 window.Swal = Swal
 /*************SWEET-ALERT-2-CONFIG-END***************************/
+/*************STORE***************************/
+import { useAuthStore } from './store';
 /****************************************************************/
 import { useLoading } from 'vue-loading-overlay';
 import "vue-loading-overlay/dist/css/index.css";
@@ -23,6 +25,7 @@ import "vue-loading-overlay/dist/css/index.css";
         // options
         });
         router.beforeEach((to, from, next) => {
+                const {token} = useAuthStore()
                         /* const loader = $loading.show({
                                 // Optional parameters
                                 loader: 'spinner',
@@ -33,7 +36,7 @@ import "vue-loading-overlay/dist/css/index.css";
                         }, 500) */
                         /******************************/
                         if(to.matched.some(record=>record.meta.requiresAuth)){
-                                if (localStorage.getItem("jwt")!=null) {
+                                if (token!=null) {
                                         next()
                                         return;
                                 }

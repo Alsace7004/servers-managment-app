@@ -46,12 +46,9 @@ export default {
                 console.log("Valeur de res dans loginUser:",res)
 
                 if(res.data.status){
-                    let token = res.data.access_token
-                    localStorage.setItem("jwt",token)
                     Swal.fire('Success!','Connexion reussie !!!.','success');
                     //this.$router.push("/users");
                     userStore.setUserDetails(res)
-
                     this.$router.replace("/");
                     //window.location.href("/users");
                 }

@@ -1,10 +1,13 @@
 import axios from "axios";
 import router from "../router/index"
+import { useAuthStore } from "../store";
 const axiosClient = axios.create({});
 
 //request
 axiosClient.interceptors.request.use(config=>{
-    config.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`
+    const {token} = useAuthStore()
+    //config.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`
+    config.headers.Authorization = `Bearer ${token}`
     return config;
 })
 //end
