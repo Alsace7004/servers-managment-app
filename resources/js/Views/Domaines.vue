@@ -152,20 +152,20 @@
                             </template>
                             <template v-slot:body>
                                 <label for=""><strong>Description du Serveur :</strong></label>
-                                <div class="input_form mb_3">
+                                <div class="mb_3">
                                     <p>{{domaine.nom_domaine}}</p>
                                 </div>
                                 <label for=""><strong>Hebergeur :</strong></label>
-                                <div class="input_form mb_3">
+                                <div class="mb_3">
                                     <p>{{domaine.hebergeur}}</p>
                                 </div>
                                 <label for=""><strong>Registre :</strong></label>
-                                <div class="input_form mb_3">
+                                <div class="mb_3">
                                     <p>{{domaine.registre}}</p>
                                 </div>
                                 <label for=""><strong>Date Expiration :</strong></label>
-                                <div class="input_form mb_3">
-                                    <p>{{domaine.date_expiration}}</p>
+                                <div class="mb_3">
+                                    <p>{{convert(domaine.date_expiration)}}</p>
                                 </div>
                             </template>
                             <template v-slot:footer>
