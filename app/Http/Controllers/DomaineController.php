@@ -48,17 +48,20 @@ class DomaineController extends Controller
             'nom_domaine'       =>'required|string|min:2|max:75',
             'hebergeur'         =>'required|string|min:2|max:75',
             'registre'          =>'required|string|min:2|max:75',
-            'date_expiration'   =>'required|date|after:yesterday',
+            'date_expiration'   =>'required|date|after:today',
         ],[
             'nom_domaine.required'  =>'Veuillez remplir ce champ',
             'nom_domaine.min'       =>'Trop court',
-            'nom_domaine.required'  =>'Trop long',
+            'nom_domaine.max'       =>'Trop long',
+
             'hebergeur.required'    =>'Veuillez remplir ce champ',
-            'hebergeur.min'             =>'Trop court',
-            'hebergeur.required'        =>'Trop long',
-            'registre.required'         =>'Veuillez remplir ce champ',
-            'registre.min'              =>'Trop court',
-            'registre.required'         =>'Trop long',
+            'hebergeur.min'         =>'Trop court',
+            'hebergeur.max'         =>'Trop long',
+
+            'registre.required'     =>'Veuillez remplir ce champ',
+            'registre.min'          =>'Trop court',
+            'registre.max'          =>'Trop long',
+
             'date_expiration.required'  =>'Veuillez remplir ce champ',
             'date_expiration.date'      =>'Veuillez entrer une date',
             'date_expiration.after'     =>"Cette date doit etre ulterieure à la date d'aujourd'hui",
@@ -99,7 +102,7 @@ class DomaineController extends Controller
             'nom_domaine'       =>'required|string|min:2|max:75',
             'hebergeur'         =>'required|string|min:2|max:75',
             'registre'          =>'required|string|min:2|max:75',
-            'date_expiration'   =>'required|date|after:yesterday',
+            'date_expiration'   =>'required|date|after:today',
         ],[
             'nom_domaine.required'  =>'Veuillez remplir ce champ',
             'nom_domaine.min'       =>'Trop court',
@@ -117,7 +120,7 @@ class DomaineController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
-        if($domaine->update()){
+        if($domaine->update($data)){
             return ['status'=>true];
         }
         return ['status'=>false];

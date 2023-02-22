@@ -15,9 +15,8 @@
                             <ContentHeader message="Page des Domaines !!!"/>
                             <div v-if="$is('Admin') || $can('server-create')">
                                 <!-- Edit post form -->
-                                <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Serveur</button>
+                                <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Domaine</button>
                             </div>
-                            <span>{{ errorMsg }}</span>
                             <div class="data_box" v-if="!$can('server-list')">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                                     Chargement des domaines en cours...
@@ -38,22 +37,23 @@
                                 <div class="data_box_content" >
                                     <v-table :columns="columns">
                                         <tbody>
-                                            <tr v-if="!servers.length">
+                                            <tr v-if="!domaines.length">
                                                 <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
                                                     Chargement des domaines en cours...
                                                     <loader></loader>
                                                 </p>
                                             </tr>
-                                            <tr v-for="(item,key) in servers" :key="key">
+                                            <tr v-for="(item,key) in domaines" :key="key">
                                                 <td>{{item.id}}</td>
-                                                <td>{{item.name}}</td>
-                                                <td>{{item.username}}</td>
-                                                <td>{{item.url_connexion}}</td>
+                                                <td>{{item.nom_domaine}}</td>
+                                                <td>{{item.hebergeur}}</td>
+                                                <td>{{item.registre}}</td>
+                                                <td>{{convert(item.date_expiration)}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>
-                                                    <button class="view_btn" @click="viewServer(item.id)"><i class="fas fa-eye"></i></button>
-                                                    <button class="edit_btn" v-if="$can('server-edit')"  @click="editServer(item.id)"><i class="fas fa-edit"></i></button>
-                                                    <button class="delete_btn" v-if="$can('server-delete')" @click="deleteServer(item.id)"><i class="fas fa-trash"></i></button>
+                                                    <button class="view_btn" @click="viewDomaine(item.id)"><i class="fas fa-eye"></i></button>
+                                                    <button class="edit_btn" v-if="$can('server-edit')"  @click="editDomaine(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" v-if="$can('server-delete')" @click="deleteDomaine(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -80,99 +80,92 @@
         </div>
     <!-- End -->
                         <!-- Adding Modal Begin -->
-                        <proper-modal v-show="isModalVisible" modalName="create_server">
+                        <proper-modal v-show="isModalVisible" modalName="create_domaine">
                             <template v-slot:header>
-                                <h4>Ajouter un serveur</h4>
+                                <h4>Ajouter un domaine</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
                                 <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="server.name" placeholder="Server name...">
+                                    <input type="text" class="input_form_item" v-model="domaine.nom_domaine" placeholder="Nom de domaine...">
                                 </div>
-                                <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <span v-if="errors.nom_domaine" class="error_txt">{{errors.nom_domaine[0]}}</span>
                                 <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="server.username" placeholder="Server username...">
+                                    <input type="text" class="input_form_item" v-model="domaine.hebergeur" placeholder="Hebergeur...">
                                 </div>
-                                <span v-if="errors.username" class="error_txt">{{errors.username[0]}}</span>
+                                <span v-if="errors.hebergeur" class="error_txt">{{errors.hebergeur[0]}}</span>
                                 <div class="input_form mb_3">
-                                    <input type="password" class="input_form_item" v-model="server.password" placeholder="Server password...">
+                                    <input type="text" class="input_form_item" v-model="domaine.registre" placeholder="Registre...">
                                 </div>
-                                <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
+                                <span v-if="errors.registre" class="error_txt">{{errors.registre[0]}}</span>
                                 <div class="input_form mb_3">
-                                    <input type="url" class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
+                                    <input type="date" class="input_form_item" v-model="domaine.date_expiration" placeholder="Date Expiration...">
                                 </div>
-                                <span v-if="errors.url_connexion" class="error_txt">{{errors.url_connexion[0]}}</span>
-                                <!-- <div class="input_form mb_3">
-                                    <textarea name="" id="" cols="30" rows="3" class="input_form_item" v-model="server.description" placeholder="Server description..."></textarea>
-                                </div> -->
-                                <ckeditor :editor="editor" v-model="server.description" :config="editorConfig"></ckeditor>
-                                <span v-if="errors.description" class="error_txt">{{errors.description[0]}}</span>
+                                <span v-if="errors.date_expiration" class="error_txt">{{errors.date_expiration[0]}}</span>
+                                
                             </template>
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveServer">Sauvegarder</button>
+                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveDomaine">Sauvegarder</button>
                                 </div>
                             </template>
                         </proper-modal>
                         <!-- Adding Modal End -->
                         <!-- Editing Modal Begin -->
-                        <proper-modal v-show="isModalVisible" modalName="edit_server">
+                        <proper-modal v-show="isModalVisible" modalName="edit_domaine">
                             <template v-slot:header>
-                                <h4>Editer un serveur :</h4>
+                                <h4>Editer un domaine :</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
                                 <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="server.name" placeholder="Server name...">
+                                    <input type="text" class="input_form_item" v-model="domaine.nom_domaine" placeholder="Nom de domaine...">
                                 </div>
-                                <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <span v-if="errors.nom_domaine" class="error_txt">{{errors.nom_domaine[0]}}</span>
                                 <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="server.username" placeholder="Server username...">
+                                    <input type="text" class="input_form_item" v-model="domaine.hebergeur" placeholder="Hebergeur...">
                                 </div>
-                                <span v-if="errors.username" class="error_txt">{{errors.username[0]}}</span>
+                                <span v-if="errors.hebergeur" class="error_txt">{{errors.hebergeur[0]}}</span>
                                 <div class="input_form mb_3">
-                                    <input type="password" class="input_form_item" v-model="server.password" placeholder="Server password...">
+                                    <input type="text" class="input_form_item" v-model="domaine.registre" placeholder="Registre...">
                                 </div>
-                                <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
+                                <span v-if="errors.registre" class="error_txt">{{errors.registre[0]}}</span>
                                 <div class="input_form mb_3">
-                                    <input type="url" class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
+                                    <input type="date" class="input_form_item" v-model="domaine.date_expiration" placeholder="Date Expiration...">
                                 </div>
-                                <span v-if="errors.url_connexion" class="error_txt">{{errors.url_connexion[0]}}</span>
-                                <!-- editor -->
-                                <ckeditor :editor="editor" v-model="server.description" :config="editorConfig"></ckeditor>
-                                <span v-if="errors.description" class="error_txt">{{errors.description[0]}}</span>
+                                <span v-if="errors.date_expiration" class="error_txt">{{errors.date_expiration[0]}}</span>
                             </template>
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateServer">Mettre à jour</button>
+                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateDomaine">Mettre à jour</button>
                                 </div>
                             </template>
                         </proper-modal>
                         <!-- Editing Modal End -->
                         <!-- Editing Modal Begin -->
-                        <proper-modal v-show="isModalVisible" modalName="view_server">
+                        <proper-modal v-show="isModalVisible" modalName="view_domaine">
                             <template v-slot:header>
-                                <h4>Les details d'un serveur:</h4>
+                                <h4>Les details d'un domaine:</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
-                                <label for=""><strong>Nom du Serveur :</strong></label>
-                                <div class="input_form mb_3">
-                                    <input type="text" readonly class="input_form_item" v-model="server.name" placeholder="Server name...">
-                                </div>
-                                <label for=""><strong>Username du Serveur :</strong></label>
-                                <div class="input_form mb_3">
-                                    <input type="text" readonly class="input_form_item" v-model="server.username" placeholder="Server username...">
-                                </div>
-                                <label for=""><strong>URL du Serveur :</strong></label>
-                                <div class="input_form mb_3">
-                                    <input type="url" readonly class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
-                                </div>
                                 <label for=""><strong>Description du Serveur :</strong></label>
                                 <div class="input_form mb_3">
-                                    <textarea name="" readonly id="" cols="30" rows="3" class="input_form_item" v-model="server.description" placeholder="Server description..."></textarea>
+                                    <p>{{domaine.nom_domaine}}</p>
+                                </div>
+                                <label for=""><strong>Hebergeur :</strong></label>
+                                <div class="input_form mb_3">
+                                    <p>{{domaine.hebergeur}}</p>
+                                </div>
+                                <label for=""><strong>Registre :</strong></label>
+                                <div class="input_form mb_3">
+                                    <p>{{domaine.registre}}</p>
+                                </div>
+                                <label for=""><strong>Date Expiration :</strong></label>
+                                <div class="input_form mb_3">
+                                    <p>{{domaine.date_expiration}}</p>
                                 </div>
                             </template>
                             <template v-slot:footer>
@@ -193,36 +186,34 @@
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
-    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     export default {
         name:'domaines',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,
-            ClassicEditor
         },
         data(){
             let columns =[
-                {label:'~#',name:''},
-                {label:'Nom',name:''},
-                {label:'Username',name:''},
-                {label:'Url_Connexion',name:''},
-                {label:'Ajouté Le',name:''},
-                {label:'Actions',name:''},
+                {label:'~#',            name:''},
+                {label:'Nom de domaine',name:''},
+                {label:'Hebergeur',     name:''},
+                {label:'Registre',      name:''},
+                {label:'Date Expiration',name:''},
+                {label:'Ajouté Le',     name:''},
+                {label:'Actions',       name:''},
             ];
             return{
                 
                 perPage : ['5','10','20','30'],
                 columns: columns,
-                servers:[],
+                domaines:[],
                 errors:[],
                 links:[],
-                server:{
-                    name:'',
-                    username:'',
-                    password:'',
-                    url_connexion:'',
-                    description:'<p>Content of the editor.</p>',
+                domaine:{
+                    nom_domaine:'',
+                    hebergeur:'',
+                    registre:'',
+                    date_expiration:'',
                 },
                 isModalVisible:false,
                 tData:{
@@ -238,57 +229,49 @@
                 edit_id:'',
                 is_Editing:false,
                 loading:false,
-
-                editor: ClassicEditor,
-                editorData: '<p>Content of the editor.</p>',
-                editorConfig: {
-                    // The configuration of the editor.
-                },
-                errorMsg: null,
             }
         },
         methods:{
             showModal(){
                 this.errors = []
-                this.server={
-                    name :"",
-                    username:'',
-                    password:'',
-                    url_connexion:'',
-                    description:''
+                this.domaine={
+                    nom_domaine:'',
+                    hebergeur:'',
+                    registre:'',
+                    date_expiration:''
                 }
-                $("#create_server").modal("show")
+                $("#create_domaine").modal("show")
             },
-            getServers(pageGet){
+            getDomaines(pageGet){
                 this.tData.page = pageGet
-                axiosClient.get("api/servers",{params:this.tData}).then((res)=>{
-                    let content = res.data.servers
-                    //console.log("Valeur de res dans getServers:",res)
-                    this.servers = content.data
+                axiosClient.get("api/domaines",{params:this.tData}).then((res)=>{
+                    let content = res.data.domaines
+                    console.log("Valeur de res dans getDomaines:",res)
+                    this.domaines = content.data
                     this.configPagination(content)
-                    //console.log("Valeur de res.data dans getServers:",res.data)
+                    //console.log("Valeur de res.data dans getDomaines:",res.data)
                 }).catch((err)=>{
-                    console.log("Valeur de err dans getServers:",err.response)
+                    console.log("Valeur de err dans getDomaines:",err.response)
                 })
             },
-            saveServer(){
+            saveDomaine(){
                 this.errors = []
                 let send_server = document.querySelector("#send_server")
                 send_server.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
-                axiosClient.post("api/servers",this.server).then((res)=>{
+                axiosClient.post("api/domaines",this.domaine).then((res)=>{
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
-                    //console.log("Valeur de res dans saveServer:",res)
+                    //console.log("Valeur de res dans saveDomaine:",res)
                     if(res.data.status){
-                        $('#create_server').modal('hide'); 
-                        this.getServers()
-                        Swal.fire('Créer!','Nouveau Serveur Ajouter avec success.','success') ;
+                        $('#create_domaine').modal('hide'); 
+                        this.getDomaines()
+                        Swal.fire('Créer!','Nouveau Domaine Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
-                    //console.log("Valeur de err dans saveServer:",err.response)
+                    //console.log("Valeur de err dans saveDomaine:",err.response)
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors
                     }else{
@@ -298,10 +281,10 @@
                 })
             },
             getPerPage(){
-                this.getServers()
+                this.getDomaines()
             },
             getSearch(){
-                this.getServers()
+                this.getDomaines()
             },
             configPagination(data){
                 this.pagination.from    =data.from,
@@ -312,7 +295,7 @@
             navigation(nav){
                 const url = nav.url.split("=");
                 const page = url[1];
-                this.getServers(page)
+                this.getDomaines(page)
             },
             getClass(item){
                 if(item.url === null) return "page-item disabled no-cursor"
@@ -322,50 +305,50 @@
                     }else return "page-item";
                 }
             },
-            editServer(id){
+            editDomaine(id){
                 this.errors = [];
-                axiosClient.get(`api/servers/${id}`).then((res)=>{
-                    $("#edit_server").modal("show")
+                axiosClient.get(`api/domaines/${id}`).then((res)=>{
+                    $("#edit_domaine").modal("show")
                     //console.log('valeur de res dans edit server:',res)
                     this.edit_id    = res.data.id;
-                    this.server.name  = res.data.name;
-                    this.server.username  = res.data.username;
-                    this.server.url_connexion  = res.data.url_connexion;
-                    this.server.description  = res.data.description;
+                    this.domaine.nom_domaine      = res.data.nom_domaine;
+                    this.domaine.hebergeur        = res.data.hebergeur;
+                    this.domaine.registre         = res.data.registre;
+                    this.domaine.date_expiration  = res.data.date_expiration;
                     this.is_Editing = true;
                 })
             },
-            viewServer(id){
+            viewDomaine(id){
                 this.errors = [];
-                axiosClient.get(`api/servers/${id}`).then((res)=>{
-                    $("#view_server").modal("show")
+                axiosClient.get(`api/domaines/${id}`).then((res)=>{
+                    $("#view_domaine").modal("show")
                     //console.log('valeur de res dans edit server:',res)
                     //this.edit_id    = res.data.id;
-                    this.server.name  = res.data.name;
-                    this.server.username  = res.data.username;
-                    this.server.url_connexion  = res.data.url_connexion;
-                    this.server.description  = res.data.description;
+                    this.domaine.nom_domaine      = res.data.nom_domaine;
+                    this.domaine.hebergeur        = res.data.hebergeur;
+                    this.domaine.registre         = res.data.registre;
+                    this.domaine.date_expiration  = res.data.date_expiration;
                     //this.is_Editing = true;
                 })
             },  
-            updateServer(){
+            updateDomaine(){
                     let update_server = document.querySelector("#update_server")
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
-                    axiosClient.put(`api/servers/${this.edit_id}`,this.server).then((res)=>{
+                    axiosClient.put(`api/domaines/${this.edit_id}`,this.domaine).then((res)=>{
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
                         if(res.data.status){
-                            $('#edit_server').modal('hide');
-                            Swal.fire('Mise à jour!','Serveur mise à jour avec success.','success')    
-                            this.getServers();
+                            $('#edit_domaine').modal('hide');
+                            Swal.fire('Mise à jour!','Domaine mise à jour avec success.','success')    
+                            this.getDomaines();
                             this.edit_id = "";
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
-                        console.log("Valeur de err dans updateServer:",err.response)
+                        console.log("Valeur de err dans updateDomaine:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors
                         }else{
@@ -374,7 +357,7 @@
                         }
                     })
             },
-            deleteServer(id){
+            deleteDomaine(id){
                     Swal.fire({
                     title: 'Etes-vous sûr?',
                     text: "Vous ne pourrez pas annuler cette action !!!",
@@ -386,16 +369,16 @@
                     confirmButtonText: 'Oui, supprimez-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                                axiosClient.delete(`api/servers/${id}`).then((res)=>{
+                                axiosClient.delete(`api/domaines/${id}`).then((res)=>{
                                     if(res.data.status){
-                                        Swal.fire('Supprimé!','Le Serveur a été supprimé.','success') 
-                                        this.getServers()
+                                        Swal.fire('Supprimé!','Le Domaine a été supprimé.','success') 
+                                        this.getDomaines()
                                     }
                                 }).catch((err)=>{
                                     Swal.fire('Erreur !!!',"Une erreur s'est produite !!!",'error')
                                 })
                         }else{
-                            Swal.fire('Conserver !!!',"Le Serveur est toujours disponible !!!",'success')
+                            Swal.fire('Conserver !!!',"Le Domaine est toujours disponible !!!",'success')
                         }
                     })
             },
@@ -403,7 +386,7 @@
 
 
         created(){
-            this.getServers()
+            this.getDomaines()
         },
     }
 </script>
