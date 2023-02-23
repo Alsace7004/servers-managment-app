@@ -30,7 +30,12 @@ class PermissionTableSeeder extends Seeder
             'server-list',
             'server-create',
             'server-edit',
-            'server-delete'
+            'server-delete',
+
+            'domaine-list',
+            'domaine-create',
+            'domaine-edit',
+            'domaine-delete',
         ];
       
         foreach ($permissions as $permission) {

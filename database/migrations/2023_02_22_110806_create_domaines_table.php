@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('hebergeur');
             $table->string('registre');
             $table->string('date_expiration');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

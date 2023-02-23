@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Domaine;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -37,12 +38,23 @@ class DomaineExpiration extends Command
         //$domaines = Domaine::query()->select('id','date_expiration')->get();
         $user = User::query()->select('id','email')->where('id',1)->get();
         for($i=0;$i<sizeof($domaines);$i++){
-            $date_actuelle = Carbon::now()->format('Y-m-d H:i');
+            $date_actuelle = Carbon::now()->format('Y-m-d');
             $date_expiration = $domaines[$i]->date_expiration;
-
+            $id = $domaines[$i]->id; // id
             $toDate     = Carbon::parse($date_actuelle);
             $fromDate   = Carbon::parse($date_expiration);
             $days       = $toDate->diffInDays($fromDate);
+            /**************************************************************************/
+            //si date_expiration == date_aujourd'hui
+                //==> On met le status a 1
+            if($toDate >= $fromDate){
+                Log::info("Status a 1 : toDate:{$toDate} | fromDate:{$fromDate}");
+                DB::UPDATE("UPDATE domaines SET status=1 WHERE id= $id");
+            }else{
+                Log::info("Status a 0 : toDate:{$toDate} | fromDate:{$fromDate}");
+                DB::UPDATE("UPDATE domaines SET status=0 WHERE id= $id");
+            }
+            /**************************************************************************/
             //si date_expiration - date_actuelle <= 7j
                 //==> on envoie des notifications
                 if($days == 7){

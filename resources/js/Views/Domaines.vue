@@ -50,7 +50,10 @@
                                                 <td>{{item.registre}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>{{convert(item.date_expiration)}}</td>
-                                                <td>Expiré(e)</td>
+                                                <td>
+                                                    <p v-if="item.status === 0" class="badge_white">En cours</p>
+                                                    <p v-if="item.status === 1" class="badge_red">Expiré(e)</p>
+                                                </td>
                                                 <td>
                                                     <button class="view_btn" @click="viewDomaine(item.id)"><i class="fas fa-eye"></i></button>
                                                     <button class="edit_btn" v-if="$can('domaine-edit')"  @click="editDomaine(item.id)"><i class="fas fa-edit"></i></button>
@@ -394,5 +397,21 @@
 </script>
 
 <style scoped>
-
+    .badge_red{
+        /* border: 1px solid blue; */
+        /* background-color: #00a8ff; */
+        /* background-color: #0be881; */
+        border-radius: 5px;
+        /* background-color: #dd3333;
+        color: white; */
+        color: #dd3333;
+    }
+    .badge_white{
+        border: 1px solid grey gray;
+        /* background-color: #00a8ff; */
+        /* background-color: #0be881; */
+        border-radius: 5px;
+        /* background-color: #fff; */
+        color:rgb(81, 79, 79);
+    }
 </style>

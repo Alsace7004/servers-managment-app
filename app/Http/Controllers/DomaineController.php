@@ -19,7 +19,7 @@ class DomaineController extends Controller
         $length = $request->input('length');
         $searchValue = $request->input('search');
 
-        $domaines = Domaine::query()->select('id','nom_domaine','hebergeur','registre','date_expiration','created_at')
+        $domaines = Domaine::query()->select('id','nom_domaine','hebergeur','registre','date_expiration','status','created_at')
                     ->orderBy('id','desc');
         if($searchValue){
             $domaines->where(function($query) use ($searchValue){
