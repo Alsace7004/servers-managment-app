@@ -78,6 +78,11 @@ export default {
                     return _return;
                 },
                 async getPermission(){
+                        let {U_permissions,role} = useAuthStore()
+                            this.Permissions    = U_permissions;
+                            this.Roles          = role;
+                },
+                /* async getPermission(){
                     await axiosClient.get('api/get-permissions').then( (response) => {
                             //console.log("Valeur de response from helper.js: ",response)
                             //window.Laravel.jsPermissions = response.data;
@@ -92,7 +97,7 @@ export default {
                         //console.log(err.response.data)
                         console.log(err)
                     });
-                },
+                }, */
                 /* async getPermission(){
                     const res = await axiosClient.get('api/get-permissions');
                     //console.log("Valeur de res from helper.js: ",res)

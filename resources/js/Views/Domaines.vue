@@ -251,7 +251,7 @@
                 this.tData.page = pageGet
                 axiosClient.get("api/domaines",{params:this.tData}).then((res)=>{
                     let content = res.data.domaines
-                    console.log("Valeur de res dans getDomaines:",res)
+                    //console.log("Valeur de res dans getDomaines:",res)
                     this.domaines = content.data
                     this.configPagination(content)
                     //console.log("Valeur de res.data dans getDomaines:",res.data)
@@ -402,16 +402,16 @@
         /* background-color: #00a8ff; */
         /* background-color: #0be881; */
         border-radius: 5px;
-        /* background-color: #dd3333;
-        color: white; */
-        color: #dd3333;
+        background-color: #dd3333;
+        color: white;
+        /* color: #dd3333; */
     }
     .badge_white{
-        border: 1px solid grey gray;
+        /* border: 1px solid grey gray; */
         /* background-color: #00a8ff; */
         /* background-color: #0be881; */
         border-radius: 5px;
-        /* background-color: #fff; */
-        color:rgb(81, 79, 79);
+        background-color: #2f3640;
+        color: #fff;
     }
 </style>
