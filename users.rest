@@ -24,3 +24,5 @@ Authorization: Bearer 49|OnMuowZyIbziNM50N2DVL1C4ybgg9MrLcyXlVzv3
 ### GET PERMISSION
 GET http://localhost:8000/api/get-permissions
 Authorization: Bearer 22|DBIZqPQboIQxPsycolXIcOdMtWPKqv06tNDIXMd2
+###
+GET http://localhost:8000/sanctum/csrf-cookie

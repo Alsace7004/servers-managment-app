@@ -89,7 +89,8 @@ export default {
                         }
                     ).catch((err)=>{
                         //console.log("Valeur de err from app.js:",err.response)
-                        console.log(err.response.data)
+                        //console.log(err.response.data)
+                        console.log(err)
                     });
                 },
                 /* async getPermission(){

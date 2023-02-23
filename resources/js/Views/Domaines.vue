@@ -13,17 +13,17 @@
                         
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Domaines !!!"/>
-                            <div v-if="$is('Admin') || $can('server-create')">
+                            <div v-if="$is('Admin') || $can('domaine-create')">
                                 <!-- Edit post form -->
                                 <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Domaine</button>
                             </div>
-                            <div class="data_box" v-if="!$can('server-list')">
+                            <div class="data_box" v-if="!$can('domaine-list')">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                                     Chargement des domaines en cours...
                                                     <loader></loader>
                                 </p>
                             </div>
-                            <div class="data_box" v-if="$can('server-list')">
+                            <div class="data_box" v-if="$can('domaine-list')">
                                 <div class="data_box_header">
                                     <div class="per_page">
                                         <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
@@ -48,12 +48,13 @@
                                                 <td>{{item.nom_domaine}}</td>
                                                 <td>{{item.hebergeur}}</td>
                                                 <td>{{item.registre}}</td>
-                                                <td>{{convert(item.date_expiration)}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
+                                                <td>{{convert(item.date_expiration)}}</td>
+                                                <td>Expiré(e)</td>
                                                 <td>
                                                     <button class="view_btn" @click="viewDomaine(item.id)"><i class="fas fa-eye"></i></button>
-                                                    <button class="edit_btn" v-if="$can('server-edit')"  @click="editDomaine(item.id)"><i class="fas fa-edit"></i></button>
-                                                    <button class="delete_btn" v-if="$can('server-delete')" @click="deleteDomaine(item.id)"><i class="fas fa-trash"></i></button>
+                                                    <button class="edit_btn" v-if="$can('domaine-edit')"  @click="editDomaine(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" v-if="$can('domaine-delete')" @click="deleteDomaine(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -198,8 +199,9 @@
                 {label:'Nom de domaine',name:''},
                 {label:'Hebergeur',     name:''},
                 {label:'Registre',      name:''},
-                {label:'Date Expiration',name:''},
                 {label:'Ajouté Le',     name:''},
+                {label:'Date Expiration',name:''},
+                {label:'Status',       name:''},
                 {label:'Actions',       name:''},
             ];
             return{

@@ -46,17 +46,18 @@ class DomaineExpiration extends Command
             //si date_expiration - date_actuelle <= 7j
                 //==> on envoie des notifications
                 if($days == 7){
-                    /* Mail::raw("Domaine qui arriverons à echeance dans une semaine \n 
+                    Mail::raw("Domaine qui arriverons à echeance dans une semaine \n 
                             Nom de domaine :{$domaines[$i]->nom_domaine} \n 
                             Hebergeur :{$domaines[$i]->hebergeur}  \n 
                             Registre :{$domaines[$i]->registre} \n 
-                            Date d'expiration : {$domaines[$i]->$date_expiration}", 
+                            Date d'expiration : {$domaines[$i]->date_expiration}", 
                         function ($mail) use ($user) {
                             $mail->from('me@thewebscrapper.com');
                             $mail->to($user[0]->email)
                                 ->subject('Domaine qui expireront dans 1 semaine');
-                    }); */
-                    Log::info("Domaine qui arriverons à echeance dans une semaine \n 
+                    });
+                    Log::info("\n 
+                                Domaine qui arriverons à echeance dans une semaine \n 
                                 Nom de domaine :{$domaines[$i]->nom_domaine} \n 
                                 Hebergeur :{$domaines[$i]->hebergeur}  \n 
                                 Registre :{$domaines[$i]->registre} \n 

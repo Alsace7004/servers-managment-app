@@ -23,7 +23,7 @@
                         </router-link>
                     </li>
                     <!-- <li>
-                        <router-link :to="{name:'permissions'}" class="item">
+                        <router-link v-if="$is('Admin')" :to="{name:'permissions'}" class="item">
                             <span class="icon"><i class="fas fa-user-shield"></i></span>
                             <span>Permissions</span>
                         </router-link>
@@ -35,7 +35,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link  :to="{name:'domaines'}" class="item">
+                        <router-link v-if="$can('domaine-list')" :to="{name:'domaines'}" class="item">
                             <span class="icon"><i class="fas fa-globe"></i></span>
                             <span>Domaines</span>
                         </router-link>

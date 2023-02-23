@@ -45,7 +45,7 @@ class DomaineController extends Controller
         //
         $data = $request->only(['nom_domaine','hebergeur','registre','date_expiration']);
         $validator = Validator::make($data,[
-            'nom_domaine'       =>'required|string|min:2|max:75',
+            'nom_domaine'       =>['required','string','min:2','max:75','regex:/^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/i'],
             'hebergeur'         =>'required|string|min:2|max:75',
             'registre'          =>'required|string|min:2|max:75',
             'date_expiration'   =>'required|date|after:today',
@@ -53,6 +53,7 @@ class DomaineController extends Controller
             'nom_domaine.required'  =>'Veuillez remplir ce champ',
             'nom_domaine.min'       =>'Trop court',
             'nom_domaine.max'       =>'Trop long',
+            'nom_domaine.regex'     =>'nom de domaine invalide',
 
             'hebergeur.required'    =>'Veuillez remplir ce champ',
             'hebergeur.min'         =>'Trop court',

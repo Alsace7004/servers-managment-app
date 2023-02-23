@@ -74,8 +74,8 @@ const routes = [
             requiresAuth:true
         },
         beforeEnter(to,from,next){
-            let {U_permissions}=useAuthStore()
-            if(U_permissions.includes('permission-list')){
+            let {role}=useAuthStore()
+            if(role.includes('BaT')){
                 //verifier la permission
                 next()
             }else{
@@ -107,15 +107,15 @@ const routes = [
         meta:{
             requiresAuth:true
         },
-        /* beforeEnter(to,from,next){
+        beforeEnter(to,from,next){
             let {U_permissions}=useAuthStore()
-            if(U_permissions.includes('server-list')){
+            if(U_permissions.includes('domaine-list')){
                 //verifier la permission
                 next()
             }else{
                 next({name:'notAuthorised'})
             }
-        } */
+        }
     },
     {
         path:'/notAuthorised',
