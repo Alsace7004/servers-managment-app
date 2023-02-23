@@ -16,8 +16,8 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - Gestion des permissions.
 - Gestion des serveurs.
 - Gestion des domaines.
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Gestion de de Task Schedule.
+- Gestion d'envoi de mail automatisé.
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
@@ -49,18 +49,18 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 - **[CUSTUM CSS](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
 - **[CUSTUM JS](https://lendio.com)**
 
-## Contributing
+## Contribution
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Thank you for considering contributing to the Laravel framework!
 
 ## Code of Conduct
 
 In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+## Securité et Vulnerabilité
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this app, please fell free to create another branch and resolve it !!!
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This App is open-sourced licensed under the [MIT license](https://opensource.org/licenses/MIT).

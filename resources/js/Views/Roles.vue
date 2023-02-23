@@ -87,8 +87,8 @@
 
                                 <div class="col-md-12">
                                     <label for=""><strong>Choisir une permission :</strong></label>
-                                    <div class="row col-md-6" style="">
-                                        <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
+                                    <div class="row col-md-6" style="border:1px solid yellow;width:100%;">
+                                        <div class="" style="border:1px solid red;width:10%;" v-for="permi in permissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.name }}</label>
                                         </div>

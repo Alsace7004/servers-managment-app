@@ -19,8 +19,8 @@
                             </div>
                             <div class="data_box" v-if="!$can('domaine-list')">
                                 <p style="display:flex;justify-content:center;align-items:center;">
-                                                    Chargement des domaines en cours...
-                                                    <loader></loader>
+                                        Chargement des domaines en cours...
+                                        <loader></loader>
                                 </p>
                             </div>
                             <div class="data_box" v-if="$can('domaine-list')">
@@ -34,7 +34,7 @@
                                         <input type="text" class="search_bar_form" name="" id="" v-model="tData.search" @input="getSearch" placeholder="Rechercher...">
                                     </div>
                                 </div>
-                                <div class="data_box_content" >
+                                <div class="data_box_content">
                                     <v-table :columns="columns">
                                         <tbody>
                                             <tr v-if="!domaines.length">
@@ -148,10 +148,10 @@
                             </template>
                         </proper-modal>
                         <!-- Editing Modal End -->
-                        <!-- Editing Modal Begin -->
+                        <!-- View Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="view_domaine">
                             <template v-slot:header>
-                                <h4>Les details d'un domaine:</h4>
+                                <h4>Les details du domaine:</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -171,6 +171,14 @@
                                 <div class="mb_3">
                                     <p>{{convert(domaine.date_expiration)}}</p>
                                 </div>
+                                <label for=""><strong>Status :</strong></label>
+                                <div class="mb_3">
+                                    <tr>
+                                        <p v-if="domaine.status === 0" class="badge_white_view">En cours</p>
+                                        <p v-if="domaine.status === 1" class="badge_red_view">Expiré(e)</p>
+                                    </tr>
+                                    
+                                </div>
                             </template>
                             <template v-slot:footer>
                                 <div>
@@ -178,7 +186,7 @@
                                 </div>
                             </template>
                         </proper-modal>
-                        <!-- Editing Modal End -->
+                        <!-- View Modal End -->
     
 </template>
 
@@ -243,7 +251,8 @@
                     nom_domaine:'',
                     hebergeur:'',
                     registre:'',
-                    date_expiration:''
+                    date_expiration:'',
+                    status:'',
                 }
                 $("#create_domaine").modal("show")
             },
@@ -328,12 +337,11 @@
                 axiosClient.get(`api/domaines/${id}`).then((res)=>{
                     $("#view_domaine").modal("show")
                     //console.log('valeur de res dans edit server:',res)
-                    //this.edit_id    = res.data.id;
                     this.domaine.nom_domaine      = res.data.nom_domaine;
                     this.domaine.hebergeur        = res.data.hebergeur;
                     this.domaine.registre         = res.data.registre;
                     this.domaine.date_expiration  = res.data.date_expiration;
-                    //this.is_Editing = true;
+                    this.domaine.status           = res.data.status;
                 })
             },  
             updateDomaine(){
@@ -398,20 +406,19 @@
 
 <style scoped>
     .badge_red{
-        /* border: 1px solid blue; */
-        /* background-color: #00a8ff; */
-        /* background-color: #0be881; */
         border-radius: 5px;
         background-color: #dd3333;
         color: white;
-        /* color: #dd3333; */
     }
     .badge_white{
-        /* border: 1px solid grey gray; */
-        /* background-color: #00a8ff; */
-        /* background-color: #0be881; */
         border-radius: 5px;
         background-color: #2f3640;
         color: #fff;
+    }
+    .badge_red_view{
+        border:1px solid #dd3333;background-color: #dd3333;color: white;padding:1px 15px;border-radius:5px
+    }
+    .badge_white_view{
+        border:1px solid #2f3640;background-color: #2f3640;color: #fff;padding:1px 15px;border-radius:5px
     }
 </style>
