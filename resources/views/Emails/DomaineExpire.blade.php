@@ -37,18 +37,19 @@
                         <th>Nom de domaine</th>
                         <th>Hebergeur</th>
                         <th>Registre</th>
-                        <th>Date Expirartion</th>
+                        <th>Date Expiration</th>
                         <th>Jours Restant</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{{$domaineName}}</td>
-                        <td>{{$hebergeur}}</td>
-                        <td>{{$registre}}</td>
-                        <td>{{$date_expiration}}</td>
-                        <td>7</td>
-                    </tr>
+                    @foreach ($domaines as $item)
+                        <tr>
+                            <td>{{$item->nom_domaine}}</td>
+                            <td>{{$item->hebergeur}}</td>
+                            <td>{{$item->registre}}</td>
+                            <td>{{$item->date_expiration}}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 

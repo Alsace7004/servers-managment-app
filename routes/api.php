@@ -1,13 +1,16 @@
 <?php
 
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\DomaineController;
-use App\Http\Controllers\ServerController;
-use App\Http\Controllers\PermmissionController;
+use Carbon\Carbon;
+use App\Models\Domaine;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ServerController;
+use App\Http\Controllers\DomaineController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\PermmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +27,9 @@ use Illuminate\Support\Facades\Route;
     //return "salut";
     Route::apiResource('roles',RoleController::class);
 }); */
+
+
+
 Route::post("login",[AuthController::class,'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -48,5 +54,22 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
+//Route::get("jules",[UserController::class,'getExpire']);
+
+Route::get('/baby',function(){
+   /*  $expDate = Carbon::now()->subDays(15));
+    Table::whereDate('exp_date', '<',$expDate);  */
+
+     $date_actuelle = Carbon::now()->format('Y-m-d');
+      /* $domaines = Domaine::query()
+        ->select('id','nom_domaine','hebergeur','registre','date_expiration')
+        ->where(DB::raw("DATEDIFF(date_expiration,$date_actuelle)"),'<=',7)->get()->toArray(); */
+        //$domaines = DB::table('domaines')->whereDate("date_expiration","<=",$date_actuelle)->toSql();
+        //->whereRaw(DB::raw("DATEDIFF(date_expiration,$date_actuelle)",'<=',7))->get(); 
+        //->where("DATEDIFF(date_expiration,'$date_actuelle')","<=",7)->get()->toArray();
+        $domaines = DB::SELECT("SELECT * FROM domaines WHERE DATEDIFF(domaines.date_expiration,'$date_actuelle') <=7");
+        //dd($brez);
+        dd($domaines);
+});
 
 

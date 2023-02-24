@@ -142,11 +142,11 @@
         </div> --}}
         <div id="app"></div>
         {{-- {{dd(Auth::user())}} --}}
-        @if (Auth::check())
+        {{-- @if (Auth::check())
             <script>window.authUser={!! json_encode(Auth::user()); !!};</script>
         @else
             <script>window.authUser=null;</script>
-        @endif
+        @endif --}}
         {{-- <script src="{{asset('admin/script.js')}}" defer></script> --}}
         
     </body>

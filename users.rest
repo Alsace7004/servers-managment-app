@@ -26,3 +26,6 @@ GET http://localhost:8000/api/get-permissions
 Authorization: Bearer 22|DBIZqPQboIQxPsycolXIcOdMtWPKqv06tNDIXMd2
 ###
 GET http://localhost:8000/sanctum/csrf-cookie
+
+### TEST
+GET http://localhost:8000/api/baby

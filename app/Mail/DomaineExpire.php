@@ -51,10 +51,12 @@ class DomaineExpire extends Mailable
         return new Content(
             view: 'Emails.DomaineExpire',
             with: [
-                'domaineName'       => $this->data->nom_domaine,
+                'domaines'       => $this->data,
+
+                /* 'domaineName'       => $this->data->nom_domaine,
                 'hebergeur'         => $this->data->hebergeur,
                 'registre'          => $this->data->registre,
-                'date_expiration'   => $this->data->date_expiration,
+                'date_expiration'   => $this->data->date_expiration, */
             ],
         );
     }

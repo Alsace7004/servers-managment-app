@@ -36,18 +36,18 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 ### Technologies Utilisées
 
 - **[LARAVEL](https://laravel.com)**
-- **[VUEJS](https://tighten.co)**
-- **[SPATIE LARAVEL-PERMISSION](https://kirschbaumdevelopment.com)**
-- **[VUE ROUTER](https://64robots.com)**
-- **[SWEET ALERT](https://cubettech.com)**
-- **[PINIA](https://cyber-duck.co.uk)**
-- **[CKEditor](https://www.many.co.uk)**
-- **[LARAVEL SANCTUM](https://www.webdock.io/en)**
-- **[PINIA PLUGIN PERSISTED STATE](https://devsquad.com)**
-- **[FONT AWESOME](https://www.curotec.com/services/technologies/laravel/)**
-- **[BOOTSTRAP](https://op.gg)**
-- **[CUSTUM CSS](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[CUSTUM JS](https://lendio.com)**
+- **[VUEJS](https://vuejs.org/)**
+- **[SPATIE LARAVEL-PERMISSION](https://spatie.be/docs/laravel-permission/v5/introduction)**
+- **[VUE ROUTER](https://router.vuejs.org/)**
+- **[SWEET ALERT](https://sweetalert2.github.io/#download)**
+- **[PINIA](https://pinia.vuejs.org/)**
+- **[CKEditor](https://ckeditor.com/docs/ckeditor5/latest/installation/frameworks/vuejs-v3.html#component-directives)**
+- **[LARAVEL SANCTUM](https://laravel.com)**
+- **[PINIA PLUGIN PERSISTED STATE](https://www.npmjs.com/package/pinia-plugin-persistedstate)**
+- **[FONT AWESOME](https://fontawesome.com/)**
+- **[BOOTSTRAP](https://getbootstrap.com)**
+- **[CUSTUM CSS]()**
+- **[CUSTUM JS]()**
 
 ## Contribution
 
