@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\DomaineExpire;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Domaine;
@@ -58,7 +59,9 @@ class DomaineExpiration extends Command
             //si date_expiration - date_actuelle <= 7j
                 //==> on envoie des notifications
                 if($days == 7){
-                    Mail::raw("Domaine qui arriverons à echeance dans une semaine \n 
+                    Mail::to($user[0]->email)->send(new DomaineExpire($domaines[$i]));
+
+                    /* Mail::raw("Domaine qui arriverons à echeance dans une semaine \n 
                             Nom de domaine :{$domaines[$i]->nom_domaine} \n 
                             Hebergeur :{$domaines[$i]->hebergeur}  \n 
                             Registre :{$domaines[$i]->registre} \n 
@@ -67,7 +70,7 @@ class DomaineExpiration extends Command
                             $mail->from('me@thewebscrapper.com');
                             $mail->to($user[0]->email)
                                 ->subject('Domaine qui expireront dans 1 semaine');
-                    });
+                    }); */
                     Log::info("\n 
                                 Domaine qui arriverons à echeance dans une semaine \n 
                                 Nom de domaine :{$domaines[$i]->nom_domaine} \n 

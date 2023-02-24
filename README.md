@@ -35,7 +35,7 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ### Technologies Utilisées
 
-- **[LARAVEL](https://vehikl.com/)**
+- **[LARAVEL](https://laravel.com)**
 - **[VUEJS](https://tighten.co)**
 - **[SPATIE LARAVEL-PERMISSION](https://kirschbaumdevelopment.com)**
 - **[VUE ROUTER](https://64robots.com)**
@@ -51,7 +51,7 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ## Contribution
 
-Thank you for considering contributing to the Laravel framework!
+Merci de bien vouloir s'inspirer ou de contribuer au developpement de cette application !!!
 
 ## Code of Conduct
 
