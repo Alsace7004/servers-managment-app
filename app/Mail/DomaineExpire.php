@@ -35,7 +35,7 @@ class DomaineExpire extends Mailable
         return new Envelope(
             from: new Address('portable@omonolalomi.com', 'Portable Zazu'),
             replyTo: [
-                new Address('skiibii@example.com', 'Taylor Otwell'),
+                new Address('ORI@ORUNMILA.IFA', 'ORI ORUNMILA'),
             ],
             subject: 'Nom de domaines qui expireront dans une semiane',
         );
@@ -52,11 +52,6 @@ class DomaineExpire extends Mailable
             view: 'Emails.DomaineExpire',
             with: [
                 'domaines'       => $this->data,
-
-                /* 'domaineName'       => $this->data->nom_domaine,
-                'hebergeur'         => $this->data->hebergeur,
-                'registre'          => $this->data->registre,
-                'date_expiration'   => $this->data->date_expiration, */
             ],
         );
     }

@@ -58,9 +58,7 @@ Merci de bien vouloir s'inspirer ou de contribuer au developpement de cette appl
 In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
 ## Securité et Vulnerabilité
-
-If you discover a security vulnerability within this app, please fell free to create another branch and resolve it !!!
+Si vous decouvrez une vulnerabilté de securité ou un quelconque bug, veuillez bien vouloir créer une nouvelle branche et y apporter vos solutions
 
 ## License
-
-This App is open-sourced licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Cette Application est open-source.

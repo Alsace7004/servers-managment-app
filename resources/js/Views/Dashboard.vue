@@ -31,17 +31,7 @@ import axiosClient from "../axios/index"
     /* import {useAuthStore} from "../store/index"
     const userStore  = useAuthStore();
     console.log("From dashboard:",userStore.getUserRoleAndPermission()) */
-   const expire = ()=>{
-        axios.get("api/baby").then((res)=>{
-            console.log("Valeur de expire:",res)
-        }).catch((err)=>{
-            console.log("Valeur de err:",err)
-        })
-   }
-
-   onMounted(()=>{
-    expire()
-   })
+   
         
 </script>
 

@@ -71,6 +71,31 @@
         mounted(){
 
         },
+
+        /* 
+        23-02-2023
+        Probleme de validation au niveau du nom de domaine (Resolut)
+        Tache
+        Affiché les domaines expirés dans un tableau html mis en forme 
+        envoyé à l'administrateur avec le nombre de jour restant avant l'expirartion
+        des domaines
+        24-02-2023
+        Aujourd'hui j'ai taffé sur la fonctionnalité d'envoie de mail a l'administrateur,
+        Le mail envoyé contient un tableau html mis en forme contenant la liste
+        des domaines qui vont s'expiré dans exactement 7 jours avec pour chaque
+        domaine le nombre de jour lui restant avant son expiration
+
+        Nouvelles Taches Recu :
+        -----SERVEURS
+        -Au niveau du serveur, le username ne doit pas etre affiché
+        -Le username doit etre affciher au niveau des details d'un serveur
+        et la personne le vois s'il a les permissions
+        -Le mot de passe doit etre affiché en claire au niveau des details d'un serveur
+        -----Domaines
+        Pour ajouter un serveur, au niveau de l'hebergeur,on choisit un serveur,
+        (il existe une relation entre les deux)
+        
+        */
         
     }
 </script>

@@ -29,6 +29,7 @@ class PermissionTableSeeder extends Seeder
             
             'server-list',
             'server-create',
+            'server-view',
             'server-edit',
             'server-delete',
 

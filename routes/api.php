@@ -54,22 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-//Route::get("jules",[UserController::class,'getExpire']);
 
-Route::get('/baby',function(){
-   /*  $expDate = Carbon::now()->subDays(15));
-    Table::whereDate('exp_date', '<',$expDate);  */
-
-     $date_actuelle = Carbon::now()->format('Y-m-d');
-      /* $domaines = Domaine::query()
-        ->select('id','nom_domaine','hebergeur','registre','date_expiration')
-        ->where(DB::raw("DATEDIFF(date_expiration,$date_actuelle)"),'<=',7)->get()->toArray(); */
-        //$domaines = DB::table('domaines')->whereDate("date_expiration","<=",$date_actuelle)->toSql();
-        //->whereRaw(DB::raw("DATEDIFF(date_expiration,$date_actuelle)",'<=',7))->get(); 
-        //->where("DATEDIFF(date_expiration,'$date_actuelle')","<=",7)->get()->toArray();
-        $domaines = DB::SELECT("SELECT * FROM domaines WHERE DATEDIFF(domaines.date_expiration,'$date_actuelle') <=7");
-        //dd($brez);
-        dd($domaines);
-});
 
 

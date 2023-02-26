@@ -46,7 +46,6 @@
                                             <tr v-for="(item,key) in servers" :key="key">
                                                 <td>{{item.id}}</td>
                                                 <td>{{item.name}}</td>
-                                                <td>{{item.username}}</td>
                                                 <td>{{item.url_connexion}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>
@@ -150,28 +149,36 @@
                             </template>
                         </proper-modal>
                         <!-- Editing Modal End -->
-                        <!-- Editing Modal Begin -->
+                        <!-- view Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="view_server">
                             <template v-slot:header>
-                                <h4>Les details d'un serveur:</h4>
+                                <h4>Les details du serveur:</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
                                 <label for=""><strong>Nom du Serveur :</strong></label>
-                                <div class="input_form mb_3">
-                                    <input type="text" readonly class="input_form_item" v-model="server.name" placeholder="Server name...">
+                                <div class="mb_3">
+                                    <p>{{server.name}}</p>
                                 </div>
+
                                 <label for=""><strong>Username du Serveur :</strong></label>
-                                <div class="input_form mb_3">
-                                    <input type="text" readonly class="input_form_item" v-model="server.username" placeholder="Server username...">
+                                <div class="mb_3">
+                                    <p>{{server.username}}</p>
                                 </div>
+
+                                <label for=""><strong>Mot de passe du Serveur :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{server.password}}</p>
+                                </div>
+
                                 <label for=""><strong>URL du Serveur :</strong></label>
-                                <div class="input_form mb_3">
-                                    <input type="url" readonly class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
+                                <div class="mb_3">
+                                    <p>{{server.url_connexion}}</p>
                                 </div>
+
                                 <label for=""><strong>Description du Serveur :</strong></label>
-                                <div class="input_form mb_3">
-                                    <textarea name="" readonly id="" cols="30" rows="3" class="input_form_item" v-model="server.description" placeholder="Server description..."></textarea>
+                                <div class="">
+                                    <p>{{server.description}}</p>
                                 </div>
                             </template>
                             <template v-slot:footer>
@@ -180,7 +187,7 @@
                                 </div>
                             </template>
                         </proper-modal>
-                        <!-- Editing Modal End -->
+                        <!-- view Modal End -->
     
 </template>
 
@@ -204,7 +211,6 @@
             let columns =[
                 {label:'~#',name:''},
                 {label:'Nom',name:''},
-                {label:'Username',name:''},
                 {label:'Url_Connexion',name:''},
                 {label:'Ajouté Le',name:''},
                 {label:'Actions',name:''},
@@ -341,6 +347,7 @@
                     //this.edit_id    = res.data.id;
                     this.server.name  = res.data.name;
                     this.server.username  = res.data.username;
+                    this.server.password  = res.data.password;
                     this.server.url_connexion  = res.data.url_connexion;
                     this.server.description  = res.data.description;
                     //this.is_Editing = true;

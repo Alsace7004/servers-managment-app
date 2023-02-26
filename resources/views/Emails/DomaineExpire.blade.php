@@ -48,6 +48,7 @@
                             <td>{{$item->hebergeur}}</td>
                             <td>{{$item->registre}}</td>
                             <td>{{$item->date_expiration}}</td>
+                            <td>{{$item->thediff}}</td>
                         </tr>
                     @endforeach
                 </tbody>
