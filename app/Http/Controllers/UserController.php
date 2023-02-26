@@ -60,7 +60,7 @@ class UserController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
-        /*
+        
         $user = new User();
         $user->name = $data['name'];
         $user->email = $data['email'];
@@ -69,7 +69,7 @@ class UserController extends Controller
             $user->assignRole($data['roles']);
             return ['status'=>true];
         }
-        return ['status'=>false]; */
+        return ['status'=>false];
     }
 
     public function show(User $user)
