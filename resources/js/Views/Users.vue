@@ -267,7 +267,7 @@
             roles.value = content;
             //console.log("Valeur de res dans getUsers:",res)
         }).catch((err)=>{
-            console.log("Valeur de err dans getRoles dans Users:",err)
+            console.log("Valeur de err dans getRoles dans Users:",err.response)
         })
     }
     const saveUser = ()=>{
@@ -276,9 +276,10 @@
         send_user.innerHTML = "Sauvegarde en cours..."
         loading.value = true;
         axiosClient.post("api/users",user).then((res)=>{
+            //console.log("Valeur de res dans saveUser:",res)
             send_user.innerHTML = "Sauvegarder"
             loading.value = false;
-            //console.log("valeur de res:",res)
+           
             if(res.data.status){
                 $('#create_user').modal('hide'); 
                 getUsers()

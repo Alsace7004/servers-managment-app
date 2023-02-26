@@ -11,7 +11,7 @@ axiosClient.interceptors.request.use(config=>{
     return config;
 })
 //end
-axiosClient.interceptors.response.use(response=>{
+/* axiosClient.interceptors.response.use(response=>{
     return response;
 },err=>{
     //console.log("valeur de err dans axios:",err.response)
@@ -24,6 +24,6 @@ axiosClient.interceptors.response.use(response=>{
         return;
     }
        //return err;
-})
+}) */
 
 export default axiosClient;

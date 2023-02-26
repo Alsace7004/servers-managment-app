@@ -35,7 +35,9 @@ class UserController extends Controller
         ]);
     }
     public function store(Request $request){
-        $data = $request->only(['name','email','password','roles']);
+
+        
+         $data = $request->only(['name','email','password','roles']);
         //dd($data);
         $validator = Validator::make($data,[
             'name'=>'required|string|min:2|max:100',
@@ -58,6 +60,7 @@ class UserController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
+        /*
         $user = new User();
         $user->name = $data['name'];
         $user->email = $data['email'];
@@ -66,7 +69,7 @@ class UserController extends Controller
             $user->assignRole($data['roles']);
             return ['status'=>true];
         }
-        return ['status'=>false];
+        return ['status'=>false]; */
     }
 
     public function show(User $user)

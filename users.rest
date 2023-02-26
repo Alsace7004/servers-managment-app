@@ -9,11 +9,14 @@ Authorization: Bearer 6|5NN4aZRTHwfJkO90ILD5yjmQL393M3NSAMtU1eFt
 ### ADD NEW USER
 POST http://localhost:8000/api/users
 Content-Type: application/json
+Authorization: Bearer 23|e9zrcjUL949rIvBVXyif6vPpjcsTN9vXF5i29T8C
+
 
 {
-    "name":"Duro",
-    "email":"Duro@Jaiye.com",
-    "password":"123456789"
+    "name":"",
+    "email":"",
+    "password":"",
+    "roles":
 }
 ### Another Action
 
