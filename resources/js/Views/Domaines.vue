@@ -20,6 +20,7 @@
                                         <loader></loader>
                                 </p>
                             </div>
+                            
                             <div v-else class="data_box">
                                 <!-- Create Domaine Btn Begin-->
                                 <div v-if="$is('Admin') || $can('domaine-create')">
@@ -48,7 +49,7 @@
                                             <tr v-for="(item,key) in domaines" :key="key">
                                                 <td>{{item.id}}</td>
                                                 <td>{{item.nom_domaine}}</td>
-                                                <td>{{item.hebergeur}}</td>
+                                                <td>{{item.username}}</td>
                                                 <td>{{item.registre}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>{{convert(item.date_expiration)}}</td>
