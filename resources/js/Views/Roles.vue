@@ -13,14 +13,17 @@
                         
                         <!-- router-view-begin -->
                         <ContentHeader message="Page des Roles  !!!"/>
-                        <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
-                        <div class="data_box" v-if="!$can('role-list')">
+                        
+                        <div v-if="!roles.length || !$can('role-list')" class="data_box">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                                     Chargement des roles en cours...
                                                     <loader></loader>
                                 </p>
                         </div>
-                        <div class="data_box" v-if="$can('role-list')">
+                        <div v-else class="data_box">
+                            <!-- Create Role Btn begin-->
+                            <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
+                            <!-- Create Role Btn end-->
                             <div class="data_box_header">
                                 <div class="per_page">
                                     <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
@@ -34,12 +37,6 @@
                             <div class="data_box_content">
                                 <v-table :columns="columns">
                                     <tbody>
-                                        <tr v-if="!roles.length">
-                                            <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
-                                                Chargement des roles en cours...
-                                                <loader></loader>
-                                            </p>
-                                        </tr>
                                         <tr v-for="(role,key) in roles" :key="key">
                                             <td>{{role.id}}</td>
                                             <td>{{role.name}}</td>

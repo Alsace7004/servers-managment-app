@@ -13,17 +13,19 @@
                         
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Domaines !!!"/>
-                            <div v-if="$is('Admin') || $can('domaine-create')">
-                                <!-- Edit post form -->
-                                <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Domaine</button>
-                            </div>
-                            <div class="data_box" v-if="!$can('domaine-list')">
+                            
+                            <div v-if="!domaines.length || !$can('domaine-list')" class="data_box">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                         Chargement des domaines en cours...
                                         <loader></loader>
                                 </p>
                             </div>
-                            <div class="data_box" v-if="$can('domaine-list')">
+                            <div v-else class="data_box">
+                                <!-- Create Domaine Btn Begin-->
+                                <div v-if="$is('Admin') || $can('domaine-create')">
+                                    <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Domaine</button>
+                                </div>
+                                <!-- Create Domaine Btn end-->
                                 <div class="data_box_header">
                                     <div class="per_page">
                                         <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">

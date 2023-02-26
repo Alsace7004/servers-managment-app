@@ -12,16 +12,18 @@
                     <div class="content_body">
                         <!-- router-view-begin -->
                         <ContentHeader message="Page des utilisateurs !!!"/>
-                        <button v-if="$can('user-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Utilisateur</button>
-                        <!-- <button @click="toggleModal2">Edit Modal</button> -->
-                        <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#create_user">Open Modal</button> -->
-                        <div class="data_box" v-if="!$can('user-list')">
+
+                        
+                        <div v-if="!users.length || !$can('user-list')" class="data_box" >
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                     Chargement des utilisateurs en cours...
                                     <loader></loader>
                                 </p>
                         </div>
-                        <div class="data_box" v-if="$can('user-list')">
+                        <div v-else class="data_box">
+                            <!-- Create User Btn begin-->
+                            <button v-if="$can('user-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Utilisateur</button>
+                            <!-- Create User Btn end-->
                             <div class="data_box_header">
                                 <div class="per_page">
                                     <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
@@ -35,12 +37,6 @@
                             <div class="data_box_content">
                                 <v-table :columns="columns">
                                     <tbody>
-                                        <tr v-if="!users.length">
-                                            <p style="display:flex;justify-content:center;align-items:center;margin-left:20rem">
-                                                Chargement des utilisateurs en cours...
-                                                <loader></loader>
-                                            </p>
-                                        </tr>
                                         <tr v-for="(user,key) in users" :key="key" :class="user.id === id ? 'holla' : ''">
                                             <td>{{user.id}}</td>
                                             <td>{{user.name}}</td>
