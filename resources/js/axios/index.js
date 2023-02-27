@@ -6,7 +6,6 @@ const axiosClient = axios.create({});
 //request
 axiosClient.interceptors.request.use(config=>{
     const {token} = useAuthStore()
-    //config.headers.Authorization = `Bearer ${localStorage.getItem('jwt')}`
     config.headers.Authorization = `Bearer ${token}`
     return config;
 })

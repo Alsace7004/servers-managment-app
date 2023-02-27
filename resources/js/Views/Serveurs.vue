@@ -46,7 +46,7 @@
                                                 <td>{{item.url_connexion}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>
-                                                    <button class="view_btn" @click="viewServer(item.id)"><i class="fas fa-eye"></i></button>
+                                                    <button class="view_btn" v-if="$can('server-view')" @click="viewServer(item.id)"><i class="fas fa-eye"></i></button>
                                                     <button class="edit_btn" v-if="$can('server-edit')"  @click="editServer(item.id)"><i class="fas fa-edit"></i></button>
                                                     <button class="delete_btn" v-if="$can('server-delete')" @click="deleteServer(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
