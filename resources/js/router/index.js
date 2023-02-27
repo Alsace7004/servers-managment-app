@@ -118,6 +118,57 @@ const routes = [
         }
     },
     {
+        path:'/departements',
+        name:'departements',
+        component:()=>import("../Views/Departements.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('domaine-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        }
+    },
+    {
+        path:'/type_de_staff',
+        name:'type_de_staff',
+        component:()=>import("../Views/TypeDeStaff.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('domaine-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        }
+    },
+    {
+        path:'/staff',
+        name:'staff',
+        component:()=>import("../Views/Staff.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('domaine-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        }
+    },
+    {
         path:'/notAuthorised',
         name:'notAuthorised',
         component:()=>import("../components/notAuthorised.vue")

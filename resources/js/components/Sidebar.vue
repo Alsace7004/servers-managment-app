@@ -11,24 +11,6 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link v-if="$can('user-list')" :to="{name:'users'}" class="item">
-                            <span class="icon"><i class="fas fa-users"></i></span>
-                            <span>Utilisateurs</span>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link v-if="$is('Admin') || $can('role-list')" :to="{name:'roles'}" class="item">
-                            <span class="icon"><i class="fas fa-lock"></i></span>
-                            <span>Roles</span>
-                        </router-link>
-                    </li>
-                    <!-- <li>
-                        <router-link v-if="$is('Admin')" :to="{name:'permissions'}" class="item">
-                            <span class="icon"><i class="fas fa-user-shield"></i></span>
-                            <span>Permissions</span>
-                        </router-link>
-                    </li> -->
-                    <li>
                         <router-link v-if="$can('server-list')" :to="{name:'serveurs'}" class="item">
                             <span class="icon"><i class="fas fa-server"></i></span>
                             <span>Serveurs</span>
@@ -40,12 +22,51 @@
                             <span>Domaines</span>
                         </router-link>
                     </li>
+                    <!--  -->
+                    <li>
+                        <router-link v-if="$can('domaine-list')" :to="{name:'departements'}" class="item">
+                            <span class="icon"><i class="fas fa-building"></i></span>
+                            <span>Departements</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link v-if="$can('domaine-list')" :to="{name:'type_de_staff'}" class="item">
+                            <span class="icon"><i class="fas fa-user-alt"></i></span>
+                            <span>Type de Staff</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link v-if="$can('domaine-list')" :to="{name:'staff'}" class="item">
+                            <span class="icon"><i class="fas fa-user-friends"></i></span>
+                            <span>Staff</span>
+                        </router-link>
+                    </li>
+                    <!--  -->
+                    <li>
+                        <router-link v-if="$is('Admin') || $can('role-list')" :to="{name:'roles'}" class="item">
+                            <span class="icon"><i class="fas fa-lock"></i></span>
+                            <span>Roles</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link v-if="$can('user-list')" :to="{name:'users'}" class="item">
+                            <span class="icon"><i class="fas fa-users"></i></span>
+                            <span>Utilisateurs</span>
+                        </router-link>
+                    </li>
+                    <!-- <li>
+                        <router-link v-if="$is('Admin')" :to="{name:'permissions'}" class="item">
+                            <span class="icon"><i class="fas fa-user-shield"></i></span>
+                            <span>Permissions</span>
+                        </router-link>
+                    </li> -->
                     <li>
                         <a  @click="logout" class="item deconnexion_btn">
                             <span class="icon"><i class="fas fa-power-off"></i></span>
                             <span>Deconnexion</span>
                         </a>
                     </li>
+                    <!--  -->
                 </ul>
             </div>
 </template>

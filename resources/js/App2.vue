@@ -94,7 +94,28 @@
         -----Domaines
         Pour ajouter un serveur, au niveau de l'hebergeur,on choisit un serveur,
         (il existe une relation entre les deux)
-        
+        27-02-2023
+        Tache du 24-02-2023 resolu
+        Nouvelles Taches Recu :
+        -----SIDE BAR, afficher les menu comme suit:
+            #Tableau de bord
+            #Serveur
+            #Domaine
+            #Departement
+            #Type de Staff
+            #Staff
+            #Role
+            #Utilisateur
+        -----Placer le logo de EBA dans la SIDEBAR
+        -----Nouveau Menu Departement:
+            Action:Création,Liste,Modification,Suppretion
+            Creation : Name, created_at,superviseur (c'est un utilisateur)
+        -----Type de Staff :
+            Action:Creation,Liste,Modification,Suppretion
+            Creation:Name,created_at
+        -----Nouveau Menu Staff :
+            Action:Creation,Liste,Modification,Retrait
+            Creation:Nom,Prenom,adresse,email,departement,type de staff,photo
         */
         
     }
