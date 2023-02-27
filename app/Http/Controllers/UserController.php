@@ -34,6 +34,13 @@ class UserController extends Controller
             'users'=>$users->paginate($length),
         ]);
     }
+    public function userList(){
+        $users = User::query()->select('id','email')->orderBy('id','desc')->get();
+        return response()->json([
+            'status'=>true,
+            'users'=>$users
+        ]);
+    }
     public function store(Request $request){
 
         

@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('departements', function (Blueprint $table) {
             $table->id();
+            $table->string('nom_departement');
+            $table->foreignId('user_id')->constrained();
+            $table->boolean('is_deleted')->default(0);
             $table->timestamps();
         });
     }

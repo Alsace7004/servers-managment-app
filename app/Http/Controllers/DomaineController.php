@@ -27,7 +27,7 @@ class DomaineController extends Controller
         if($searchValue){
             $domaines->where(function($query) use ($searchValue){
                 $query->where('nom_domaine','like','%'.$searchValue.'%')
-                    //->orWhere('hebergeur','like','%'.$searchValue.'%')
+                    ->orWhere('servers.name','like','%'.$searchValue.'%')
                     ->orWhere('registre','like','%'.$searchValue.'%');
             });
         }

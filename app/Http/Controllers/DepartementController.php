@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Departement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DepartementController extends Controller
 {
@@ -12,9 +13,26 @@ class DepartementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $length      = $request->input('length');
+        $searchValue = $request->input('search');
+
+        $departements = Departement::join('users','users.id','=','departements.user_id')
+                                    ->select('departements.id','departements.nom_departement','users.email','departements.created_at')
+                                    ->where('departements.is_deleted','=',false)
+                                    ->orderBy('departements.id','desc');
+        if($searchValue){
+            $departements->where(function($query) use($searchValue){
+                $query->where('departements.nom_departement','like','%'.$searchValue.'%')
+                    ->orWhere('users.email','like','%'.$searchValue.'%');
+            });
+        }
+        return response()->json([
+            'status'=>true,
+            'departements'=>$departements->paginate($length)
+        ]);
     }
 
     /**
@@ -26,6 +44,23 @@ class DepartementController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->only(['nom_departement','user_id']);
+        $validator = Validator::make($data,[
+            'nom_departement'   =>'required|string|min:2|max:100',
+            'user_id'           =>'required'
+        ],[
+            'nom_departement.required'  =>'Veuillez remplir ce champ',
+            'nom_departement.min'       =>'Trop court',
+            'nom_departement.max'       =>'Trop long',
+            'user_id.required'          =>'Veuillez remplir ce champ',
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
+        if(Departement::create($data)){
+            return ['status'=>true];
+        }
+        return ['status'=>false];   
     }
 
     /**
@@ -37,6 +72,7 @@ class DepartementController extends Controller
     public function show(Departement $departement)
     {
         //
+        return $departement;
     }
 
     /**
@@ -49,6 +85,23 @@ class DepartementController extends Controller
     public function update(Request $request, Departement $departement)
     {
         //
+        $data = $request->only(['nom_departement','user_id']);
+        $validator = Validator::make($data,[
+            'nom_departement'   =>'required|string|min:2|max:100',
+            'user_id'           =>'required'
+        ],[
+            'nom_departement.required'  =>'Veuillez remplir ce champ',
+            'nom_departement.min'       =>'Trop court',
+            'nom_departement.max'       =>'Trop long',
+            'user_id.required'          =>'Veuillez remplir ce champ',
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
+        if($departement->update($data)){
+            return ['status'=>true];
+        }
+        return ['status'=>false]; 
     }
 
     /**
@@ -60,5 +113,13 @@ class DepartementController extends Controller
     public function destroy(Departement $departement)
     {
         //
+        if($departement){
+            $departement->is_deleted = true;
+            if($departement->save()){
+                return ['status'=>true];
+            }
+            return ['status'=>false]; 
+        }
+        return ['status'=>false]; 
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\ServerController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\PermmissionController;
+use App\Http\Controllers\DepartementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //logout
     Route::post("logout",[AuthController::class,'logout'])->name('logout');
     Route::get('user', [UserController::class,'getAuthUserInfo']);
+    Route::get('getAllUsers',[UserController::class,'userList']);
     Route::get('getUserRoleAndPermission/{user}',[UserController::class,'showUser']);
     //Others    
     Route::apiResource('roles',RoleController::class);
@@ -49,7 +51,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('getAllServers',[ServerController::class,'serverList']);
     //Domaines
     Route::apiResource('domaines',DomaineController::class);
-
+    //Departements
+    Route::apiResource('departements',DepartementController::class);
 
     Route::get('/get-permissions',[PermmissionController::class,'getAuthUserPermissionAndRole']);
 });
