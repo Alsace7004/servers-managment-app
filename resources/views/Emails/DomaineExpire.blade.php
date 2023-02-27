@@ -45,7 +45,7 @@
                     @foreach ($domaines as $item)
                         <tr>
                             <td>{{$item->nom_domaine}}</td>
-                            <td>{{$item->hebergeur}}</td>
+                            <td>{{$item->name}}</td>
                             <td>{{$item->registre}}</td>
                             <td>{{$item->date_expiration}}</td>
                             <td>{{$item->thediff}}</td>

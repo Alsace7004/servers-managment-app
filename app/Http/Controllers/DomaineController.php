@@ -22,7 +22,7 @@ class DomaineController extends Controller
         /* $domaines = Domaine::query()->select('id','nom_domaine','server_id','registre','date_expiration','status','created_at')
                     ->orderBy('id','desc'); */
                     $domaines = Domaine::join('servers','servers.id','=','domaines.server_id')
-                    ->select('domaines.id','nom_domaine','server_id','registre','date_expiration','status','domaines.created_at','servers.username')
+                    ->select('domaines.id','nom_domaine','server_id','registre','date_expiration','status','domaines.created_at','servers.name')
                     ->orderBy('id','desc');
         if($searchValue){
             $domaines->where(function($query) use ($searchValue){
@@ -46,10 +46,10 @@ class DomaineController extends Controller
     public function store(Request $request)
     {
         //
-        $data = $request->only(['nom_domaine','hebergeur','registre','date_expiration']);
+        $data = $request->only(['nom_domaine','server_id','registre','date_expiration']);
         $validator = Validator::make($data,[
             'nom_domaine'       =>['required','string','min:2','max:75','regex:/^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/i'],
-            'hebergeur'         =>'required|string|min:2|max:75',
+            'server_id'         =>'required',
             'registre'          =>'required|string|min:2|max:75',
             'date_expiration'   =>'required|date|after:today',
         ],[
@@ -58,9 +58,7 @@ class DomaineController extends Controller
             'nom_domaine.max'       =>'Trop long',
             'nom_domaine.regex'     =>'nom de domaine invalide',
 
-            'hebergeur.required'    =>'Veuillez remplir ce champ',
-            'hebergeur.min'         =>'Trop court',
-            'hebergeur.max'         =>'Trop long',
+            'server_id.required'    =>'Veuillez remplir ce champ',
 
             'registre.required'     =>'Veuillez remplir ce champ',
             'registre.min'          =>'Trop court',
@@ -88,7 +86,10 @@ class DomaineController extends Controller
     public function show(Domaine $domaine)
     {
         //
-        return $domaine;
+        $domaines = Domaine::join('servers','servers.id','=','domaines.server_id')
+            ->select('domaines.id','nom_domaine','server_id','registre','date_expiration','status','domaines.created_at','servers.name')
+            ->where('domaines.id',$domaine->id)->get();
+        return $domaines;
     }
 
     /**
@@ -101,19 +102,17 @@ class DomaineController extends Controller
     public function update(Request $request,Domaine $domaine)
     {
         //
-        $data = $request->only(['nom_domaine','hebergeur','registre','date_expiration']);
+        $data = $request->only(['nom_domaine','server_id','registre','date_expiration']);
         $validator = Validator::make($data,[
             'nom_domaine'       =>'required|string|min:2|max:75',
-            'hebergeur'         =>'required|string|min:2|max:75',
+            'server_id'         =>'required',
             'registre'          =>'required|string|min:2|max:75',
             'date_expiration'   =>'required|date|after:today',
         ],[
             'nom_domaine.required'  =>'Veuillez remplir ce champ',
             'nom_domaine.min'       =>'Trop court',
             'nom_domaine.required'  =>'Trop long',
-            'hebergeur.required'    =>'Veuillez remplir ce champ',
-            'hebergeur.min'             =>'Trop court',
-            'hebergeur.required'        =>'Trop long',
+            'server_id.required'    =>'Veuillez remplir ce champ',
             'registre.required'         =>'Veuillez remplir ce champ',
             'registre.min'              =>'Trop court',
             'registre.required'         =>'Trop long',

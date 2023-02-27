@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Domaine extends Model
 {
     use HasFactory;
-    protected $fillable = ['nom_domaine','hebergeur','registre','date_expiration'];
+    protected $fillable = ['nom_domaine','server_id','registre','date_expiration'];
 }

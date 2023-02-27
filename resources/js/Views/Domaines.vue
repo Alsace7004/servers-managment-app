@@ -49,7 +49,7 @@
                                             <tr v-for="(item,key) in domaines" :key="key">
                                                 <td>{{item.id}}</td>
                                                 <td>{{item.nom_domaine}}</td>
-                                                <td>{{item.username}}</td>
+                                                <td>{{item.name}}</td>
                                                 <td>{{item.registre}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>{{convert(item.date_expiration)}}</td>
@@ -98,9 +98,12 @@
                                 </div>
                                 <span v-if="errors.nom_domaine" class="error_txt">{{errors.nom_domaine[0]}}</span>
                                 <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="domaine.hebergeur" placeholder="Hebergeur...">
+                                    <select name="" id="" v-model="domaine.server_id" class="input_form_item">
+                                        <option value="">Choisir le serveur</option>
+                                        <option v-for="server in servers" :key="server.id" :value="server.id">{{server.name}}</option>
+                                    </select>
                                 </div>
-                                <span v-if="errors.hebergeur" class="error_txt">{{errors.hebergeur[0]}}</span>
+                                <span v-if="errors.server_id" class="error_txt">{{errors.server_id[0]}}</span>
                                 <div class="input_form mb_3">
                                     <input type="text" class="input_form_item" v-model="domaine.registre" placeholder="Registre...">
                                 </div>
@@ -131,9 +134,12 @@
                                 </div>
                                 <span v-if="errors.nom_domaine" class="error_txt">{{errors.nom_domaine[0]}}</span>
                                 <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="domaine.hebergeur" placeholder="Hebergeur...">
+                                    <select name="" id="" v-model="domaine.server_id" class="input_form_item">
+                                        <option value="">Choisir le serveur</option>
+                                        <option v-for="server in servers" :key="server.id" :value="server.id">{{server.name}}</option>
+                                    </select>
                                 </div>
-                                <span v-if="errors.hebergeur" class="error_txt">{{errors.hebergeur[0]}}</span>
+                                <span v-if="errors.server_id" class="error_txt">{{errors.server_id[0]}}</span>
                                 <div class="input_form mb_3">
                                     <input type="text" class="input_form_item" v-model="domaine.registre" placeholder="Registre...">
                                 </div>
@@ -164,7 +170,7 @@
                                 </div>
                                 <label for=""><strong>Hebergeur :</strong></label>
                                 <div class="mb_3">
-                                    <p>{{domaine.hebergeur}}</p>
+                                    <p>{{domaine.server_id}}</p>
                                 </div>
                                 <label for=""><strong>Registre :</strong></label>
                                 <div class="mb_3">
@@ -223,11 +229,12 @@
                 perPage : ['5','10','20','30'],
                 columns: columns,
                 domaines:[],
+                servers:[],
                 errors:[],
                 links:[],
                 domaine:{
                     nom_domaine:'',
-                    hebergeur:'',
+                    server_id:'',
                     registre:'',
                     date_expiration:'',
                 },
@@ -252,7 +259,7 @@
                 this.errors = []
                 this.domaine={
                     nom_domaine:'',
-                    hebergeur:'',
+                    server_id:'',
                     registre:'',
                     date_expiration:'',
                     status:'',
@@ -270,6 +277,15 @@
                 }).catch((err)=>{
                     console.log("Valeur de err dans getDomaines:",err.response)
                 })
+            },
+            //getAllRoles
+            getServers (){
+                    axiosClient.get("api/getAllServers").then((res)=>{
+                        let content = res.data.servers;
+                        this.servers = content;
+                    }).catch((err)=>{
+                        console.log("Valeur de err dans getservers dans Domaine:",err.response)
+                    })
             },
             saveDomaine(){
                 this.errors = []
@@ -327,24 +343,24 @@
                 axiosClient.get(`api/domaines/${id}`).then((res)=>{
                     $("#edit_domaine").modal("show")
                     //console.log('valeur de res dans edit server:',res)
-                    this.edit_id    = res.data.id;
-                    this.domaine.nom_domaine      = res.data.nom_domaine;
-                    this.domaine.hebergeur        = res.data.hebergeur;
-                    this.domaine.registre         = res.data.registre;
-                    this.domaine.date_expiration  = res.data.date_expiration;
-                    this.is_Editing = true;
+                    this.edit_id                  = res.data[0].id;
+                    this.domaine.nom_domaine      = res.data[0].nom_domaine;
+                    this.domaine.server_id        = res.data[0].server_id;
+                    this.domaine.registre         = res.data[0].registre;
+                    this.domaine.date_expiration  = res.data[0].date_expiration;
+                    this.is_Editing               = true;
                 })
             },
             viewDomaine(id){
                 this.errors = [];
                 axiosClient.get(`api/domaines/${id}`).then((res)=>{
                     $("#view_domaine").modal("show")
-                    //console.log('valeur de res dans edit server:',res)
-                    this.domaine.nom_domaine      = res.data.nom_domaine;
-                    this.domaine.hebergeur        = res.data.hebergeur;
-                    this.domaine.registre         = res.data.registre;
-                    this.domaine.date_expiration  = res.data.date_expiration;
-                    this.domaine.status           = res.data.status;
+                    //console.log('valeur de res dans view server:',res)
+                    this.domaine.nom_domaine      = res.data[0].nom_domaine;
+                    this.domaine.server_id        = res.data[0].name;
+                    this.domaine.registre         = res.data[0].registre;
+                    this.domaine.date_expiration  = res.data[0].date_expiration;
+                    this.domaine.status           = res.data[0].status;
                 })
             },  
             updateDomaine(){
@@ -403,6 +419,7 @@
 
         created(){
             this.getDomaines()
+            this.getServers()
         },
     }
 </script>

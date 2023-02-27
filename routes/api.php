@@ -46,6 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('permissions',PermmissionController::class);
     Route::get('getAllPermissions',[PermmissionController::class,'permissionList']);
     Route::apiResource('servers',ServerController::class);
+    Route::get('getAllServers',[ServerController::class,'serverList']);
     //Domaines
     Route::apiResource('domaines',DomaineController::class);
 

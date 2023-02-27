@@ -38,12 +38,13 @@ class DomaineExpiration extends Command
     {   
         $date_actuelle = Carbon::now()->format('Y-m-d');
 
-        $domaines = DB::SELECT("SELECT id,nom_domaine,hebergeur,registre,date_expiration,
+        $domaines = DB::SELECT("SELECT domaines.id,nom_domaine,servers.name,registre,date_expiration,
                     CASE WHEN DATEDIFF(domaines.date_expiration,'$date_actuelle') <= 0 THEN 'expiré(e)'
-                         ELSE DATEDIFF(domaines.date_expiration,'$date_actuelle')
+                        ELSE DATEDIFF(domaines.date_expiration,'$date_actuelle')
                     END AS thediff
-                    FROM domaines 
-                    WHERE DATEDIFF(domaines.date_expiration,'$date_actuelle') <=7");
+                    FROM domaines,servers
+                    WHERE DATEDIFF(domaines.date_expiration,'$date_actuelle') <=7 
+                    AND domaines.server_id = servers.id");
 
         Mail::to('Olamide@badoshness.lekki')->send(new DomaineExpire($domaines));
 

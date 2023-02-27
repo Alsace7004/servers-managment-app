@@ -34,7 +34,14 @@ class ServerController extends Controller
             'servers'=>$servers->paginate($length)
         ]);
     }
-
+    public function serverList(){
+        $servers = Server::query()->select('id','name')->orderBy('id','desc')->get();
+        
+        return response()->json([
+            'status'=>true,
+            'servers'=>$servers
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      *
