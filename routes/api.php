@@ -12,7 +12,7 @@ use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\PermmissionController;
 use App\Http\Controllers\DepartementController;
-
+use App\Http\Controllers\TypeStaffController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,7 +53,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('domaines',DomaineController::class);
     //Departements
     Route::apiResource('departements',DepartementController::class);
-
+    //Type de Staff
+    Route::apiResource('typeStaff',TypeStaffController::class);
     Route::get('/get-permissions',[PermmissionController::class,'getAuthUserPermissionAndRole']);
 });
 

@@ -106,13 +106,16 @@
             #Staff
             #Role
             #Utilisateur
+            (Done)
         -----Placer le logo de EBA dans la SIDEBAR
         -----Nouveau Menu Departement:
             Action:Création,Liste,Modification,Suppretion
             Creation : Name, created_at,superviseur (c'est un utilisateur)
+            (Done)
         -----Type de Staff :
             Action:Creation,Liste,Modification,Suppretion
             Creation:Name,created_at
+            (.....)
         -----Nouveau Menu Staff :
             Action:Creation,Liste,Modification,Retrait
             Creation:Nom,Prenom,adresse,email,departement,type de staff,photo
