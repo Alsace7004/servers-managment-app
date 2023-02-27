@@ -35,6 +35,17 @@ class TypeStaffController extends Controller
 
     }
 
+    public function typeStaffList(){
+        $typeStaff = TypeStaff::query()->select('id','type_staff')
+                                ->where('is_deleted',false)
+                                ->orderBy('id','desc')->get();
+        
+        return response()->json([
+            'status'=>true,
+            'typeStaff'=>$typeStaff
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

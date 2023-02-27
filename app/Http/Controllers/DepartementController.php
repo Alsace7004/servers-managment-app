@@ -35,6 +35,17 @@ class DepartementController extends Controller
         ]);
     }
 
+    public function departementList(){
+        $departements = Departement::query()->select('id','nom_departement')
+                                    ->where('is_deleted',false)
+                                    ->orderBy('id','desc')->get();
+        
+        return response()->json([
+            'status'=>true,
+            'departements'=>$departements
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

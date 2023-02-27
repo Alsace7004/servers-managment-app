@@ -14,7 +14,7 @@
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Type de Staff !!!"/>
                             
-                            <div v-if="!domaines.length || !$can('domaine-list')" class="data_box">
+                            <div v-if="!TypeStaffs.length || !$can('domaine-list')" class="data_box">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                         Chargement des type de staff en cours...
                                         <loader></loader>
@@ -24,7 +24,7 @@
                             <div v-else class="data_box">
                                 <!-- Create Domaine Btn Begin-->
                                 <div v-if="$is('Admin') || $can('domaine-create')">
-                                    <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Domaine</button>
+                                    <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter type de staff</button>
                                 </div>
                                 <!-- Create Domaine Btn end-->
                                 <div class="data_box_header">
@@ -40,21 +40,13 @@
                                 <div class="data_box_content">
                                     <v-table :columns="columns">
                                         <tbody>
-                                            <tr v-for="(item,key) in domaines" :key="key">
+                                            <tr v-for="(item,key) in TypeStaffs" :key="key">
                                                 <td>{{item.id}}</td>
-                                                <td>{{item.nom_domaine}}</td>
-                                                <td>{{item.name}}</td>
-                                                <td>{{item.registre}}</td>
+                                                <td>{{item.type_staff}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
-                                                <td>{{convert(item.date_expiration)}}</td>
                                                 <td>
-                                                    <p v-if="item.status === 0" class="badge_white">En cours</p>
-                                                    <p v-if="item.status === 1" class="badge_red">Expiré(e)</p>
-                                                </td>
-                                                <td>
-                                                    <button class="view_btn" @click="viewDomaine(item.id)"><i class="fas fa-eye"></i></button>
-                                                    <button class="edit_btn" v-if="$can('domaine-edit')"  @click="editDomaine(item.id)"><i class="fas fa-edit"></i></button>
-                                                    <button class="delete_btn" v-if="$can('domaine-delete')" @click="deleteDomaine(item.id)"><i class="fas fa-trash"></i></button>
+                                                    <button class="edit_btn" v-if="$can('domaine-edit')"  @click="editTypeStaff(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" v-if="$can('domaine-delete')" @click="deleteTypeStaff(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -83,35 +75,19 @@
                         <!-- Adding Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="create_domaine">
                             <template v-slot:header>
-                                <h4>Ajouter un domaine</h4>
+                                <h4>Ajouter un type de staff</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
                                 <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="domaine.nom_domaine" placeholder="Nom de domaine...">
+                                    <input type="text" class="input_form_item" v-model="typestaff.type_staff" placeholder="Nom du type de staff...">
                                 </div>
-                                <span v-if="errors.nom_domaine" class="error_txt">{{errors.nom_domaine[0]}}</span>
-                                <div class="input_form mb_3">
-                                    <select name="" id="" v-model="domaine.server_id" class="input_form_item">
-                                        <option value="">Choisir le serveur</option>
-                                        <option v-for="server in servers" :key="server.id" :value="server.id">{{server.name}}</option>
-                                    </select>
-                                </div>
-                                <span v-if="errors.server_id" class="error_txt">{{errors.server_id[0]}}</span>
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="domaine.registre" placeholder="Registre...">
-                                </div>
-                                <span v-if="errors.registre" class="error_txt">{{errors.registre[0]}}</span>
-                                <div class="input_form mb_3">
-                                    <input type="date" class="input_form_item" v-model="domaine.date_expiration" placeholder="Date Expiration...">
-                                </div>
-                                <span v-if="errors.date_expiration" class="error_txt">{{errors.date_expiration[0]}}</span>
-                                
+                                <span v-if="errors.type_staff" class="error_txt">{{errors.type_staff[0]}}</span>
                             </template>
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveDomaine">Sauvegarder</button>
+                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveTypeStaff">Sauvegarder</button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -119,29 +95,14 @@
                         <!-- Editing Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="edit_domaine">
                             <template v-slot:header>
-                                <h4>Editer un domaine :</h4>
+                                <h4>Editer le type de staff :</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
                                 <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="domaine.nom_domaine" placeholder="Nom de domaine...">
+                                    <input type="text" class="input_form_item" v-model="typestaff.type_staff" placeholder="Nom de domaine...">
                                 </div>
-                                <span v-if="errors.nom_domaine" class="error_txt">{{errors.nom_domaine[0]}}</span>
-                                <div class="input_form mb_3">
-                                    <select name="" id="" v-model="domaine.server_id" class="input_form_item">
-                                        <option value="">Choisir le serveur</option>
-                                        <option v-for="server in servers" :key="server.id" :value="server.id">{{server.name}}</option>
-                                    </select>
-                                </div>
-                                <span v-if="errors.server_id" class="error_txt">{{errors.server_id[0]}}</span>
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="domaine.registre" placeholder="Registre...">
-                                </div>
-                                <span v-if="errors.registre" class="error_txt">{{errors.registre[0]}}</span>
-                                <div class="input_form mb_3">
-                                    <input type="date" class="input_form_item" v-model="domaine.date_expiration" placeholder="Date Expiration...">
-                                </div>
-                                <span v-if="errors.date_expiration" class="error_txt">{{errors.date_expiration[0]}}</span>
+                                <span v-if="errors.type_staff" class="error_txt">{{errors.type_staff[0]}}</span>
                             </template>
                             <template v-slot:footer>
                                 <div>
@@ -151,45 +112,6 @@
                             </template>
                         </proper-modal>
                         <!-- Editing Modal End -->
-                        <!-- View Modal Begin -->
-                        <proper-modal v-show="isModalVisible" modalName="view_domaine">
-                            <template v-slot:header>
-                                <h4>Les details du domaine:</h4>
-                                <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
-                            </template>
-                            <template v-slot:body>
-                                <label for=""><strong>Description du Serveur :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{domaine.nom_domaine}}</p>
-                                </div>
-                                <label for=""><strong>Hebergeur :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{domaine.server_id}}</p>
-                                </div>
-                                <label for=""><strong>Registre :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{domaine.registre}}</p>
-                                </div>
-                                <label for=""><strong>Date Expiration :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{convert(domaine.date_expiration)}}</p>
-                                </div>
-                                <label for=""><strong>Status :</strong></label>
-                                <div class="mb_3">
-                                    <tr>
-                                        <p v-if="domaine.status === 0" class="badge_white_view">En cours</p>
-                                        <p v-if="domaine.status === 1" class="badge_red_view">Expiré(e)</p>
-                                    </tr>
-                                    
-                                </div>
-                            </template>
-                            <template v-slot:footer>
-                                <div>
-                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                </div>
-                            </template>
-                        </proper-modal>
-                        <!-- View Modal End -->
     
 </template>
 
@@ -202,7 +124,7 @@
     import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
     export default {
-        name:'domaines',
+        name:'TypeStaffs',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,
@@ -210,27 +132,20 @@
         data(){
             let columns =[
                 {label:'~#',            name:''},
-                {label:'Nom de domaine',name:''},
-                {label:'Hebergeur',     name:''},
-                {label:'Registre',      name:''},
+                {label:'Type Staff',    name:''},
                 {label:'Ajouté Le',     name:''},
-                {label:'Date Expiration',name:''},
-                {label:'Status',       name:''},
                 {label:'Actions',       name:''},
             ];
             return{
                 
                 perPage : ['5','10','20','30'],
                 columns: columns,
-                domaines:[],
+                TypeStaffs:[],
                 servers:[],
                 errors:[],
                 links:[],
-                domaine:{
-                    nom_domaine:'',
-                    server_id:'',
-                    registre:'',
-                    date_expiration:'',
+                typestaff:{
+                    type_staff:'',
                 },
                 isModalVisible:false,
                 tData:{
@@ -251,54 +166,40 @@
         methods:{
             showModal(){
                 this.errors = []
-                this.domaine={
-                    nom_domaine:'',
-                    server_id:'',
-                    registre:'',
-                    date_expiration:'',
-                    status:'',
+                this.typestaff={
+                    type_staff:'',
                 }
                 $("#create_domaine").modal("show")
             },
-            getDomaines(pageGet){
+            getTypeStaff(pageGet){
                 this.tData.page = pageGet
-                axiosClient.get("api/domaines",{params:this.tData}).then((res)=>{
-                    let content = res.data.domaines
-                    //console.log("Valeur de res dans getDomaines:",res)
-                    this.domaines = content.data
+                axiosClient.get("api/typeStaff",{params:this.tData}).then((res)=>{
+                    let content = res.data.typeStaff
+                    //console.log("Valeur de content dans getTypeStaff:",content)
+                    this.TypeStaffs = content.data
                     this.configPagination(content)
-                    //console.log("Valeur de res.data dans getDomaines:",res.data)
                 }).catch((err)=>{
-                    console.log("Valeur de err dans getDomaines:",err.response)
+                    console.log("Valeur de err dans getTypeStaff:",err.response)
                 })
             },
-            //getAllRoles
-            getServers (){
-                    axiosClient.get("api/getAllServers").then((res)=>{
-                        let content = res.data.servers;
-                        this.servers = content;
-                    }).catch((err)=>{
-                        console.log("Valeur de err dans getservers dans Domaine:",err.response)
-                    })
-            },
-            saveDomaine(){
+            saveTypeStaff(){
                 this.errors = []
                 let send_server = document.querySelector("#send_server")
                 send_server.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
-                axiosClient.post("api/domaines",this.domaine).then((res)=>{
+                axiosClient.post("api/typeStaff",this.typestaff).then((res)=>{
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
-                    //console.log("Valeur de res dans saveDomaine:",res)
+                    //console.log("Valeur de res dans saveTypeStaff:",res)
                     if(res.data.status){
                         $('#create_domaine').modal('hide'); 
-                        this.getDomaines()
-                        Swal.fire('Créer!','Nouveau Domaine Ajouter avec success.','success') ;
+                        this.getTypeStaff()
+                        Swal.fire('Créer!','Nouveau Type de Staff Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
-                    //console.log("Valeur de err dans saveDomaine:",err.response)
+                    //console.log("Valeur de err dans saveTypeStaff:",err.response)
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors
                     }else{
@@ -308,10 +209,10 @@
                 })
             },
             getPerPage(){
-                this.getDomaines()
+                this.getTypeStaff()
             },
             getSearch(){
-                this.getDomaines()
+                this.getTypeStaff()
             },
             configPagination(data){
                 this.pagination.from    =data.from,
@@ -322,7 +223,7 @@
             navigation(nav){
                 const url = nav.url.split("=");
                 const page = url[1];
-                this.getDomaines(page)
+                this.getTypeStaff(page)
             },
             getClass(item){
                 if(item.url === null) return "page-item disabled no-cursor"
@@ -332,49 +233,34 @@
                     }else return "page-item";
                 }
             },
-            editDomaine(id){
+            editTypeStaff(id){
                 this.errors = [];
-                axiosClient.get(`api/domaines/${id}`).then((res)=>{
+                axiosClient.get(`api/typeStaff/${id}`).then((res)=>{
                     $("#edit_domaine").modal("show")
                     //console.log('valeur de res dans edit server:',res)
-                    this.edit_id                  = res.data[0].id;
-                    this.domaine.nom_domaine      = res.data[0].nom_domaine;
-                    this.domaine.server_id        = res.data[0].server_id;
-                    this.domaine.registre         = res.data[0].registre;
-                    this.domaine.date_expiration  = res.data[0].date_expiration;
+                    this.edit_id                  = res.data.id;
+                    this.typestaff.type_staff     = res.data.type_staff;
                     this.is_Editing               = true;
                 })
             },
-            viewDomaine(id){
-                this.errors = [];
-                axiosClient.get(`api/domaines/${id}`).then((res)=>{
-                    $("#view_domaine").modal("show")
-                    //console.log('valeur de res dans view server:',res)
-                    this.domaine.nom_domaine      = res.data[0].nom_domaine;
-                    this.domaine.server_id        = res.data[0].name;
-                    this.domaine.registre         = res.data[0].registre;
-                    this.domaine.date_expiration  = res.data[0].date_expiration;
-                    this.domaine.status           = res.data[0].status;
-                })
-            },  
             updateDomaine(){
                     let update_server = document.querySelector("#update_server")
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
-                    axiosClient.put(`api/domaines/${this.edit_id}`,this.domaine).then((res)=>{
+                    axiosClient.put(`api/typeStaff/${this.edit_id}`,this.typestaff).then((res)=>{
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
                         if(res.data.status){
                             $('#edit_domaine').modal('hide');
-                            Swal.fire('Mise à jour!','Domaine mise à jour avec success.','success')    
-                            this.getDomaines();
+                            Swal.fire('Mise à jour!','Type de Staff mise à jour avec success.','success')    
+                            this.getTypeStaff();
                             this.edit_id = "";
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
-                        console.log("Valeur de err dans updateDomaine:",err.response)
+                        //console.log("Valeur de err dans updateDomaine:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors
                         }else{
@@ -383,7 +269,7 @@
                         }
                     })
             },
-            deleteDomaine(id){
+            deleteTypeStaff(id){
                     Swal.fire({
                     title: 'Etes-vous sûr?',
                     text: "Vous ne pourrez pas annuler cette action !!!",
@@ -395,16 +281,16 @@
                     confirmButtonText: 'Oui, supprimez-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                                axiosClient.delete(`api/domaines/${id}`).then((res)=>{
+                                axiosClient.delete(`api/typeStaff/${id}`).then((res)=>{
                                     if(res.data.status){
-                                        Swal.fire('Supprimé!','Le Domaine a été supprimé.','success') 
-                                        this.getDomaines()
+                                        Swal.fire('Supprimé!','Le Type de Staff a été supprimé.','success') 
+                                        this.getTypeStaff()
                                     }
                                 }).catch((err)=>{
                                     Swal.fire('Erreur !!!',"Une erreur s'est produite !!!",'error')
                                 })
                         }else{
-                            Swal.fire('Conserver !!!',"Le Domaine est toujours disponible !!!",'success')
+                            Swal.fire('Conserver !!!',"Le Type de Staff est toujours disponible !!!",'success')
                         }
                     })
             },
@@ -412,8 +298,7 @@
 
 
         created(){
-            this.getDomaines()
-            this.getServers()
+            this.getTypeStaff()
         },
     }
 </script>
