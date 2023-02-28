@@ -84,7 +84,7 @@
 
                                 <div class="col-md-12">
                                     <label for=""><strong>Choisir une permission :</strong></label>
-                                    <div class="row col-md-6" style="">
+                                    <div class="row col-md-6" style="columns: 4 auto;">
                                         <div class="" style="" v-for="permi in permissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.name }}</label>
@@ -116,27 +116,10 @@
                                 <!-- update part begin-->
                                 <div class="col-md-12">
                                     <label for=""><strong>Choisir une permission :</strong></label>
-                                    <div class="row col-md-6" style="">
-
+                                    <div class="row col-md-6" style="columns: 4 auto;">
                                         <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
-                                                <!-- <div v-for="permi2 in role.permission" :key="permi2.id">
-                                                    <span v-if="permi.id === permi2.permission_id ?'hello' :''">*</span>
-                                                </div> -->
-                                                <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.name }}
-
-                                                <!-- <input  type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
-                                                <label style="margin-left:0.5rem" >{{ permi.name }}</label> -->
-
-                                           
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.name }}
                                         </div>
-
-                                        <!-- <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
-                                            <div v-for="permi2 in role.permission" :key="permi2.permission_id">
-                                                <input v-if="permi2.permission_id === permi.id ? 'checked' : ''"  type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
-                                                <label style="margin-left:0.5rem" >{{ permi.name }}</label>
-                                            </div>
-                                        </div> -->
-
                                     </div>
                                 </div>
                                 <span v-if="errors.permission" class="error_txt">{{errors.permission[0]}}</span>
@@ -159,7 +142,7 @@
                             <template v-slot:body>
                                 <label for="">Nom du role : <strong>{{role.name}}</strong></label>
                                 <p>Liste des permissions du role : </p>
-                                <ul style="list-style-type:none">
+                                <ul style="list-style-type:none;columns: 4 auto;">
                                     <li style="color:#dd3333" v-if="!rolePermissions.length">Pas de permission disponible...</li>
                                     <li v-for="(item,key) in rolePermissions" :key="key"><strong>{{item.name}}</strong></li>
                                 </ul>
