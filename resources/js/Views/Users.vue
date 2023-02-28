@@ -149,10 +149,10 @@
                                 <p><strong>Nom :</strong> {{user.name}} </p>
                                 <p><strong>Email :</strong>{{user.email}}</p>
                                 <p><strong>Role :</strong>{{user_role_name}} </p>
-                                <ul style="list-style-type:none">
+                                <ul style="list-style-type:none;columns: 3 auto;">
                                     <strong>Permissions :</strong> 
                                     <li style="color:#dd3333" v-if="!user_permissions.length">Pas de permission disponible...</li>
-                                    <li v-for="(item,key) in user_permissions" :key="key">{{item.name}}</li>
+                                    <li v-for="(item,key) in user_permissions" :key="key">{{item.slug}}</li>
                                 </ul>
                             </template>
                             <template v-slot:footer>
@@ -323,7 +323,7 @@
                 errors.value = [];
                 axiosClient.get(`api/users/${id}`).then((res)=>{
                     $("#edit_user").modal("show")
-                    console.log('valeur de res dans edit user:',res)
+                    //console.log('valeur de res dans edit user:',res)
                     edit_id.value = res.data.id;
                         user.name  = res.data.name;
                         user.email  = res.data.email;

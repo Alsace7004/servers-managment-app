@@ -84,10 +84,10 @@
 
                                 <div class="col-md-12">
                                     <label for=""><strong>Choisir une permission :</strong></label>
-                                    <div class="row col-md-6" style="columns: 4 auto;">
+                                    <div class="row col-md-6" style="columns: 3 auto;">
                                         <div class="" style="" v-for="permi in permissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
-                                            <label style="margin-left:0.5rem" >{{ permi.name }}</label>
+                                            <label style="margin-left:0.5rem" >{{ permi.slug }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -116,9 +116,9 @@
                                 <!-- update part begin-->
                                 <div class="col-md-12">
                                     <label for=""><strong>Choisir une permission :</strong></label>
-                                    <div class="row col-md-6" style="columns: 4 auto;">
+                                    <div class="row col-md-6" style="columns: 3 auto;">
                                         <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
-                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.name }}
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }}
                                         </div>
                                     </div>
                                 </div>
@@ -142,9 +142,9 @@
                             <template v-slot:body>
                                 <label for="">Nom du role : <strong>{{role.name}}</strong></label>
                                 <p>Liste des permissions du role : </p>
-                                <ul style="list-style-type:none;columns: 4 auto;">
+                                <ul style="list-style-type:none;columns: 3 auto;">
                                     <li style="color:#dd3333" v-if="!rolePermissions.length">Pas de permission disponible...</li>
-                                    <li v-for="(item,key) in rolePermissions" :key="key"><strong>{{item.name}}</strong></li>
+                                    <li v-for="(item,key) in rolePermissions" :key="key"><strong>{{item.slug}}</strong></li>
                                 </ul>
                             </template>
                             <template v-slot:footer>
@@ -386,7 +386,6 @@
                             }
                         }
                     }
-                    //console.log("Valeur de ret:",ret)
                     return ret
                 }
         },

@@ -1,7 +1,7 @@
 <template>
             <div class="sidebar">
                 <div class="sidebar_header">
-                    SERVERS
+                    <img :src="'../admin/img/eba.png'" alt="SERVERS" srcset="">
                 </div>
                 <ul>
                     <li>

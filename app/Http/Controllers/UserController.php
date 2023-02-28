@@ -105,7 +105,7 @@ class UserController extends Controller
         //get that role Permissions
         $rolePermissions  = DB::SELECT("SELECT
             role_has_permissions.permission_id,
-            permissions.name
+            permissions.name,permissions.slug
             FROM role_has_permissions,roles,permissions    
             WHERE roles.id = role_has_permissions.role_id 
             AND permissions.id = role_has_permissions.permission_id
