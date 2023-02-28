@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -131,9 +132,11 @@ class UserController extends Controller
         }
         return ["status"=>false];
     }
-    public function destroy(User $user)
+    public function destroy(Request $request,User $user)
     {
         //
+        
+
         if($user->delete()){
             return ['status'=>true,];
         }

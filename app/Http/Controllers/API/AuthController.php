@@ -28,6 +28,7 @@ class AuthController extends Controller
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
         if(auth()->attempt($data)){
+            $request->session()->regenerate();
             return response()->json([
                 'status'=>true,
                 'user_role'=>auth()->user()->roles->pluck('name'),
@@ -53,11 +54,17 @@ class AuthController extends Controller
         //dd(Auth::user());
         //dd($request->user()->tokens()->delete());
         //dd(auth()->user()->tokens()->delete());
+        Auth::logout();
+ 
+        $request->session()->invalidate();
+     
+        $request->session()->regenerateToken();
+        return ['status'=>true];
 
-        if($request->user()->tokens()->delete()){
+        /* if($request->user()->tokens()->delete()){
             return ['status'=>true];
         }
-        return ['status'=>false];
+        return ['status'=>false]; */
     }
 
 }

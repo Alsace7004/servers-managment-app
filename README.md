@@ -8,7 +8,7 @@
 </p>
 
 ## A propos de cette application
-
+    Les fonctionnalitées :
 
 - Gestion des utilisateurs.
 - Gestion des roles.
@@ -17,8 +17,10 @@
 - Gestion des domaines.
 - Gestion de de Task Schedule.
 - Gestion d'envoi de mail automatisé.
-
-
+- Gestion des departements.
+- Gestion des type de staff.
+- Gestion du staff.
+- Gestion de preview+upload d'image.
 ### Technologies Utilisées
 
 - **[LARAVEL](https://laravel.com)**

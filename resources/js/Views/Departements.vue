@@ -219,7 +219,7 @@
                 this.tData.page = pageGet
                 axiosClient.get("api/departements",{params:this.tData}).then((res)=>{
                     let content = res.data.departements
-                    console.log("Valeur de res dans getDepartements:",res)
+                    //console.log("Valeur de res dans getDepartements:",res)
                     //console.log("Valeur de res dans content.data:",content.data)
                     this.departements = content.data
                     this.configPagination(content)

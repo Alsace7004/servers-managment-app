@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class StaffController extends Controller
@@ -51,7 +52,7 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         //
-        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id']);
+        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo']);
         $validator = Validator::make($data,[
             'nom'               =>'required|string|min:2|max:100',
             'prenom'            =>'required|string|min:2|max:100',
@@ -59,6 +60,7 @@ class StaffController extends Controller
             'adresse'           =>'required|string|min:2|max:100',
             'type_staff_id'     =>'required',
             'departement_id'    =>'required',
+            'photo'             =>'required|file|mimes:jpeg,png,jpg,svg|max:1024',
         ],[
             'nom.required'      =>'Veuillez remplir ce champ',
             'nom.min'           =>'Trop court',
@@ -73,12 +75,26 @@ class StaffController extends Controller
             'adresse.required'  =>'Veuillez remplir ce champ',
             'adresse.min'       =>'Trop court',
             'adresse.max'       =>'Trop long',
-            'type_staff_id.required'=>'Veuillez remplir ce champ',
-            'departement_id.required'=>'Veuillez remplir ce champ',
+            'type_staff_id.required'    =>'Veuillez remplir ce champ',
+            'departement_id.required'   =>'Veuillez remplir ce champ',
+            'photo.required'            =>'Veuillez choisir une image',
+            'photo.file'                =>'Veuillez choisir une image',
+            'photo.mimes'               =>'Non autorisé',
+            'photo.max'                 =>'Image trop lourde',
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
+        if($image=($request->file('photo'))){
+            $destinationPath = public_path('img_path/Staff');
+            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
+            $image->move($destinationPath,$staffImage);
+            $data['photo']=$staffImage;
+        }
+        if(Staff::create($data)){
+            return ['status'=>true];
+        }
+        return ['status'=>false];
     }
 
     /**
@@ -103,6 +119,55 @@ class StaffController extends Controller
     public function update(Request $request, Staff $staff)
     {
         //
+        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo']);
+        $validator = Validator::make($data,[
+            'nom'               =>'required|string|min:2|max:100',
+            'prenom'            =>'required|string|min:2|max:100',
+            'email'             =>'required|email|min:2|max:100',
+            'adresse'           =>'required|string|min:2|max:100',
+            'type_staff_id'     =>'required',
+            'departement_id'    =>'required',
+            //'photo'             =>'required|file|mimes:jpeg,png,jpg,svg|max:1024',
+        ],[
+            'nom.required'      =>'Veuillez remplir ce champ',
+            'nom.min'           =>'Trop court',
+            'nom.max'           =>'Trop long',
+            'prenom.required'   =>'Veuillez remplir ce champ',
+            'prenom.min'        =>'Trop court',
+            'prenom.max'        =>'Trop long',
+            'email.required'    =>'Veuillez remplir ce champ',
+            'email.email'       =>'Veuillez entrer une adresse email valid',
+            'email.min'         =>'Trop court',
+            'email.max'         =>'Trop long',
+            'adresse.required'  =>'Veuillez remplir ce champ',
+            'adresse.min'       =>'Trop court',
+            'adresse.max'       =>'Trop long',
+            'type_staff_id.required'    =>'Veuillez remplir ce champ',
+            'departement_id.required'   =>'Veuillez remplir ce champ',
+            'photo.required'            =>'Veuillez choisir une image',
+            'photo.file'                =>'Veuillez choisir une image',
+            'photo.mimes'               =>'Non autorisé',
+            'photo.max'                 =>'Image trop lourde',
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
+        //delete the existing file in public_path and add new one
+        $image_path = "img_path/Staff/".$staff->photo;  // Value is not URL but directory file path
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+        //
+        if($image=($request->file('photo'))){
+            $destinationPath = public_path('img_path/Staff');
+            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
+            $image->move($destinationPath,$staffImage);
+            $data['photo']=$staffImage;
+        }
+        if($staff->update($data)){
+            return ['status'=>true];
+        }
+        return ['status'=>false];
     }
 
     /**

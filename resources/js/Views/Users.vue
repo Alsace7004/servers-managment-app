@@ -245,7 +245,7 @@
     /*************************************************/
     const getUsers = (pageGet)=>{
         tData.page = pageGet
-        axiosClient.get("api/users",{params:tData}).then((res)=>{
+        axios.get("api/users",{params:tData}).then((res)=>{
             let content = res.data.users;
             users.value = content.data;
             //console.log("Valeur de res dans getUsers:",res)

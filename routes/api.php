@@ -33,8 +33,8 @@ use App\Http\Controllers\TypeStaffController;
 
 
 Route::post("login",[AuthController::class,'login'])->name('login');
-
-Route::middleware('auth:sanctum')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('web')->group(function () {
     //logout
     Route::post("logout",[AuthController::class,'logout'])->name('logout');
     Route::get('user', [UserController::class,'getAuthUserInfo']);

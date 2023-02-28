@@ -30,46 +30,45 @@
     import Sidebar from "./components/Sidebar.vue"
     import Navbar from "./components/Navbar.vue"
     
-    //import { onMounted,ref } from "vue"
-    //let authenticated = ref(false)
-    /* onMounted(()=>{
-        let token = localStorage.getItem("jwt");
-        if(token != null){
-            authenticated.value = true
-            console.log("Valeur de authenticated.value if :",authenticated.value)
-        }else{
-            authenticated.value = false
-            console.log("Valeur de authenticated.value else:",authenticated.value)
-        }
-    }) */
+    
     export default{
         components:{
             Navbar,Sidebar
         },
         data(){
             return{
-                authenticated:false,
-                authUser: window.authUser
+                //
             }
         },
         methods:{
-
+            //
         },
         created(){
-            console.log("valeur de this.authUser:",this.authUser);
+            //
+            /* axios.interceptors.response.use(
+                    response => response.data,
+                    error => {
+                        if (error.response && 419 === error.response.status) {
+                            window.location.reload()
+                        }
 
-            let token = localStorage.getItem("jwt");
-            console.log("valeur de token:",token)
-            if(token != null){
-                this.authenticated = true
-                console.log("Valeur de authenticated.value if :",this.authenticated)
-            }else{
-                this.authenticated = false
-                console.log("Valeur de authenticated.value else:",this.authenticated)
-            }
+                        return Promise.reject(error)
+                    }
+                ) */
+                /*authClient.interceptors.response.use(
+                (response) => {
+                    return response;
+                },
+                function(error) {
+                    if (error.response.status === 401 || error.response.status === 419) {
+                    store.dispatch("auth/logout");
+                    }
+                    return Promise.reject(error.response);
+                }
+                );  */
         },
         mounted(){
-
+            //
         },
 
         /* 

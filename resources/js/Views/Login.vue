@@ -39,34 +39,39 @@ export default {
             let login_btn = document.querySelector('.login_btn')
             login_btn.innerHTML = "Connexion en cours..."
             this.loading =  true
-            axios.post('api/login',this.user).then((res)=>{
-                localStorage.clear(); 
-                login_btn.innerHTML ="Se connecter"
-                this.loading =  false
-                console.log("Valeur de res dans loginUser:",res)
+            axios.get('/sanctum/csrf-cookie').then(response => {
+                console.log("Valeur de response dans sanctum/csrf-cookie:",response)
+                // Login...
+                    axios.post('api/login',this.user).then((res)=>{
+                        localStorage.clear(); 
+                        login_btn.innerHTML ="Se connecter"
+                        this.loading =  false
+                        console.log("Valeur de res dans loginUser:",res)
 
-                if(res.data.status){
-                    Swal.fire('Success!','Connexion reussie !!!.','success');
-                    //this.$router.push("/users");
-                    userStore.setUserDetails(res)
-                    this.$router.replace("/");
-                    //window.location.href("/users");
-                }
-                //17|Qq5qDR6r3GgVF0iSgLhVpOV4C7rgYe37qTbI1PVS
-            }).catch((err)=>{
-                login_btn.innerHTML ="Se connecter"
-                this.loading =  false
-                console.log("Valeur de err dans loginUser:",err.response)
-                
-                if(err.response.status === 422){
-                    this.errors = err.response.data.errors
-                }else if(err.response.status === 401){
-                      Swal.fire('Erreur!',`${err.response.data.message}`,'error') ;
-                }else{
-                    //console.log("erreur: probleme de connexion")
-                    Swal.fire('Erreur!','Probleme de connexion.','error') ;
-                }
-            })
+                        if(res.data.status){
+                            Swal.fire('Success!','Connexion reussie !!!.','success');
+                            //this.$router.push("/users");
+                            userStore.setUserDetails(res)
+                            this.$router.replace("/");
+                            //window.location.href("/users");
+                        }
+                        //17|Qq5qDR6r3GgVF0iSgLhVpOV4C7rgYe37qTbI1PVS
+                    }).catch((err)=>{
+                        login_btn.innerHTML ="Se connecter"
+                        this.loading =  false
+                        console.log("Valeur de err dans loginUser:",err.response)
+                        
+                        if(err.response.status === 422){
+                            this.errors = err.response.data.errors
+                        }else if(err.response.status === 401){
+                            Swal.fire('Erreur!',`${err.response.data.message}`,'error') ;
+                        }else{
+                            //console.log("erreur: probleme de connexion")
+                            Swal.fire('Erreur!','Probleme de connexion.','error') ;
+                        }
+                    })
+            });
+            
         },
     },
 }

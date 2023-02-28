@@ -1,12 +1,18 @@
 import axios from "axios";
 import router from "../router/index"
 import { useAuthStore } from "../store";
-const axiosClient = axios.create({});
+axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
+const axiosClient = axios.create({
+    baseURL: `http://localhost:8000`,
+    withCredentials: true,
+});
 
 //request
 axiosClient.interceptors.request.use(config=>{
     const {token} = useAuthStore()
+   
     config.headers.Authorization = `Bearer ${token}`
+    
     return config;
 })
 //end

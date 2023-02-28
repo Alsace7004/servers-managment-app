@@ -85,44 +85,60 @@
                             </template>
                             <template v-slot:body>
                                 <!--  -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="staff.nom" placeholder="Nom...">
+                                <div style="border:1px solid red;display:flex">
+                                    <!-- left -->
+                                    <div style="border:1px solid green;flex:1;">
+                                        <div style="border:1px solid #000;height:100px;width:100px;margin:30px auto;border-radius:5px">
+                                            <label class="label">
+                                                <input type="file" @change="updateImage" style="height:100px;width:100px;" name="" id="">
+                                                <span>Choisir une image </span>
+                                            </label>
+                                            <img style="height:100px;width:100px;;margin-top:1rem" v-if="staffImg.img" :src="staffImg.img" />
+                                            <span v-if="errors.photo" class="error_txt">{{errors.photo[0]}}</span>
+                                        </div>
+                                    </div>
+                                    <!-- right -->
+                                    <div style="border:1px solid yellow;flex:1">
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <input type="text" class="input_form_item" v-model="staff.nom" placeholder="Nom...">
+                                        </div>
+                                        <span v-if="errors.nom" class="error_txt">{{errors.nom[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <input type="text" class="input_form_item" v-model="staff.prenom" placeholder="Prenom...">
+                                        </div>
+                                        <span v-if="errors.prenom" class="error_txt">{{errors.prenom[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <input type="email" class="input_form_item" v-model="staff.email" placeholder="Email...">
+                                        </div>
+                                        <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <input type="text" class="input_form_item" v-model="staff.adresse" placeholder="Adresse...">
+                                        </div>
+                                        <span v-if="errors.adresse" class="error_txt">{{errors.adresse[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <select name="" id="" v-model="staff.departement_id" class="input_form_item">
+                                                <option value="">Choisir le Departement</option>
+                                                <option v-for="item in departements" :key="item.id" :value="item.id">{{item.nom_departement}}</option>
+                                            </select>
+                                        </div>
+                                        <span v-if="errors.departement_id" class="error_txt">{{errors.departement_id[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <select name="" id="" v-model="staff.type_staff_id" class="input_form_item">
+                                                <option value="">Choisir le Type de staff</option>
+                                                <option v-for="item in typeStaffs" :key="item.id" :value="item.id">{{item.type_staff}}</option>
+                                            </select>
+                                        </div>
+                                        <span v-if="errors.type_staff_id" class="error_txt">{{errors.type_staff_id[0]}}</span>
+                                        <!--  -->
+                                    </div>
                                 </div>
-                                <span v-if="errors.nom" class="error_txt">{{errors.nom[0]}}</span>
                                 <!--  -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="staff.prenom" placeholder="Prenom...">
-                                </div>
-                                <span v-if="errors.prenom" class="error_txt">{{errors.prenom[0]}}</span>
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <input type="email" class="input_form_item" v-model="staff.email" placeholder="Email...">
-                                </div>
-                                <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="staff.adresse" placeholder="Adresse...">
-                                </div>
-                                <span v-if="errors.adresse" class="error_txt">{{errors.adresse[0]}}</span>
-                                <!--  -->
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <select name="" id="" v-model="staff.departement_id" class="input_form_item">
-                                        <option value="">Choisir le Departement</option>
-                                        <option v-for="item in departements" :key="item.id" :value="item.id">{{item.nom_departement}}</option>
-                                    </select>
-                                </div>
-                                <span v-if="errors.departement_id" class="error_txt">{{errors.departement_id[0]}}</span>
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <select name="" id="" v-model="staff.type_staff_id" class="input_form_item">
-                                        <option value="">Choisir le Type de staff</option>
-                                        <option v-for="item in typeStaffs" :key="item.id" :value="item.id">{{item.type_staff}}</option>
-                                    </select>
-                                </div>
-                                <span v-if="errors.type_staff_id" class="error_txt">{{errors.type_staff_id[0]}}</span>
-                                <!--  -->
-                                
                             </template>
                             <template v-slot:footer>
                                 <div>
@@ -135,47 +151,66 @@
                         <!-- Editing Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="edit_domaine">
                             <template v-slot:header>
-                                <h4>Editer un domaine :</h4>
+                                <h4>Editer le staff :</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
                                 <!--  -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="staff.nom" placeholder="Nom...">
+                                <div style="border:1px solid red;display:flex">
+                                    <!-- left -->
+                                    <div style="border:1px solid green;flex:1;">
+                                        <div style="border:1px solid #000;height:100px;width:100px;margin:30px auto;border-radius:5px">
+                                            <label class="label">
+                                                <input type="file" @change="updateImage" style="height:100px;width:100px;" name="" id="">
+                                                <span>Choisir une image </span>
+                                            </label>
+                                            <img style="height:100px;width:100px;margin-top:1rem" v-if="staffImg.img" :src="staffImg.img" />
+                                            <img style="width:100px;height:100px" v-else :src="staffImage(staff.photo)" alt=""  >
+                                            <span v-if="errors.photo" class="error_txt">{{errors.photo[0]}}</span>
+                                            <!-- v-if="staff.photo" -->
+                                        </div>
+                                    </div>
+                                    <!-- right -->
+                                    <div style="border:1px solid yellow;flex:1">
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <input type="text" class="input_form_item" v-model="staff.nom" placeholder="Nom...">
+                                        </div>
+                                        <span v-if="errors.nom" class="error_txt">{{errors.nom[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <input type="text" class="input_form_item" v-model="staff.prenom" placeholder="Prenom...">
+                                        </div>
+                                        <span v-if="errors.prenom" class="error_txt">{{errors.prenom[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <input type="email" class="input_form_item" v-model="staff.email" placeholder="Email...">
+                                        </div>
+                                        <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <input type="text" class="input_form_item" v-model="staff.adresse" placeholder="Adresse...">
+                                        </div>
+                                        <span v-if="errors.adresse" class="error_txt">{{errors.adresse[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <select name="" id="" v-model="staff.departement_id" class="input_form_item">
+                                                <option value="">Choisir le Departement</option>
+                                                <option v-for="item in departements" :key="item.id" :value="item.id">{{item.nom_departement}}</option>
+                                            </select>
+                                        </div>
+                                        <span v-if="errors.departement_id" class="error_txt">{{errors.departement_id[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
+                                            <select name="" id="" v-model="staff.type_staff_id" class="input_form_item">
+                                                <option value="">Choisir le Type de staff</option>
+                                                <option v-for="item in typeStaffs" :key="item.id" :value="item.id">{{item.type_staff}}</option>
+                                            </select>
+                                        </div>
+                                        <span v-if="errors.type_staff_id" class="error_txt">{{errors.type_staff_id[0]}}</span>
+                                        <!--  -->
+                                    </div>
                                 </div>
-                                <span v-if="errors.nom" class="error_txt">{{errors.nom[0]}}</span>
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="staff.prenom" placeholder="Prenom...">
-                                </div>
-                                <span v-if="errors.prenom" class="error_txt">{{errors.prenom[0]}}</span>
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <input type="email" class="input_form_item" v-model="staff.email" placeholder="Email...">
-                                </div>
-                                <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="staff.adresse" placeholder="Adresse...">
-                                </div>
-                                <span v-if="errors.adresse" class="error_txt">{{errors.adresse[0]}}</span>
-                                <!--  -->
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <select name="" id="" v-model="staff.departement_id" class="input_form_item">
-                                        <option value="">Choisir le Departement</option>
-                                        <option v-for="item in departements" :key="item.id" :value="item.id">{{item.nom_departement}}</option>
-                                    </select>
-                                </div>
-                                <span v-if="errors.departement_id" class="error_txt">{{errors.departement_id[0]}}</span>
-                                <!--  -->
-                                <div class="input_form mb_3">
-                                    <select name="" id="" v-model="staff.type_staff_id" class="input_form_item">
-                                        <option value="">Choisir le Type de staff</option>
-                                        <option v-for="item in typeStaffs" :key="item.id" :value="item.id">{{item.type_staff}}</option>
-                                    </select>
-                                </div>
-                                <span v-if="errors.type_staff_id" class="error_txt">{{errors.type_staff_id[0]}}</span>
                                 <!--  -->
                             </template>
                             <template v-slot:footer>
@@ -231,6 +266,10 @@
                     adresse:'',
                     type_staff_id:'',
                     departement_id:'',
+                    photo:'',
+                },
+                staffImg:{
+                    img:''
                 },
                 isModalVisible:false,
                 tData:{
@@ -258,6 +297,10 @@
                     adresse:'',
                     type_staff_id:'',
                     departement_id:'',
+                    photo:'',
+                }
+                this.staffImg={
+                    img:'',
                 }
                 $("#create_domaine").modal("show")
             },
@@ -298,14 +341,22 @@
                 let send_server = document.querySelector("#send_server")
                 send_server.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
-                axiosClient.post("api/staff",this.staff).then((res)=>{
+                let fd = new FormData()
+                    fd.append('nom',this.staff.nom)
+                    fd.append('email',this.staff.email)
+                    fd.append('prenom',this.staff.prenom)
+                    fd.append('adresse',this.staff.adresse)
+                    fd.append('type_staff_id',this.staff.type_staff_id)
+                    fd.append('departement_id',this.staff.departement_id)
+                    fd.append('photo',this.staff.photo)
+                axiosClient.post("api/staff",fd).then((res)=>{
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
                     //console.log("Valeur de res dans saveStaff:",res)
                     if(res.data.status){
                         $('#create_domaine').modal('hide'); 
                         this.getStaffs()
-                        Swal.fire('Créer!','Nouveau Domaine Ajouter avec success.','success') ;
+                        Swal.fire('Créer!','Nouveau Staff Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
                     send_server.innerHTML = "Sauvegarder"
@@ -349,6 +400,7 @@
                 axiosClient.get(`api/staff/${id}`).then((res)=>{
                     $("#edit_domaine").modal("show")
                     //console.log('valeur de res dans edit staff:',res)
+                    this.staffImg.img             = '';
                     this.edit_id                  = res.data.id;
                     this.staff.nom                = res.data.nom;
                     this.staff.prenom             = res.data.prenom;
@@ -356,6 +408,7 @@
                     this.staff.email              = res.data.email;
                     this.staff.departement_id     = res.data.departement_id;
                     this.staff.type_staff_id      = res.data.type_staff_id;
+                    this.staff.photo              = res.data.photo;
                     this.is_Editing               = true;
                 })
             }, 
@@ -363,7 +416,16 @@
                     let update_server = document.querySelector("#update_server")
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
-                    axiosClient.put(`api/staff/${this.edit_id}`,this.staff).then((res)=>{
+                    let fl = new FormData()
+                        fl.append('nom',this.staff.nom)
+                        fl.append('email',this.staff.email)
+                        fl.append('prenom',this.staff.prenom)
+                        fl.append('adresse',this.staff.adresse)
+                        fl.append('type_staff_id',this.staff.type_staff_id)
+                        fl.append('departement_id',this.staff.departement_id)
+                        fl.append('photo',this.staff.photo)
+                        fl.append('_method', 'PATCH');
+                    axiosClient.post(`api/staff/${this.edit_id}`,fl).then((res)=>{
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
                         if(res.data.status){
@@ -394,12 +456,12 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     cancelButtonText: 'Annuler!',
-                    confirmButtonText: 'Oui, supprimez-le!'
+                    confirmButtonText: 'Oui, retirer-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
                                 axiosClient.delete(`api/staff/${id}`).then((res)=>{
                                     if(res.data.status){
-                                        Swal.fire('Supprimé!','Le Staff a été supprimé.','success') 
+                                        Swal.fire('Retiré!','Le Staff a été retiré(e).','success') 
                                         this.getStaffs()
                                     }
                                 }).catch((err)=>{
@@ -409,6 +471,17 @@
                             Swal.fire('Conserver !!!',"Le Staff est toujours disponible !!!",'success')
                         }
                     })
+            },
+            updateImage(e){
+                //console.log("uploading begin")
+                let file = e.target.files[0];
+                //console.log("Valeur de file:",file)
+                this.staff.photo = file;
+                this.staffImg.img = URL.createObjectURL(file);
+            },
+            staffImage(img)
+            {   
+                return "/img_path/Staff/"+img;
             },
         },
 
@@ -422,20 +495,31 @@
 </script>
 
 <style scoped>
-    .badge_red{
+    /*********************************************/
+    label.label input[type="file"] {
+        position: absolute;
+        top: -1000px;
+      }
+      .label {
+        cursor: pointer;
+        border: 1px solid #cccccc;
         border-radius: 5px;
-        background-color: #dd3333;
-        color: white;
-    }
-    .badge_white{
-        border-radius: 5px;
-        background-color: #2f3640;
+        padding: 5px 15px;
+        margin: 5px;
+        background: #dddddd;
+        display: inline-block;
+      }
+      .label:hover {
+        background: #dd3333;
         color: #fff;
-    }
-    .badge_red_view{
-        border:1px solid #dd3333;background-color: #dd3333;color: white;padding:1px 15px;border-radius:5px
-    }
-    .badge_white_view{
-        border:1px solid #2f3640;background-color: #2f3640;color: #fff;padding:1px 15px;border-radius:5px
-    }
+      }
+      .label:active {
+        background: #9fa1a0;
+      }
+      .label:invalid + span {
+        color: #000000;
+      }
+      .label:valid + span {
+        color: #ffffff;
+      }
 </style>

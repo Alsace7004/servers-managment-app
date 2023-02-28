@@ -80,7 +80,7 @@
 
     const logout =() =>{
         //alert("hited !!!")
-        axiosClient.post("api/logout").then((res)=>{
+        axios.post("api/logout").then((res)=>{
             console.log("Valeur de res dans logout:",res)
             if(res.data.status){
                 Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success');
