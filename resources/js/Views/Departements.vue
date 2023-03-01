@@ -14,7 +14,7 @@
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Departements !!!"/>
                             
-                            <div v-if="!departements.length || !$can('domaine-list')" class="data_box">
+                            <div v-if="!departements.length || !$can('departement-list')" class="data_box">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                         Chargement des departements en cours...
                                         <loader></loader>
@@ -23,7 +23,7 @@
                             
                             <div v-else class="data_box">
                                 <!-- Create departement Btn Begin-->
-                                <div v-if="$is('Admin') || $can('domaine-create')">
+                                <div v-if="$is('Admin') || $can('departement-create')">
                                     <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Departement</button>
                                 </div>
                                 <!-- Create departement Btn end-->
@@ -46,9 +46,8 @@
                                                 <td>{{item.email}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>
-                                                    <!-- <button class="view_btn" @click="viewDepartement(item.id)"><i class="fas fa-eye"></i></button> -->
-                                                    <button class="edit_btn" v-if="$can('domaine-edit')"  @click="editDepartement(item.id)"><i class="fas fa-edit"></i></button>
-                                                    <button class="delete_btn" v-if="$can('domaine-delete')" @click="deleteDepartement(item.id)"><i class="fas fa-trash"></i></button>
+                                                    <button class="edit_btn" v-if="$can('departement-edit')"  @click="editDepartement(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" v-if="$can('departement-delete')" @click="deleteDepartement(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -14,7 +14,7 @@
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Staff !!!"/>
                             
-                            <div v-if="!staffs.length || !$can('domaine-list')" class="data_box">
+                            <div v-if="!staffs.length || !$can('staff-list')" class="data_box">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                         Chargement des staff en cours...
                                         <loader></loader>
@@ -23,7 +23,7 @@
                             
                             <div v-else class="data_box">
                                 <!-- Create Domaine Btn Begin-->
-                                <div v-if="$is('Admin') || $can('domaine-create')">
+                                <div v-if="$is('Admin') || $can('staff-create')">
                                     <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Staff</button>
                                 </div>
                                 <!-- Create Domaine Btn end-->
@@ -50,8 +50,8 @@
                                                 <td>{{item.type_staff}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>
-                                                    <button class="edit_btn" v-if="$can('domaine-edit')"  @click="editStaff(item.id)"><i class="fas fa-edit"></i></button>
-                                                    <button class="delete_btn" v-if="$can('domaine-delete')" @click="deleteStaff(item.id)"><i class="fas fa-trash"></i></button>
+                                                    <button class="edit_btn" v-if="$can('staff-edit')"  @click="editStaff(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" v-if="$can('staff-delete')" @click="deleteStaff(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -207,7 +207,7 @@
                                             </select>
                                         </div>
                                         <span v-if="errors.role_id" class="error_txt">{{errors.role_id[0]}}</span>
-                                        
+
                                         <div class="input_form mb_3">
                                             <select name="" id="" v-model="staff.departement_id" class="input_form_item">
                                                 <option value="">Choisir le Departement</option>

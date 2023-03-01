@@ -14,7 +14,7 @@
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Type de Staff !!!"/>
                             
-                            <div v-if="!TypeStaffs.length || !$can('domaine-list')" class="data_box">
+                            <div v-if="!TypeStaffs.length || !$can('typeStaff-list')" class="data_box">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                         Chargement des type de staff en cours...
                                         <loader></loader>
@@ -23,7 +23,7 @@
                             
                             <div v-else class="data_box">
                                 <!-- Create Domaine Btn Begin-->
-                                <div v-if="$is('Admin') || $can('domaine-create')">
+                                <div v-if="$is('Admin') || $can('typeStaff-create')">
                                     <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter type de staff</button>
                                 </div>
                                 <!-- Create Domaine Btn end-->
@@ -45,8 +45,8 @@
                                                 <td>{{item.type_staff}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>
-                                                    <button class="edit_btn" v-if="$can('domaine-edit')"  @click="editTypeStaff(item.id)"><i class="fas fa-edit"></i></button>
-                                                    <button class="delete_btn" v-if="$can('domaine-delete')" @click="deleteTypeStaff(item.id)"><i class="fas fa-trash"></i></button>
+                                                    <button class="edit_btn" v-if="$can('typeStaff-edit')"  @click="editTypeStaff(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" v-if="$can('typeStaff-delete')" @click="deleteTypeStaff(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -24,19 +24,19 @@
                     </li>
                     <!--  -->
                     <li>
-                        <router-link v-if="$can('domaine-list')" :to="{name:'departements'}" class="item">
+                        <router-link v-if="$can('departement-list')" :to="{name:'departements'}" class="item">
                             <span class="icon"><i class="fas fa-building"></i></span>
                             <span>Departements</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link v-if="$can('domaine-list')" :to="{name:'type_de_staff'}" class="item">
+                        <router-link v-if="$can('typeStaff-list')" :to="{name:'type_de_staff'}" class="item">
                             <span class="icon"><i class="fas fa-user-alt"></i></span>
                             <span>Type de Staff</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link v-if="$can('domaine-list')" :to="{name:'staff'}" class="item">
+                        <router-link v-if="$can('staff-list')" :to="{name:'staff'}" class="item">
                             <span class="icon"><i class="fas fa-user-friends"></i></span>
                             <span>Staff</span>
                         </router-link>
