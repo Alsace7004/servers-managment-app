@@ -20,7 +20,10 @@ class ServerController extends Controller
         $length = $request->input('length');
         $searchValue = $request->input('search');
 
-        $servers = Server::query()->select('id','name','username','url_connexion','created_at')->orderBy('id','desc');
+        $servers = Server::query()
+                        ->select('id','name','username','url_connexion','created_at')
+                        ->where('is_deleted',false)
+                        ->orderBy('id','desc');
         
         if($searchValue){
             $servers->where(function($query) use ($searchValue){
@@ -35,7 +38,10 @@ class ServerController extends Controller
         ]);
     }
     public function serverList(){
-        $servers = Server::query()->select('id','name')->orderBy('id','desc')->get();
+        $servers = Server::query()
+                            ->select('id','name')
+                            ->where('is_deleted',false)
+                            ->orderBy('id','desc')->get();
         
         return response()->json([
             'status'=>true,
@@ -57,7 +63,7 @@ class ServerController extends Controller
             'name'          =>'required|string|unique:servers|min:2|max:50',
             'username'      =>'required|string|min:2|max:50',
             'password'      =>'required|string|min:8',
-            'url_connexion' =>'required|string|url|min:2|max:100',
+            'url_connexion' =>'required|string|url|unique:servers|min:2|max:100',
             'description'   =>'required|string|min:2|max:255',
         ],[
             'name.required'             =>'Veuillez remplir ce champ',
@@ -73,6 +79,7 @@ class ServerController extends Controller
             'url_connexion.url'         =>'Veuillez entrer une URL',
             'url_connexion.min'         =>'Trop court',
             'url_connexion.max'         =>'Trop long',
+            'url_connexion.unique'      =>'Cette valeur existe déjà',
             'description.required'      =>'Veuillez remplir ce champ',
             'description.min'           =>'Trop court',
             'description.max'           =>'Trop long',
@@ -119,7 +126,7 @@ class ServerController extends Controller
             'name'          =>['required','string',Rule::unique('servers')->ignore($server->id),'min:2','max:50'],
             'username'      =>'required|string|min:2|max:50',
             'password'      =>'required|string|min:8',
-            'url_connexion' =>'required|string|url|min:2|max:100',
+            'url_connexion' =>['required','string',Rule::unique('servers')->ignore($server->id),'url','min:2','max:100'],
             'description'   =>'required|string|min:2|max:255',
         ],[
             'name.required'             =>'Veuillez remplir ce champ',
@@ -135,6 +142,7 @@ class ServerController extends Controller
             'url_connexion.url'         =>'Veuillez entrer une URL',
             'url_connexion.min'         =>'Trop court',
             'url_connexion.max'         =>'Trop long',
+            'url_connexion.unique'      =>'Cette valeur existe déjà',
             'description.required'      =>'Veuillez remplir ce champ',
             'description.min'           =>'Trop court',
             'description.max'           =>'Trop long',
@@ -162,8 +170,12 @@ class ServerController extends Controller
     public function destroy(Server $server)
     {
         //
-        if($server->delete()){
-            return ['status'=>true,];
+        if($server){
+            $server->is_deleted = true;
+            if($server->save()){
+                return ['status'=>true];
+            }
+            return ['status'=>false];
         }
         return ['status'=>false];
     }

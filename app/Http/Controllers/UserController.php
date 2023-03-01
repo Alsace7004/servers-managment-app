@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +24,7 @@ class UserController extends Controller
         $users = $users[0]; */
         /***************************************************/
         /***************************************************/
-        $users = User::query()->select('id','name','email','created_at')->orderBy('id','desc');
+        $users = User::query()->select('id','name','email','created_at')->where('is_deleted',false)->orderBy('id','desc');
         if($searchValue){
             $users->where(function($query) use ($searchValue){
                 $query->where('name','like','%'.$searchValue.'%')
@@ -36,7 +37,10 @@ class UserController extends Controller
         ]);
     }
     public function userList(){
-        $users = User::query()->select('id','email')->orderBy('id','desc')->get();
+        $users = User::query()
+                        ->select('id','email')
+                        ->where('is_deleted',false)
+                        ->orderBy('id','desc')->get();
         return response()->json([
             'status'=>true,
             'users'=>$users
@@ -119,11 +123,26 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
-        $this->validate($request,[
-            'name'=>'required',
-            'email'=>'required|email',
+        $data = $request->only(['name','email','roles']);
+        $validator = Validator::make($data,[
+            'name'=>'required|string|min:2|max:100',
+            'email' => ['required','email',
+                Rule::unique('users')->ignore($user->id)
+            ],
             'roles' => 'required'
+        ],[
+            'name.required'=>'Veuillez remplir ce champ',
+            'name.string'=>'Veuillez entrer des chaines de caractère',
+            'name.min'=>'Trop court...',
+            'name.max'=>'Trop long...',
+            'email.required'=>'Veuillez remplir ce champ',
+            'email.email'=>'Veuillez entrer une adresse mail valide',
+            'email.unique'=>'Mail déjà utilisé.',
+            'roles.required'=>'Veuillez remplir ce champ...',
         ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         if($user->save()){
@@ -135,10 +154,12 @@ class UserController extends Controller
     public function destroy(Request $request,User $user)
     {
         //
-        
-
-        if($user->delete()){
-            return ['status'=>true,];
+        if($user){
+            $user->is_deleted = true;
+            if($user->save()){
+                return ['status'=>true];
+            }
+            return ['status'=>false];
         }
         return ['status'=>false];
     }

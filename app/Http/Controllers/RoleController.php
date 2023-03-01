@@ -22,7 +22,9 @@ class RoleController extends Controller
         //
         $length = $request->input('length');
         $searchValue = $request->input('search');
-        $roles = Role::query()->select('id','name','created_at')->orderBy('id','desc');
+        $roles = Role::query()->select('id','name','created_at')
+                        ->where('is_deleted',false)
+                        ->orderBy('id','desc');
         if($searchValue){
             $roles->where(function($query) use ($searchValue){
                 $query->where('name','like','%'.$searchValue.'%');
@@ -35,7 +37,9 @@ class RoleController extends Controller
     }
 
     public function roleList(){
-        $roles = Role::query()->select('id','name')->get();
+        $roles = Role::query()->select('id','name')
+                        ->where('is_deleted',false)
+                        ->get();
         return response()->json([
             'status'=>true,
             'roles'=>$roles
@@ -140,7 +144,9 @@ class RoleController extends Controller
         //dd($request->role['guard_name']);
 
         $validator = Validator::make($data,[
-            'name'          =>'required|string|min:2|max:20',
+            'name' => ['required','string','min:2','max:20',
+                Rule::unique('roles')->ignore($role->id)
+            ],
             'guard_name'=>'required|string',
         ],[
             'name.required' =>'Veuillez remplir ce champ',
@@ -173,8 +179,12 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
-        if($role->delete()){
-            return ['status'=>true,];
+        if($role){
+            $role->is_deleted = true;
+            if($role->save()){
+                return ['status'=>true];
+            }
+            return ['status'=>false];
         }
         return ['status'=>false];
     }

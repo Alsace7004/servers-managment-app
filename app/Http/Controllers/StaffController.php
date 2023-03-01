@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -52,14 +53,15 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         //
-        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo']);
+        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo','role_id']);
         $validator = Validator::make($data,[
             'nom'               =>'required|string|min:2|max:100',
             'prenom'            =>'required|string|min:2|max:100',
-            'email'             =>'required|email|min:2|max:100',
+            'email'             =>'required|email|unique:staff',
             'adresse'           =>'required|string|min:2|max:100',
             'type_staff_id'     =>'required',
             'departement_id'    =>'required',
+            'role_id'           =>'required',
             'photo'             =>'required|file|mimes:jpeg,png,jpg,svg|max:1024',
         ],[
             'nom.required'      =>'Veuillez remplir ce champ',
@@ -70,13 +72,13 @@ class StaffController extends Controller
             'prenom.max'        =>'Trop long',
             'email.required'    =>'Veuillez remplir ce champ',
             'email.email'       =>'Veuillez entrer une adresse email valid',
-            'email.min'         =>'Trop court',
-            'email.max'         =>'Trop long',
+            'email.unique'      =>'Mail déjà utilisé.',
             'adresse.required'  =>'Veuillez remplir ce champ',
             'adresse.min'       =>'Trop court',
             'adresse.max'       =>'Trop long',
             'type_staff_id.required'    =>'Veuillez remplir ce champ',
             'departement_id.required'   =>'Veuillez remplir ce champ',
+            'role_id.required'          =>'Veuillez remplir ce champ',
             'photo.required'            =>'Veuillez choisir une image',
             'photo.file'                =>'Veuillez choisir une image',
             'photo.mimes'               =>'Non autorisé',
@@ -119,14 +121,17 @@ class StaffController extends Controller
     public function update(Request $request, Staff $staff)
     {
         //
-        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo']);
+        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo','role_id']);
         $validator = Validator::make($data,[
             'nom'               =>'required|string|min:2|max:100',
             'prenom'            =>'required|string|min:2|max:100',
-            'email'             =>'required|email|min:2|max:100',
+            'email' => ['required','email',
+                Rule::unique('staff')->ignore($staff->id)
+            ],
             'adresse'           =>'required|string|min:2|max:100',
             'type_staff_id'     =>'required',
             'departement_id'    =>'required',
+            'role_id'           =>'required',
             //'photo'             =>'required|file|mimes:jpeg,png,jpg,svg|max:1024',
         ],[
             'nom.required'      =>'Veuillez remplir ce champ',
@@ -137,13 +142,13 @@ class StaffController extends Controller
             'prenom.max'        =>'Trop long',
             'email.required'    =>'Veuillez remplir ce champ',
             'email.email'       =>'Veuillez entrer une adresse email valid',
-            'email.min'         =>'Trop court',
-            'email.max'         =>'Trop long',
+            'email.unique'      =>'Mail déjà utilisé.',
             'adresse.required'  =>'Veuillez remplir ce champ',
             'adresse.min'       =>'Trop court',
             'adresse.max'       =>'Trop long',
             'type_staff_id.required'    =>'Veuillez remplir ce champ',
             'departement_id.required'   =>'Veuillez remplir ce champ',
+            'role_id.required'          =>'Veuillez remplir ce champ',
             'photo.required'            =>'Veuillez choisir une image',
             'photo.file'                =>'Veuillez choisir une image',
             'photo.mimes'               =>'Non autorisé',

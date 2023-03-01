@@ -10,5 +10,5 @@ class Staff extends Model
     use HasFactory;
     protected  $fillable = ['nom','prenom','adresse',
                             'email','photo','departement_id',
-                            'type_staff_id','is_deleted'];
+                            'type_staff_id','role_id','is_deleted'];
 }

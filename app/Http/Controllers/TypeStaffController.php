@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TypeStaff;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 class TypeStaffController extends Controller
@@ -57,9 +58,10 @@ class TypeStaffController extends Controller
         //
         $data = $request->only(['type_staff']);
         $validator = Validator::make($data,[
-            'type_staff'            =>'required|string|min:2|max:100'
+            'type_staff'            =>'required|string|unique:type_staff|min:2|max:100'
         ],[
             'type_staff.required'   =>'Veuillez remplir ce champ',
+            'type_staff.unique'     =>'Cette valeur existe déjà',
             'type_staff.min'        =>'Trop court',
             'type_staff.max'        =>'Trop long',
         ]);
@@ -96,9 +98,12 @@ class TypeStaffController extends Controller
         //
         $data = $request->only(['type_staff']);
         $validator = Validator::make($data,[
-            'type_staff'            =>'required|string|min:2|max:100'
+            'type_staff' => ['required','string','min:2','max:100',
+                Rule::unique('type_staff')->ignore($typeStaff->id)
+            ],
         ],[
             'type_staff.required'   =>'Veuillez remplir ce champ',
+            'type_staff.unique'     =>'Valeur déjà utilisé.',
             'type_staff.min'        =>'Trop court',
             'type_staff.max'        =>'Trop long',
         ]);

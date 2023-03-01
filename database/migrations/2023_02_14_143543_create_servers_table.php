@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('url_connexion');
             $table->longText('description');
+            $table->boolean('is_deleted')->default(0);
             $table->timestamps();
         });
     }

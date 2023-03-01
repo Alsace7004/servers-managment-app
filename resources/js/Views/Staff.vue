@@ -121,6 +121,13 @@
                                         <span v-if="errors.adresse" class="error_txt">{{errors.adresse[0]}}</span>
                                         <!--  -->
                                         <div class="input_form mb_3">
+                                            <select  v-model="staff.role_id" id="" class="input_form_item">
+                                                <option value="">Selectionner un Role</option>
+                                                <option v-for="role in roles" :key="role.id" :value="role.id">{{role.name}}</option>
+                                            </select>
+                                        </div>
+                                        <span v-if="errors.role_id" class="error_txt">{{errors.role_id[0]}}</span>
+                                        <div class="input_form mb_3">
                                             <select name="" id="" v-model="staff.departement_id" class="input_form_item">
                                                 <option value="">Choisir le Departement</option>
                                                 <option v-for="item in departements" :key="item.id" :value="item.id">{{item.nom_departement}}</option>
@@ -194,6 +201,14 @@
                                         <span v-if="errors.adresse" class="error_txt">{{errors.adresse[0]}}</span>
                                         <!--  -->
                                         <div class="input_form mb_3">
+                                            <select  v-model="staff.role_id" id="" class="input_form_item">
+                                                <option value="">Selectionner un Role</option>
+                                                <option v-for="role in roles" :key="role.id" :value="role.id">{{role.name}}</option>
+                                            </select>
+                                        </div>
+                                        <span v-if="errors.role_id" class="error_txt">{{errors.role_id[0]}}</span>
+                                        
+                                        <div class="input_form mb_3">
                                             <select name="" id="" v-model="staff.departement_id" class="input_form_item">
                                                 <option value="">Choisir le Departement</option>
                                                 <option v-for="item in departements" :key="item.id" :value="item.id">{{item.nom_departement}}</option>
@@ -255,6 +270,7 @@
                 perPage : ['5','10','20','30'],
                 columns: columns,
                 staffs:[],
+                roles:[],
                 departements:[],
                 typeStaffs:[],
                 errors:[],
@@ -266,6 +282,7 @@
                     adresse:'',
                     type_staff_id:'',
                     departement_id:'',
+                    role_id:'',
                     photo:'',
                 },
                 staffImg:{
@@ -297,6 +314,7 @@
                     adresse:'',
                     type_staff_id:'',
                     departement_id:'',
+                    role_id:'',
                     photo:'',
                 }
                 this.staffImg={
@@ -314,6 +332,16 @@
                     //console.log("Valeur de res.data dans getStaffs:",res.data)
                 }).catch((err)=>{
                     console.log("Valeur de err dans getStaffs:",err.response)
+                })
+            },
+            //getAllRoles
+            getRoles(){
+                axiosClient.get("api/getAllRoles").then((res)=>{
+                    let content = res.data.roles;
+                    this.roles = content;
+                    //console.log("Valeur de res dans getRoles:",res)
+                }).catch((err)=>{
+                    console.log("Valeur de err dans getRoles dans staff:",err.response)
                 })
             },
             //getDepartements
@@ -348,6 +376,7 @@
                     fd.append('adresse',this.staff.adresse)
                     fd.append('type_staff_id',this.staff.type_staff_id)
                     fd.append('departement_id',this.staff.departement_id)
+                    fd.append('role_id',this.staff.role_id)
                     fd.append('photo',this.staff.photo)
                 axiosClient.post("api/staff",fd).then((res)=>{
                     send_server.innerHTML = "Sauvegarder"
@@ -408,6 +437,7 @@
                     this.staff.email              = res.data.email;
                     this.staff.departement_id     = res.data.departement_id;
                     this.staff.type_staff_id      = res.data.type_staff_id;
+                    this.staff.role_id            = res.data.role_id;
                     this.staff.photo              = res.data.photo;
                     this.is_Editing               = true;
                 })
@@ -423,6 +453,7 @@
                         fl.append('adresse',this.staff.adresse)
                         fl.append('type_staff_id',this.staff.type_staff_id)
                         fl.append('departement_id',this.staff.departement_id)
+                        fl.append('role_id',this.staff.role_id)
                         fl.append('photo',this.staff.photo)
                         fl.append('_method', 'PATCH');
                     axiosClient.post(`api/staff/${this.edit_id}`,fl).then((res)=>{
@@ -488,6 +519,7 @@
 
         created(){
             this.getStaffs()
+            this.getRoles()
             this.getTypeStaffs()
             this.getDepartements()
         },

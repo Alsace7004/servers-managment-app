@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Departement;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 class DepartementController extends Controller
@@ -57,10 +58,11 @@ class DepartementController extends Controller
         //
         $data = $request->only(['nom_departement','user_id']);
         $validator = Validator::make($data,[
-            'nom_departement'   =>'required|string|min:2|max:100',
+            'nom_departement'   =>'required|string|unique:departements|min:2|max:100',
             'user_id'           =>'required'
         ],[
             'nom_departement.required'  =>'Veuillez remplir ce champ',
+            'nom_departement.unique'    =>'Cette valeur existe déjà',
             'nom_departement.min'       =>'Trop court',
             'nom_departement.max'       =>'Trop long',
             'user_id.required'          =>'Veuillez remplir ce champ',
@@ -98,10 +100,13 @@ class DepartementController extends Controller
         //
         $data = $request->only(['nom_departement','user_id']);
         $validator = Validator::make($data,[
-            'nom_departement'   =>'required|string|min:2|max:100',
-            'user_id'           =>'required'
+            'nom_departement' => ['required','string','min:2','max:100',
+                Rule::unique('departements')->ignore($departement->id)
+            ],
+            'user_id'         =>'required'
         ],[
             'nom_departement.required'  =>'Veuillez remplir ce champ',
+            'nom_departement.unique'    =>'Valeur déjà utilisé.',
             'nom_departement.min'       =>'Trop court',
             'nom_departement.max'       =>'Trop long',
             'user_id.required'          =>'Veuillez remplir ce champ',

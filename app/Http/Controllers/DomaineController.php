@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Domaine;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 class DomaineController extends Controller
@@ -22,8 +23,9 @@ class DomaineController extends Controller
         /* $domaines = Domaine::query()->select('id','nom_domaine','server_id','registre','date_expiration','status','created_at')
                     ->orderBy('id','desc'); */
                     $domaines = Domaine::join('servers','servers.id','=','domaines.server_id')
-                    ->select('domaines.id','nom_domaine','server_id','registre','date_expiration','status','domaines.created_at','servers.name')
-                    ->orderBy('id','desc');
+                        ->select('domaines.id','nom_domaine','server_id','registre','date_expiration','status','domaines.created_at','servers.name')
+                        ->where('domaines.is_deleted',false)
+                        ->orderBy('id','desc');
         if($searchValue){
             $domaines->where(function($query) use ($searchValue){
                 $query->where('nom_domaine','like','%'.$searchValue.'%')
@@ -48,7 +50,7 @@ class DomaineController extends Controller
         //
         $data = $request->only(['nom_domaine','server_id','registre','date_expiration']);
         $validator = Validator::make($data,[
-            'nom_domaine'       =>['required','string','min:2','max:75','regex:/^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/i'],
+            'nom_domaine'       =>['required','string','unique:domaines','min:2','max:75','regex:/^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/i'],
             'server_id'         =>'required',
             'registre'          =>'required|string|min:2|max:75',
             'date_expiration'   =>'required|date|after:today',
@@ -57,6 +59,7 @@ class DomaineController extends Controller
             'nom_domaine.min'       =>'Trop court',
             'nom_domaine.max'       =>'Trop long',
             'nom_domaine.regex'     =>'nom de domaine invalide',
+            'nom_domaine.unique'    =>'Cette valeur existe déjà',
 
             'server_id.required'    =>'Veuillez remplir ce champ',
 
@@ -104,14 +107,18 @@ class DomaineController extends Controller
         //
         $data = $request->only(['nom_domaine','server_id','registre','date_expiration']);
         $validator = Validator::make($data,[
-            'nom_domaine'       =>'required|string|min:2|max:75',
+            //'nom_domaine'       =>'required|string|min:2|max:75',
+            'nom_domaine' => ['required','string','min:2','max:100',
+                Rule::unique('domaines')->ignore($domaine->id)
+            ],
             'server_id'         =>'required',
             'registre'          =>'required|string|min:2|max:75',
             'date_expiration'   =>'required|date|after:today',
         ],[
             'nom_domaine.required'  =>'Veuillez remplir ce champ',
+            'nom_domaine.unique'    =>'Valeur déjà utilisé.',
             'nom_domaine.min'       =>'Trop court',
-            'nom_domaine.required'  =>'Trop long',
+            'nom_domaine.max'       =>'Trop long',
             'server_id.required'    =>'Veuillez remplir ce champ',
             'registre.required'         =>'Veuillez remplir ce champ',
             'registre.min'              =>'Trop court',
@@ -139,8 +146,12 @@ class DomaineController extends Controller
     public function destroy(Domaine $domaine)
     {
         //
-        if($domaine->delete()){
-            return ['status'=>true];
+        if($domaine){
+            $domaine->is_deleted = true;
+            if($domaine->save()){
+                return ['status'=>true];
+            }
+            return ['status'=>false];
         }
         return ['status'=>false];
     }
