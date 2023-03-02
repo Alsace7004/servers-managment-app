@@ -58,7 +58,7 @@
                                                     <p v-if="item.status === 1" class="badge_red">Expiré(e)</p>
                                                 </td>
                                                 <td>
-                                                    <button class="view_btn" @click="viewDomaine(item.id)"><i class="fas fa-eye"></i></button>
+                                                    <button class="view_btn" v-if="$can('domaine-view')" @click="viewDomaine(item.id)"><i class="fas fa-eye"></i></button>
                                                     <button class="edit_btn" v-if="$can('domaine-edit')"  @click="editDomaine(item.id)"><i class="fas fa-edit"></i></button>
                                                     <button class="delete_btn" v-if="$can('domaine-delete')" @click="deleteDomaine(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>

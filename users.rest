@@ -1,6 +1,6 @@
 
 ### GET ALL USER
-GET http://localhost:8000/api/users
+GET http://localhost:8000/api/servers
 
 ### GET ALL ROLES
 GET http://localhost:8000/api/roles

@@ -43,7 +43,7 @@
                                             <td>{{user.email}}</td>
                                             <td>{{convert(user.created_at)}}</td>
                                             <td>
-                                                <button class="view_btn" @click="viewUser(user.id)"><i class="fas fa-eye"></i></button>
+                                                <button class="view_btn" v-if="$is('Admin')" @click="viewUser(user.id)"><i class="fas fa-eye"></i></button>
                                                 <button v-if="$is('Admin')" class="edit_btn" @click="editUser(user.id)"><i  class="fas fa-edit"></i></button>
                                                 <button v-if="user.id != id && $is('Admin')" class="delete_btn" @click="deleteUser(user.id)"><i class="fas fa-trash"></i></button>
                                             </td>

@@ -59,7 +59,7 @@ class RoleController extends Controller
         //dd($data);
         $validator = Validator::make($data,[
             'name'          =>'required|string|unique:roles,name|min:2|max:20',
-            'guard_name'=>'required|string',
+            'guard_name'    =>'required|string',
             'permission'    => 'required',
         ],[
             'name.required' =>'Veuillez remplir ce champ',

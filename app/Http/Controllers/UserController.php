@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -49,7 +50,7 @@ class UserController extends Controller
     public function store(Request $request){
 
         
-         $data = $request->only(['name','email','password','roles']);
+        $data = $request->only(['name','email','password','roles']);
         //dd($data);
         $validator = Validator::make($data,[
             'name'=>'required|string|min:2|max:100',

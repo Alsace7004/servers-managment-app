@@ -42,7 +42,7 @@
                                             <td>{{role.name}}</td>
                                             <td>{{convert(role.created_at)}}</td>
                                             <td>
-                                                <button class="view_btn" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
+                                                <button class="view_btn" v-if="$can('role-view')" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
                                                 <button class="edit_btn" v-if="$can('role-edit')" @click="editRole(role.id)"><i class="fas fa-edit"></i></button>
                                                 <button class="delete_btn" v-if="$can('role-delete')" @click="deleteRole(role.id)"><i class="fas fa-trash"></i></button>
                                             </td>
