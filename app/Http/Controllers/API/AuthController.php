@@ -54,7 +54,7 @@ class AuthController extends Controller
         //dd(Auth::user());
         //dd($request->user()->tokens()->delete());
         //dd(auth()->user()->tokens()->delete());
-        Auth::logout();
+        //Auth::logout();
  
         $request->session()->invalidate();
      

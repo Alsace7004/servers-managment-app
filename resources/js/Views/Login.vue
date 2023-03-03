@@ -34,13 +34,17 @@ export default {
         }
     },
     methods:{
+        async getToken(){
+            await axios.get('/sanctum/csrf-cookie');
+        },
         loginUser(){
+            this.getToken();
             this.errors = []
             let login_btn = document.querySelector('.login_btn')
             login_btn.innerHTML = "Connexion en cours..."
             this.loading =  true
-            axios.get('/sanctum/csrf-cookie').then(response => {
-                console.log("Valeur de response dans sanctum/csrf-cookie:",response)
+            //axios.get('/sanctum/csrf-cookie').then(response => {
+                //console.log("Valeur de response dans sanctum/csrf-cookie:",response)
                 // Login...
                     axios.post('api/login',this.user).then((res)=>{
                         localStorage.clear(); 
@@ -70,7 +74,7 @@ export default {
                             Swal.fire('Erreur!','Probleme de connexion.','error') ;
                         }
                     })
-            });
+            //});
             
         },
     },
