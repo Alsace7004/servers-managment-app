@@ -53,22 +53,26 @@ class UserController extends Controller
         $data = $request->only(['name','email','password','roles']);
         //dd($data);
         $validator = Validator::make($data,[
-            'name'=>'required|string|min:2|max:100',
-            'email'=>'required|email|unique:users',
-            'password'=>'required|string|min:8',
-            'roles' => 'required'
+            'name'      =>'required|string|min:2|max:100|unique:users,name',
+            'email'     =>'required|email|unique:users',
+            'password'  =>'required|string|min:8',
+            'roles'     => 'required'
         ],[
-            'name.required'=>'Veuillez remplir ce champ',
-            'name.string'=>'Veuillez entrer des chaines de caractère',
-            'name.min'=>'Trop court...',
-            'name.max'=>'Trop long...',
+            'name.required' =>'Veuillez remplir ce champ',
+            'name.string'   =>'Veuillez entrer des chaines de caractère',
+            'name.min'      =>'Trop court...',
+            'name.max'      =>'Trop long...',
+            'name.unique'   =>'Cette valeur existe déjà...',
+            //
             'email.required'=>'Veuillez remplir ce champ',
-            'email.email'=>'Veuillez entrer une adresse mail valide',
-            'email.unique'=>'Mail déjà utilisé.',
-            'password.required'=>'Veuillez remplir ce champ',
-            'password.string'=>'Veuillez entrer des chaines de caractère',
-            'password.min'=>'Trop court...',
-            'roles.required'=>'Veuillez remplir ce champ...',
+            'email.email'   =>'Veuillez entrer une adresse mail valide',
+            'email.unique'  =>'Mail déjà utilisé.',
+            //
+            'password.required' =>'Veuillez remplir ce champ',
+            'password.string'   =>'Veuillez entrer des chaines de caractère',
+            'password.min'      =>'Trop court...',
+            //
+            'roles.required'    =>'Veuillez remplir ce champ...',
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
@@ -126,7 +130,10 @@ class UserController extends Controller
         //
         $data = $request->only(['name','email','roles']);
         $validator = Validator::make($data,[
-            'name'=>'required|string|min:2|max:100',
+            //'name'=>'required|string|min:2|max:100',
+            'name' => ['required','string','min:2','max:100',
+                Rule::unique('users')->ignore($user->id)
+            ],
             'email' => ['required','email',
                 Rule::unique('users')->ignore($user->id)
             ],
@@ -136,6 +143,7 @@ class UserController extends Controller
             'name.string'=>'Veuillez entrer des chaines de caractère',
             'name.min'=>'Trop court...',
             'name.max'=>'Trop long...',
+            'name.unique'=>'Cette valeur existe déjà...',
             'email.required'=>'Veuillez remplir ce champ',
             'email.email'=>'Veuillez entrer une adresse mail valide',
             'email.unique'=>'Mail déjà utilisé.',

@@ -54,9 +54,23 @@ class StaffController extends Controller
     {
         //
         $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo','role_id']);
+        $lastName = $data['prenom'];
+        $firstName = $data['nom'];
         $validator = Validator::make($data,[
-            'nom'               =>'required|string|min:2|max:100',
-            'prenom'            =>'required|string|min:2|max:100',
+            //'nom'=>'required|string|min:2|max:100|unique:staff,nom,NULL,id,prenom,'.$data['prenom'],
+            'nom' => [
+                'required','string','min:2','max:100',
+                Rule::unique('staff', 'nom')->where(function ($query) use ($lastName) {
+                    return $query->where('prenom', $lastName);
+                })
+            ],
+            //'prenom'=>'required|string|min:2|max:100',
+            'prenom' => [
+                'required','string','min:2','max:100',
+                Rule::unique('staff', 'prenom')->where(function ($query) use ($firstName) {
+                    return $query->where('nom', $firstName);
+                })
+            ],
             'email'             =>'required|email|unique:staff',
             'adresse'           =>'required|string|min:2|max:100',
             'type_staff_id'     =>'required',
@@ -67,18 +81,25 @@ class StaffController extends Controller
             'nom.required'      =>'Veuillez remplir ce champ',
             'nom.min'           =>'Trop court',
             'nom.max'           =>'Trop long',
+            'nom.unique'        =>'Nom déjà utilisé.',
+            //
             'prenom.required'   =>'Veuillez remplir ce champ',
             'prenom.min'        =>'Trop court',
             'prenom.max'        =>'Trop long',
+            'prenom.unique'     =>'Prenom déjà utilisé.',
+            //
             'email.required'    =>'Veuillez remplir ce champ',
             'email.email'       =>'Veuillez entrer une adresse email valid',
             'email.unique'      =>'Mail déjà utilisé.',
+            //
             'adresse.required'  =>'Veuillez remplir ce champ',
             'adresse.min'       =>'Trop court',
             'adresse.max'       =>'Trop long',
+            //
             'type_staff_id.required'    =>'Veuillez remplir ce champ',
             'departement_id.required'   =>'Veuillez remplir ce champ',
             'role_id.required'          =>'Veuillez remplir ce champ',
+            //
             'photo.required'            =>'Veuillez choisir une image',
             'photo.file'                =>'Veuillez choisir une image',
             'photo.mimes'               =>'Non autorisé',
@@ -122,9 +143,23 @@ class StaffController extends Controller
     {
         //
         $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo','role_id']);
+        $firstName = $data['nom'];
+        $lastName  = $data['prenom'];
         $validator = Validator::make($data,[
-            'nom'               =>'required|string|min:2|max:100',
-            'prenom'            =>'required|string|min:2|max:100',
+            //'nom'               =>'required|string|min:2|max:100',
+            'nom' => [
+                'required','string','min:2','max:100',
+                Rule::unique('staff', 'nom')->where(function ($query) use ($lastName) {
+                    return $query->where('prenom', $lastName);
+                })->ignore($staff->id)
+            ],
+            //'prenom'            =>'required|string|min:2|max:100',
+            'prenom' => [
+                'required','string','min:2','max:100',
+                Rule::unique('staff', 'prenom')->where(function ($query) use ($firstName) {
+                    return $query->where('nom', $firstName);
+                })->ignore($staff->id)
+            ],
             'email' => ['required','email',
                 Rule::unique('staff')->ignore($staff->id)
             ],
@@ -132,23 +167,30 @@ class StaffController extends Controller
             'type_staff_id'     =>'required',
             'departement_id'    =>'required',
             'role_id'           =>'required',
-            //'photo'             =>'required|file|mimes:jpeg,png,jpg,svg|max:1024',
+            //'photo'           =>'required|file|mimes:jpeg,png,jpg,svg|max:1024',
         ],[
             'nom.required'      =>'Veuillez remplir ce champ',
             'nom.min'           =>'Trop court',
             'nom.max'           =>'Trop long',
+            'nom.unique'        =>'Nom déjà utilisé.',
+            //
             'prenom.required'   =>'Veuillez remplir ce champ',
             'prenom.min'        =>'Trop court',
             'prenom.max'        =>'Trop long',
+            'prenom.unique'      =>'Prenom déjà utilisé.',
+            //
             'email.required'    =>'Veuillez remplir ce champ',
             'email.email'       =>'Veuillez entrer une adresse email valid',
             'email.unique'      =>'Mail déjà utilisé.',
+            //
             'adresse.required'  =>'Veuillez remplir ce champ',
             'adresse.min'       =>'Trop court',
             'adresse.max'       =>'Trop long',
+            //
             'type_staff_id.required'    =>'Veuillez remplir ce champ',
             'departement_id.required'   =>'Veuillez remplir ce champ',
             'role_id.required'          =>'Veuillez remplir ce champ',
+            //
             'photo.required'            =>'Veuillez choisir une image',
             'photo.file'                =>'Veuillez choisir une image',
             'photo.mimes'               =>'Non autorisé',
