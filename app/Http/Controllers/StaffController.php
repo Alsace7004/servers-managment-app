@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -81,12 +82,12 @@ class StaffController extends Controller
             'nom.required'      =>'Veuillez remplir ce champ',
             'nom.min'           =>'Trop court',
             'nom.max'           =>'Trop long',
-            'nom.unique'        =>'Nom déjà utilisé.',
+            'nom.unique'        =>'Ce nom existe déjà pour ce prénom.',
             //
             'prenom.required'   =>'Veuillez remplir ce champ',
             'prenom.min'        =>'Trop court',
             'prenom.max'        =>'Trop long',
-            'prenom.unique'     =>'Prenom déjà utilisé.',
+            'prenom.unique'     =>'Ce prénom existe déjà pour ce nom.',
             //
             'email.required'    =>'Veuillez remplir ce champ',
             'email.email'       =>'Veuillez entrer une adresse email valid',
@@ -172,12 +173,12 @@ class StaffController extends Controller
             'nom.required'      =>'Veuillez remplir ce champ',
             'nom.min'           =>'Trop court',
             'nom.max'           =>'Trop long',
-            'nom.unique'        =>'Nom déjà utilisé.',
+            'nom.unique'        =>'Ce nom existe déjà pour ce prénom.',
             //
             'prenom.required'   =>'Veuillez remplir ce champ',
             'prenom.min'        =>'Trop court',
             'prenom.max'        =>'Trop long',
-            'prenom.unique'      =>'Prenom déjà utilisé.',
+            'prenom.unique'      =>'Ce prénom existe déjà pour ce nom.',
             //
             'email.required'    =>'Veuillez remplir ce champ',
             'email.email'       =>'Veuillez entrer une adresse email valid',
@@ -199,22 +200,48 @@ class StaffController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
+        //dd($staff->photo);
         //delete the existing file in public_path and add new one
         $image_path = "img_path/Staff/".$staff->photo;  // Value is not URL but directory file path
-            if(File::exists($image_path)) {
-                File::delete($image_path);
+            //si le fichier existe, on le supprime et on upload un nouveau
+            //sinon, on enregistre la nouvelle
+            if($request->file('photo') === null){
+                if($staff->update($data)){
+                    return ['status'=>true];
+                }
+                return ['status'=>false];
+            }else{
+                if(File::exists($image_path)) {
+                    File::delete($image_path);
+                    DB::SELECT("UPDATE staff SET photo = 0 WHERE id = $staff->id");
+                    if($image=($request->file('photo'))){
+                        $destinationPath = public_path('img_path/Staff');
+                        $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
+                        $image->move($destinationPath,$staffImage);
+                        $data['photo']=$staffImage;
+                    }
+                    if($staff->update($data)){
+                        return ['status'=>true];
+                    }
+                    return ['status'=>false];
+                }else{
+                    //dd($request->file('photo'));
+                        if($image=($request->file('photo'))){
+                            $destinationPath = public_path('img_path/Staff');
+                            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
+                            $image->move($destinationPath,$staffImage);
+                            $data['photo']=$staffImage;
+                        }
+                        if($staff->update($data)){
+                            return ['status'=>true];
+                        }
+                        return ['status'=>false];
+                }
             }
+
+            
         //
-        if($image=($request->file('photo'))){
-            $destinationPath = public_path('img_path/Staff');
-            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
-            $image->move($destinationPath,$staffImage);
-            $data['photo']=$staffImage;
-        }
-        if($staff->update($data)){
-            return ['status'=>true];
-        }
-        return ['status'=>false];
+        
     }
 
     /**
