@@ -109,12 +109,7 @@ class StaffController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
-        if($image=($request->file('photo'))){
-            $destinationPath = public_path('img_path/Staff');
-            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
-            $image->move($destinationPath,$staffImage);
-            $data['photo']=$staffImage;
-        }
+        $this->updateFile($request);
         if(Staff::create($data)){
             return ['status'=>true];
         }
@@ -200,11 +195,8 @@ class StaffController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
-        //dd($staff->photo);
         //delete the existing file in public_path and add new one
-        $image_path = "img_path/Staff/".$staff->photo;  // Value is not URL but directory file path
-            //si le fichier existe, on le supprime et on upload un nouveau
-            //sinon, on enregistre la nouvelle
+            $image_path = "img_path/Staff/".$staff->photo;  // Value is not URL but directory file path
             if($request->file('photo') === null){
                 if($staff->update($data)){
                     return ['status'=>true];
@@ -214,36 +206,30 @@ class StaffController extends Controller
                 if(File::exists($image_path)) {
                     File::delete($image_path);
                     DB::SELECT("UPDATE staff SET photo = 0 WHERE id = $staff->id");
-                    if($image=($request->file('photo'))){
-                        $destinationPath = public_path('img_path/Staff');
-                        $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
-                        $image->move($destinationPath,$staffImage);
-                        $data['photo']=$staffImage;
-                    }
-                    if($staff->update($data)){
-                        return ['status'=>true];
-                    }
-                    return ['status'=>false];
-                }else{
-                    //dd($request->file('photo'));
-                        if($image=($request->file('photo'))){
-                            $destinationPath = public_path('img_path/Staff');
-                            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
-                            $image->move($destinationPath,$staffImage);
-                            $data['photo']=$staffImage;
+                        $this->updateFile($request);
+                        if($staff->update($data)){
+                            return ['status'=>true];
                         }
+                        return ['status'=>false];
+                }else{
+                        $this->updateFile($request);
                         if($staff->update($data)){
                             return ['status'=>true];
                         }
                         return ['status'=>false];
                 }
-            }
-
-            
+            }  
         //
-        
     }
-
+    private function updateFile(Request $request){
+        //update file process
+        if($image=($request->file('photo'))){
+            $destinationPath = public_path('img_path/Staff');
+            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
+            $image->move($destinationPath,$staffImage);
+            $data['photo']=$staffImage;
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
