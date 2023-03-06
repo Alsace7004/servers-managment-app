@@ -40,6 +40,7 @@
                                         <tr v-for="(role,key) in roles" :key="key">
                                             <td>{{role.id}}</td>
                                             <td>{{role.name}}</td>
+                                            <td>{{role.guard_name}}</td>
                                             <td>{{convert(role.created_at)}}</td>
                                             <td>
                                                 <button class="view_btn" v-if="$can('role-view')" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
@@ -77,22 +78,36 @@
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
+                                <!-- role_name -->
                                 <div class="input_form mb_3">
                                     <input type="text" class="input_form_item" v-model="role.name" placeholder="Role name...">
                                 </div>
                                 <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
-
+                                <!-- role_name -->
+                                <!-- guard_name -->
+                                <div class="input_form mb_3">
+                                    <!-- <input type="text" class="input_form_item" v-model="role.guard_name" placeholder="guard Ex:web/staffs"> -->
+                                    <select  v-model="role.guard_name" id="" class="input_form_item">
+                                        <option value="">Selectionner un guard</option>
+                                        <option value="web">web</option>
+                                        <option value="staffs">staffs</option>
+                                        <!-- <option v-for="role in roles" :key="role.id" :value="role.id">{{role.name}}</option> -->
+                                    </select>
+                                </div>
+                                <span v-if="errors.guard_name" class="error_txt">{{errors.guard_name[0]}}</span>
+                                <!-- guard_name -->
+                                <!-- permissions -->
                                 <div class="col-md-12">
                                     <label for=""><strong>Choisir une permission :</strong></label>
-                                    <div class="row col-md-6" style="columns: 3 auto;">
+                                    <div class="row col-md-6" style="columns: 4 auto;overflow:scroll; height:400px;">
                                         <div class="" style="" v-for="permi in permissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
-                                            <label style="margin-left:0.5rem" >{{ permi.slug }}</label>
+                                            <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
                                         </div>
                                     </div>
                                 </div>
                                 <span v-if="errors.permission" class="error_txt">{{errors.permission[0]}}</span>
-
+                                <!-- permissions -->
                             </template>
                             <template v-slot:footer>
                                 <div>
@@ -113,12 +128,22 @@
                                     <input type="text" class="input_form_item" v-model="role.name" placeholder="Role name...">
                                 </div>
                                 <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <!-- guard_name -->
+                                <div class="input_form mb_3">
+                                    <select  v-model="role.guard_name" id="" class="input_form_item">
+                                        <option value="">Selectionner un guard</option>
+                                        <option value="web">web</option>
+                                        <option value="staffs">staffs</option>
+                                    </select>
+                                </div>
+                                <span v-if="errors.guard_name" class="error_txt">{{errors.guard_name[0]}}</span>
+                                <!-- guard_name -->
                                 <!-- update part begin-->
                                 <div class="col-md-12">
                                     <label for=""><strong>Choisir une permission :</strong></label>
-                                    <div class="row col-md-6" style="columns: 3 auto;">
+                                    <div class="row col-md-6" style="columns: 3 auto;overflow-y:hidden; overflow-x:scroll; height:400px;">
                                         <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
-                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }}
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
                                 </div>
@@ -175,6 +200,7 @@
             let columns =[
                     {label:'~#',        name:'id'},
                     {label:'Roles',     name:'role'},
+                    {label:'Guard',     name:'role_guard'},
                     {label:'Ajouté Le', name:'created_at'},
                     {label:'Actions',   name:'action'},
             ];
@@ -188,7 +214,7 @@
                 links:[],
                 role:{
                     name:'',
-                    guard_name:'web',
+                    guard_name:'',
                     permission:[],
                  
                 },
@@ -218,7 +244,7 @@
             showModal(){
                 this.errors = []
                 this.role.name = ""
-                this.role.guard_name='web',
+                this.role.guard_name='',
                 this.role.permission = []
                 $("#create_role").modal("show")
             },
@@ -314,6 +340,7 @@
                     console.log('valeur de res dans edit role:',res)
                     this.edit_id            = res.data.role.id;
                     this.role.name          = res.data.role.name;
+                    this.role.guard_name    = res.data.role.guard_name;
                     this.role.permission    = res.data.rolePermissions
                     this.is_Editing         = true;
 

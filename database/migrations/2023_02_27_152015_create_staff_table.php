@@ -20,10 +20,12 @@ return new class extends Migration
             $table->string('adresse');
             $table->string('email')->unique();
             $table->string('photo');
-            $table->foreignId('role_id')->constrained('roles');
+            //$table->foreignId('role_id')->constrained('roles');
             $table->foreignId('departement_id')->constrained('departements');
             $table->foreignId('type_staff_id')->constrained('type_staff');
             $table->boolean('is_deleted')->default(0);
+            $table->string('password');
+            $table->boolean('checked')->default(1);
             $table->timestamps();
         });
     }

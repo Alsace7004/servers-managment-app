@@ -27,20 +27,56 @@ class AuthController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
-        if(auth()->attempt($data)){
+        //if(Auth::guard('web')->attempt($data) || Auth::guard('staffs')->attempt($data)){
+        if(Auth::guard('web')->attempt($data)){
             $request->session()->regenerate();
             return response()->json([
                 'status'=>true,
-                'user_role'=>auth()->user()->roles->pluck('name'),
-                'user_permission'=>Auth::user()->getPermissionsViaRoles()->pluck('name'),
-                'user'=>auth()->user(),
-                'access_token'=>auth()->user()->createToken("Token")->plainTextToken
-                //'access_token'=>auth()->user()->createToken('authToken')->accessToken
+                'user_role'=>Auth::guard('web')->user()->roles->pluck('name'),
+                'user_permission'=>Auth::guard('web')->user()->getPermissionsViaRoles()->pluck('name'),
+                'user'=>Auth::guard('web')->user(),
+                'access_token'=>Auth::guard('web')->user()->createToken("Token")->plainTextToken
+            ]);
+        }else if(Auth::guard('staffs')->attempt($data)){
+                $request->session()->regenerate();
+                return response()->json([
+                    'status'=>true,
+                    'user_role'=>Auth::guard('staffs')->user()->roles->pluck('name'),
+                    'user_permission'=>Auth::guard('staffs')->user()->getPermissionsViaRoles()->pluck('name'),
+                    'user'=>Auth::guard('staffs')->user(),
+                    'access_token'=>Auth::guard('staffs')->user()->createToken("Token")->plainTextToken
+                    //'access_token'=>auth()->user()->createToken('authToken')->accessToken
+                ]);
+        }else{
+            /* return response()->json([
+                'status'=>false,
+                'message'=>"je suis le else"
+            ]); */
+            return response()->json([
+                'status'=>false,
+                'message'=>'Email ou mot de passe incorrecte'
+            ],Response::HTTP_UNAUTHORIZED);
+        }
+        
+    }
+    //StaffLogin
+    public function staffLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required|email',
+            'password' => 'required|min:8'
+        ]);
+
+        if (Auth::guard('staff')->attempt(['email' => $request->email, 'password' => $request->password])) {
+
+            return response()->json([
+                'message'=>'je suis connecté en tant que staff',
+                'user'=>auth()->user()
             ]);
         }
         return response()->json([
             'status'=>false,
-            'message'=>'Email ou mot de passe incorrecte'
+            'message'=>'Email ou mot de passe incorrecte pour le staffeur'
         ],Response::HTTP_UNAUTHORIZED);
     }
     //register

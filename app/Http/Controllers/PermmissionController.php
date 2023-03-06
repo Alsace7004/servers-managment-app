@@ -22,7 +22,7 @@ class PermmissionController extends Controller
         ]);
     }
     public function permissionList(){
-        $permissions = Permission::query()->select('id','name','slug')->orderBy('id','desc')->get();
+        $permissions = Permission::query()->select('id','name','guard_name','slug')->orderBy('id','desc')->get();
         return response()->json([
             'status'=>true,
             'permissions'=>$permissions

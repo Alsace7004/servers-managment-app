@@ -116,6 +116,11 @@
                                         <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
                                         <!--  -->
                                         <div class="input_form mb_3">
+                                            <input type="password" class="input_form_item" v-model="staff.password" placeholder="Password...">
+                                        </div>
+                                        <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
+                                        <!--  -->
+                                        <div class="input_form mb_3">
                                             <input type="text" class="input_form_item" v-model="staff.adresse" placeholder="Adresse...">
                                         </div>
                                         <span v-if="errors.adresse" class="error_txt">{{errors.adresse[0]}}</span>
@@ -143,6 +148,10 @@
                                         </div>
                                         <span v-if="errors.type_staff_id" class="error_txt">{{errors.type_staff_id[0]}}</span>
                                         <!--  -->
+                                        <div class="mb_3">
+                                            <input type="checkbox" class="" v-model="staff.checked" placeholder="Password...">
+                                            <label for=""> Definir un mot de passe</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <!--  -->
@@ -284,6 +293,8 @@
                     departement_id:'',
                     role_id:'',
                     photo:'',
+                    password:'',
+                    checked:'',
                 },
                 staffImg:{
                     img:''
@@ -316,6 +327,8 @@
                     departement_id:'',
                     role_id:'',
                     photo:'',
+                    password:'',
+                    checked:true,
                 }
                 this.staffImg={
                     img:'',
@@ -336,7 +349,7 @@
             },
             //getAllRoles
             getRoles(){
-                axiosClient.get("api/getAllRoles").then((res)=>{
+                axiosClient.get("api/getAllStaffRoles").then((res)=>{
                     let content = res.data.roles;
                     this.roles = content;
                     //console.log("Valeur de res dans getRoles:",res)
@@ -378,6 +391,8 @@
                     fd.append('departement_id',this.staff.departement_id)
                     fd.append('role_id',this.staff.role_id)
                     fd.append('photo',this.staff.photo)
+                    fd.append('password',this.staff.password)
+                    fd.append('checked',this.staff.checked?1:0)
                 axiosClient.post("api/staff",fd).then((res)=>{
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;

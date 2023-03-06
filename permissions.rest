@@ -1,0 +1,4 @@
+
+
+### SEND PERMISSIONS TO DB
+GET http://localhost:8000/api/staffPermission

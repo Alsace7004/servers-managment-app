@@ -126,7 +126,7 @@ const routes = [
         },
         beforeEnter(to,from,next){
             let {U_permissions}=useAuthStore()
-            if(U_permissions.includes('domaine-list')){
+            if(U_permissions.includes('departement-list')){
                 //verifier la permission
                 next()
             }else{
@@ -143,7 +143,7 @@ const routes = [
         },
         beforeEnter(to,from,next){
             let {U_permissions}=useAuthStore()
-            if(U_permissions.includes('domaine-list')){
+            if(U_permissions.includes('typeStaff-list')){
                 //verifier la permission
                 next()
             }else{
@@ -160,7 +160,7 @@ const routes = [
         },
         beforeEnter(to,from,next){
             let {U_permissions}=useAuthStore()
-            if(U_permissions.includes('domaine-list')){
+            if(U_permissions.includes('staff-list')){
                 //verifier la permission
                 next()
             }else{

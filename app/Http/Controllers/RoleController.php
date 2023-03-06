@@ -22,7 +22,7 @@ class RoleController extends Controller
         //
         $length = $request->input('length');
         $searchValue = $request->input('search');
-        $roles = Role::query()->select('id','name','created_at')
+        $roles = Role::query()->select('id','name','guard_name','created_at')
                         ->where('is_deleted',false)
                         ->orderBy('id','desc');
         if($searchValue){
@@ -39,6 +39,17 @@ class RoleController extends Controller
     public function roleList(){
         $roles = Role::query()->select('id','name')
                         ->where('is_deleted',false)
+                        ->where('guard_name','web')
+                        ->get();
+        return response()->json([
+            'status'=>true,
+            'roles'=>$roles
+        ]);
+    }
+    public function staffRoleList(){
+        $roles = Role::query()->select('id','name')
+                        ->where('is_deleted',false)
+                        ->where('guard_name','staffs')
                         ->get();
         return response()->json([
             'status'=>true,
@@ -57,15 +68,32 @@ class RoleController extends Controller
         //
         $data = $request->only(['name','permission','guard_name']);
         //dd($data);
+        $name = $data['name'];
+        $guard_name = $data['guard_name'];
+        //dd($data);
         $validator = Validator::make($data,[
-            'name'          =>'required|string|unique:roles,name|min:2|max:20',
-            'guard_name'    =>'required|string',
+            'name'          =>['required','string','min:2','max:20',
+                            Rule::unique('roles','name')->where(function($query) use($guard_name){
+                                return $query->where('guard_name',$guard_name);
+                            })
+            ],
+            'guard_name'    =>['required','string','min:2','max:20',
+                            Rule::unique('roles','guard_name')->where(function($query) use($name){
+                                return $query->where('name',$name);
+                            })
+            ],
             'permission'    => 'required',
         ],[
             'name.required' =>'Veuillez remplir ce champ',
-            'name.unique'   =>'Cette valeur existe déjà',
+            'name.unique'   =>'Ce role existe déjà pour ce guard',
             'name.min'      =>'Trop court',
             'name.max'      =>'Trop long',
+            //
+            'guard_name.required' =>'Veuillez remplir ce champ',
+            'guard_name.unique'   =>'Ce guard existe déjà pour ce role',
+            'guard_name.min'      =>'Trop court',
+            'guard_name.max'      =>'Trop long',
+            //
             'permission.required'=>'Veuillez choisir une permission',
         ]);
         if($validator->fails()){
@@ -142,17 +170,29 @@ class RoleController extends Controller
         //die();
         //dd($request->role['permission']);
         //dd($request->role['guard_name']);
-
+        $name = $request->role['name'];
+        $guard_name = $request->role['guard_name'];
         $validator = Validator::make($data,[
             'name' => ['required','string','min:2','max:20',
-                Rule::unique('roles')->ignore($role->id)
+                Rule::unique('roles','name')->where(function($query) use($guard_name){
+                    return $query->where('guard_name',$guard_name);
+                })->ignore($role->id)
             ],
-            'guard_name'=>'required|string',
+            'guard_name'=>['required','string','min:2','max:20',
+                Rule::unique('roles','guard_name')->where(function($query) use($name){
+                    return $query->where('name',$name);
+                })->ignore($role->id)
+            ],
         ],[
             'name.required' =>'Veuillez remplir ce champ',
-            'name.unique'   =>'Cette valeur existe déjà',
+            'name.unique'   =>'Ce role existe déjà pour ce guard',
             'name.min'      =>'Trop court',
             'name.max'      =>'Trop long',
+            //
+            'guard_name.required' =>'Veuillez remplir ce champ',
+            'guard_name.unique'   =>'Ce guard existe déjà pour ce role',
+            'guard_name.min'      =>'Trop court',
+            'guard_name.max'      =>'Trop long',
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);

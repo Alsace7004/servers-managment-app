@@ -54,7 +54,8 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         //
-        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo','role_id']);
+        //dd($request->all());
+        $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo','role_id','password','checked']);
         $lastName = $data['prenom'];
         $firstName = $data['nom'];
         $validator = Validator::make($data,[
@@ -78,6 +79,7 @@ class StaffController extends Controller
             'departement_id'    =>'required',
             'role_id'           =>'required',
             'photo'             =>'required|file|mimes:jpeg,png,jpg,svg|max:1024',
+            'password'          =>'required|string|min:8',
         ],[
             'nom.required'      =>'Veuillez remplir ce champ',
             'nom.min'           =>'Trop court',
@@ -105,15 +107,41 @@ class StaffController extends Controller
             'photo.file'                =>'Veuillez choisir une image',
             'photo.mimes'               =>'Non autorisé',
             'photo.max'                 =>'Image trop lourde',
+            //
+            'password.required'         =>'Veuillez remplir ce champ',
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
-        $this->updateFile($request);
-        if(Staff::create($data)){
+        if($image=($request->file('photo'))){
+            $destinationPath = public_path('img_path/Staff');
+            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
+            $image->move($destinationPath,$staffImage);
+            $data['photo']=$staffImage;
+        }
+        /***********************************************/
+        $staff = new Staff();
+        $staff->nom = $data['nom'];
+        $staff->prenom = $data['prenom'];
+        $staff->email = $data['email'];
+        $staff->adresse = $data['adresse'];
+        $staff->type_staff_id = $data['type_staff_id'];
+        $staff->departement_id = $data['departement_id'];
+        $staff->checked = $data['checked'];
+        $staff->photo = $data['photo'];
+        $staff->password = bcrypt($data['password']);
+        if($staff->save()){
+            $staff->assignRole($data['role_id']);
             return ['status'=>true];
         }
         return ['status'=>false];
+        /***********************************************/
+        /* $data['password'] = bcrypt($data['password']);
+        if(Staff::create($data)){
+            return ['status'=>true];
+        }
+        return ['status'=>false]; */
+        /***********************************************/
     }
 
     /**
@@ -138,6 +166,7 @@ class StaffController extends Controller
     public function update(Request $request, Staff $staff)
     {
         //
+        
         $data = $request->only(['nom','prenom','email','adresse','type_staff_id','departement_id','photo','role_id']);
         $firstName = $data['nom'];
         $lastName  = $data['prenom'];
@@ -206,13 +235,23 @@ class StaffController extends Controller
                 if(File::exists($image_path)) {
                     File::delete($image_path);
                     DB::SELECT("UPDATE staff SET photo = 0 WHERE id = $staff->id");
-                        $this->updateFile($request);
+                        if($image=($request->file('photo'))){
+                            $destinationPath = public_path('img_path/Staff');
+                            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
+                            $image->move($destinationPath,$staffImage);
+                            $data['photo']=$staffImage;
+                        }
                         if($staff->update($data)){
                             return ['status'=>true];
                         }
                         return ['status'=>false];
                 }else{
-                        $this->updateFile($request);
+                        if($image=($request->file('photo'))){
+                            $destinationPath = public_path('img_path/Staff');
+                            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
+                            $image->move($destinationPath,$staffImage);
+                            $data['photo']=$staffImage;
+                        }
                         if($staff->update($data)){
                             return ['status'=>true];
                         }
@@ -221,15 +260,7 @@ class StaffController extends Controller
             }  
         //
     }
-    private function updateFile(Request $request){
-        //update file process
-        if($image=($request->file('photo'))){
-            $destinationPath = public_path('img_path/Staff');
-            $staffImage = date('YmdHis').".".$image->getClientOriginalExtension();
-            $image->move($destinationPath,$staffImage);
-            $data['photo']=$staffImage;
-        }
-    }
+
     /**
      * Remove the specified resource from storage.
      *
