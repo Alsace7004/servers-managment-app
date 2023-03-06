@@ -33,6 +33,11 @@ const routes = [
         component:()=>import("../Views/Login.vue")
     },
     {
+        path:'/modify-staff-password',
+        name:'modifyStaffPassword',
+        component:()=>import("../Views/ModifyStaffPassword.vue")
+    },
+    {
         path:'/users',
         name:'users',
         component:()=>import("../Views/Users.vue"),

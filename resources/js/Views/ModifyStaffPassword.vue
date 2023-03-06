@@ -1,16 +1,16 @@
 <template>
     <div class="login_container">
-        <div class="login_text">Se connecter</div>
+        <div class="login_text">Modification du mot de passe</div>
         <div class="login_form_input_control">
-            <input type="text" class="login_form_input" v-model="user.email" placeholder="Email">
+            <input type="password" class="login_form_input" v-model="user.email" placeholder="Mot de passe actuelle">
         </div>
         <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
         <div class="login_form_input_control">
-            <input type="password" class="login_form_input" v-model="user.password" name="" id="" placeholder="Password">
+            <input type="password" class="login_form_input" v-model="user.password" name="" id="" placeholder="Nouveau mot de passe">
         </div>
         <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
         <div class="login_form_input_control">
-            <button class="login_btn" :class="loading ? 'disabled':''" @click="loginUser">Se connecter</button>
+            <button class="login_btn" :class="loading ? 'disabled':''" @click="updatePassword">Mettre à jour</button>
         </div>
     </div>
 </template>
@@ -37,6 +37,9 @@ export default {
         async getToken(){
             await axios.get('/sanctum/csrf-cookie');
         },
+        updatePassword(){
+            alert("mise à jour du mot de passe en cours...")
+        },
         loginUser(){
             this.getToken();
             this.errors = []
@@ -51,22 +54,18 @@ export default {
                         login_btn.innerHTML ="Se connecter"
                         this.loading =  false
                         console.log("Valeur de res dans loginUser:",res)
-                        console.log("Valeur du checked du user connecté:",res.data.user.checked)
-                        //verifier l'attribut checked
-                        
+
                         if(res.data.status){
-                            if(res.data.user.checked === 1){
+                            Swal.fire('Success!','Connexion reussie !!!.','success');
+                            //this.$router.push("/users");
+                            userStore.setUserDetails(res)
+                            //verifier l'attribut checked
                             //si checked === 1, il devra modifier son mot de passe ensuite return direct sur /
-                            this.$router.replace("/modify-staff-password");
-                            }else if(res.data.user.checked === 0){
-                                //si checked === 0, return direct sur /
-                                Swal.fire('Success!','Connexion reussie !!!.','success');
-                                userStore.setUserDetails(res)
-                                this.$router.replace("/");
-                            }else{
-                                return;
-                            }
+                            //si checked === 0, return direct sur /
+                            this.$router.replace("/");
+                            //window.location.href("/users");
                         }
+                        //17|Qq5qDR6r3GgVF0iSgLhVpOV4C7rgYe37qTbI1PVS
                     }).catch((err)=>{
                         login_btn.innerHTML ="Se connecter"
                         this.loading =  false
