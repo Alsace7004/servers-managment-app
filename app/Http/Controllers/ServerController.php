@@ -21,7 +21,7 @@ class ServerController extends Controller
         $searchValue = $request->input('search');
 
         $servers = Server::query()
-                        ->select('id','name','username','url_connexion','created_at')
+                        ->select('id','name','username','url_connexion','date_expiration','status','created_at')
                         ->where('is_deleted',false)
                         ->orderBy('id','desc');
         
@@ -57,14 +57,15 @@ class ServerController extends Controller
     public function store(Request $request)
     {
         //
-        $data = $request->only(['name','username','password','url_connexion','description']);
+        $data = $request->only(['name','username','password','url_connexion','description','date_expiration']);
         //dd($data);
         $validator = Validator::make($data,[
-            'name'          =>'required|string|unique:servers|min:2|max:50',
-            'username'      =>'required|string|min:2|max:50',
-            'password'      =>'required|string|min:8',
-            'url_connexion' =>'required|string|url|unique:servers|min:2|max:100',
-            'description'   =>'required|string|min:2|max:255',
+            'name'                      =>'required|string|unique:servers|min:2|max:50',
+            'username'                  =>'required|string|min:2|max:50',
+            'password'                  =>'required|string|min:8',
+            'url_connexion'             =>'required|string|url|unique:servers|min:2|max:100',
+            'description'               =>'required|string|min:2|max:255',
+            'date_expiration'           =>'required|date|after:today',
         ],[
             'name.required'             =>'Veuillez remplir ce champ',
             'name.unique'               =>'Cette valeur existe déjà',
@@ -83,16 +84,20 @@ class ServerController extends Controller
             'description.required'      =>'Veuillez remplir ce champ',
             'description.min'           =>'Trop court',
             'description.max'           =>'Trop long',
+            'date_expiration.required'  =>'Veuillez remplir ce champ',
+            'date_expiration.date'      =>'Veuillez entrer une date',
+            'date_expiration.after'     =>"Cette date doit etre ulterieure à la date d'aujourd'hui",
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
-        $ser                = new Server();
-        $ser->name          = $data['name'];
-        $ser->username      = $data['username'];
-        $ser->password      = $data['password'];
-        $ser->url_connexion = $data['url_connexion'];
-        $ser->description   = $data['description'];
+        $ser                    = new Server();
+        $ser->name              = $data['name'];
+        $ser->username          = $data['username'];
+        $ser->password          = $data['password'];
+        $ser->url_connexion     = $data['url_connexion'];
+        $ser->description       = $data['description'];
+        $ser->date_expiration   = $data['date_expiration'];
         if($ser->save()){
             return ['status'=>true];
         }
@@ -121,13 +126,14 @@ class ServerController extends Controller
     public function update(Request $request, Server $server)
     {
         //Rule::unique('roles')->ignore($role->id)
-        $data = $request->only(['name','username','password','url_connexion','description']);
+        $data = $request->only(['name','username','password','url_connexion','description','date_expiration']);
         $validator = Validator::make($data,[
             'name'          =>['required','string',Rule::unique('servers')->ignore($server->id),'min:2','max:50'],
             'username'      =>'required|string|min:2|max:50',
             'password'      =>'required|string|min:8',
             'url_connexion' =>['required','string',Rule::unique('servers')->ignore($server->id),'url','min:2','max:100'],
             'description'   =>'required|string|min:2|max:255',
+            'date_expiration'           =>'required|date|after:today',
         ],[
             'name.required'             =>'Veuillez remplir ce champ',
             'name.unique'               =>'Cette valeur existe déjà',
@@ -146,6 +152,9 @@ class ServerController extends Controller
             'description.required'      =>'Veuillez remplir ce champ',
             'description.min'           =>'Trop court',
             'description.max'           =>'Trop long',
+            'date_expiration.required'  =>'Veuillez remplir ce champ',
+            'date_expiration.date'      =>'Veuillez entrer une date',
+            'date_expiration.after'     =>"Cette date doit etre ulterieure à la date d'aujourd'hui",
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
@@ -155,6 +164,7 @@ class ServerController extends Controller
             $server->password      = $data['password'];
             $server->url_connexion = $data['url_connexion'];
             $server->description   = $data['description'];
+            $server->date_expiration  = $data['date_expiration'];
             if($server->save()){
                 return ['status'=>true];
             }

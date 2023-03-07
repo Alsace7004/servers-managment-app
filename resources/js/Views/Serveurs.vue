@@ -45,6 +45,11 @@
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.url_connexion}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
+                                                <td>{{convert(item.date_expiration)}}</td>
+                                                <td>
+                                                    <p v-if="item.status === 0" class="badge_white">En cours</p>
+                                                    <p v-if="item.status === 1" class="badge_red">Expiré(e)</p>
+                                                </td>
                                                 <td>
                                                     <button class="view_btn" v-if="$can('server-view')" @click="viewServer(item.id)"><i class="fas fa-eye"></i></button>
                                                     <button class="edit_btn" v-if="$can('server-edit')"  @click="editServer(item.id)"><i class="fas fa-edit"></i></button>
@@ -97,9 +102,11 @@
                                     <input type="url" class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
                                 </div>
                                 <span v-if="errors.url_connexion" class="error_txt">{{errors.url_connexion[0]}}</span>
-                                <!-- <div class="input_form mb_3">
-                                    <textarea name="" id="" cols="30" rows="3" class="input_form_item" v-model="server.description" placeholder="Server description..."></textarea>
-                                </div> -->
+                                <div class="input_form mb_3">
+                                    <input type="date" class="input_form_item" v-model="server.date_expiration" placeholder="Date Expiration du serveur...">
+                                </div>
+                                <span v-if="errors.date_expiration" class="error_txt">{{errors.date_expiration[0]}}</span>
+                                <!-- ckeditor -->
                                 <ckeditor :editor="editor" v-model="server.description" :config="editorConfig"></ckeditor>
                                 <span v-if="errors.description" class="error_txt">{{errors.description[0]}}</span>
                             </template>
@@ -134,6 +141,12 @@
                                     <input type="url" class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
                                 </div>
                                 <span v-if="errors.url_connexion" class="error_txt">{{errors.url_connexion[0]}}</span>
+                                <!--  -->
+                                <div class="input_form mb_3">
+                                    <input type="date" class="input_form_item" v-model="server.date_expiration" placeholder="Date Expiration du serveur...">
+                                </div>
+                                <span v-if="errors.date_expiration" class="error_txt">{{errors.date_expiration[0]}}</span>
+                                <!--  -->
                                 <!-- editor -->
                                 <ckeditor :editor="editor" v-model="server.description" :config="editorConfig"></ckeditor>
                                 <span v-if="errors.description" class="error_txt">{{errors.description[0]}}</span>
@@ -174,9 +187,23 @@
                                 </div>
 
                                 <label for=""><strong>Description du Serveur :</strong></label>
-                                <div class="">
+                                <div class="mb_3">
                                     <p>{{server.description}}</p>
                                 </div>
+                                <!--  -->
+                                <label for=""><strong>Date Expiration :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{convert(server.date_expiration)}}</p>
+                                </div>
+                                <!--  -->
+                                <label for=""><strong>Status :</strong></label>
+                                <div class="mb_3">
+                                    <tr>
+                                        <p v-if="server.status === 0" class="badge_white_view">En cours</p>
+                                        <p v-if="server.status === 1" class="badge_red_view">Expiré(e)</p>
+                                    </tr>
+                                </div>
+                                <!--  -->
                             </template>
                             <template v-slot:footer>
                                 <div>
@@ -210,6 +237,8 @@
                 {label:'Nom',name:''},
                 {label:'Url_Connexion',name:''},
                 {label:'Ajouté Le',name:''},
+                {label:"Date d'expiration",name:''},
+                {label:"Status",name:''},
                 {label:'Actions',name:''},
             ];
             return{
@@ -225,6 +254,7 @@
                     password:'',
                     url_connexion:'',
                     description:'<p>Content of the editor.</p>',
+                    date_expiration:'',
                 },
                 isModalVisible:false,
                 tData:{
@@ -256,7 +286,8 @@
                     username:'',
                     password:'',
                     url_connexion:'',
-                    description:''
+                    description:'',
+                    date_expiration:'',
                 }
                 $("#create_server").modal("show")
             },
@@ -327,12 +358,13 @@
                 this.errors = [];
                 axiosClient.get(`api/servers/${id}`).then((res)=>{
                     $("#edit_server").modal("show")
-                    //console.log('valeur de res dans edit server:',res)
+                    console.log('valeur de res dans edit server:',res)
                     this.edit_id    = res.data.id;
                     this.server.name  = res.data.name;
                     this.server.username  = res.data.username;
                     this.server.url_connexion  = res.data.url_connexion;
                     this.server.description  = res.data.description;
+                    this.server.date_expiration  = res.data.date_expiration;
                     this.is_Editing = true;
                 })
             },
@@ -347,6 +379,8 @@
                     this.server.password  = res.data.password;
                     this.server.url_connexion  = res.data.url_connexion;
                     this.server.description  = res.data.description;
+                    this.server.date_expiration  = res.data.date_expiration;
+                    this.server.status  = res.data.status;
                     //this.is_Editing = true;
                 })
             },  

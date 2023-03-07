@@ -425,20 +425,5 @@
 </script>
 
 <style scoped>
-    .badge_red{
-        border-radius: 5px;
-        background-color: #dd3333;
-        color: white;
-    }
-    .badge_white{
-        border-radius: 5px;
-        background-color: #2f3640;
-        color: #fff;
-    }
-    .badge_red_view{
-        border:1px solid #dd3333;background-color: #dd3333;color: white;padding:1px 15px;border-radius:5px
-    }
-    .badge_white_view{
-        border:1px solid #2f3640;background-color: #2f3640;color: #fff;padding:1px 15px;border-radius:5px
-    }
+    
 </style>

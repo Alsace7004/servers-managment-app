@@ -136,7 +136,7 @@
             on ajoute une nouvelle colonne type
 
             si le type est un domaine->DOMAINE/HERGEMENT prend: url
-            si le typz est un serveur->DOMAINE/HEBERGEMMENT prend nom de l'hebergeur
+            si le type est un serveur->DOMAINE/HEBERGEMMENT prend nom de l'hebergeur
         */
         
     }
