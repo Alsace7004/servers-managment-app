@@ -50,7 +50,7 @@ export default {
                 if(res.data.status === false){
                     Swal.fire('Erreur!',`${res.data.message }`,'error') ;
                 }else if(res.data.status === true){
-                    Swal.fire('Success!',`${res.data.message }`,'success') ;
+                    //Swal.fire('Success!',`${res.data.message }`,'success') ;
                     this.$router.replace("/");
                 }
             }).catch((err)=>{

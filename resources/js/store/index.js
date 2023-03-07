@@ -11,6 +11,7 @@ export const useAuthStore = defineStore("auth",{
         token:null,
         name:null,
         email:null,
+        photo:null,
         role:null
     }),
     getters:{
@@ -37,6 +38,7 @@ export const useAuthStore = defineStore("auth",{
             this.$state.token           = res.data.access_token
             this.$state.name            = res.data.user.name
             this.$state.email           = res.data.user.email
+            this.$state.photo           = res.data.user.photo
             this.$state.role            = res.data.user_role
             this.$state.U_permissions   = res.data.user_permission;
         },
@@ -45,6 +47,7 @@ export const useAuthStore = defineStore("auth",{
             this.$state.token           = null
             this.$state.name            = null
             this.$state.email           = null
+            this.$state.photo           = null
             this.$state.U_roles         = null
             this.$state.U_permissions   = null
             this.$state.role            = null

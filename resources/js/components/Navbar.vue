@@ -9,7 +9,8 @@
                             <p><strong>{{name}}</strong></p>
                         </div>
                         <div class="profile_img">
-                            <img src="" alt="" srcset="">
+                            <img v-if="photo === null || photo === undefined" class="profile_img" :src="'../profile/img/user.png'" alt="" srcset="">
+                            <img v-else class="profile_img" :src="'../img_path/Staff/'+photo" alt="" srcset="">
                         </div>
                     </div>
                 </div>
@@ -18,7 +19,7 @@
 <script setup>
     import { onMounted } from "@vue/runtime-core"
     import {useAuthStore} from "../store/index"
-    const {name,email}=useAuthStore()
+    const {name,email,photo}=useAuthStore()
     onMounted(()=>{
         //console.log("Valeur de name:",email)
         let hambuger = document.querySelector(".hambuger")

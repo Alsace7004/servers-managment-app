@@ -151,7 +151,7 @@ body{
     width: 45px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
 }
 
 /*********************SHOW/HIDE-SIDE-BAR***************************************/

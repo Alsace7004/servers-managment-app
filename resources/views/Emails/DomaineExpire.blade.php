@@ -30,25 +30,33 @@
 </head>
 <body>
     {{-- Begin --}}
-            <h3 class="msg_title">Domaine qui arriverons à écheance dans moins d'une semaine</h3>
+            <h3 class="">Bonjour, liste des domaines et hebergements qui arriverons à écheance dans moins d'une semaine</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Nom de domaine</th>
+                        <th>Domaine/Hebergement</th>
+                        <th>Type</th>
+                        <th>Date Expiration</th>
+                        <th>Jours Restant</th>
+                        {{-- <th>Nom de domaine</th>
                         <th>Hebergeur</th>
                         <th>Registre</th>
                         <th>Date Expiration</th>
-                        <th>Jours Restant</th>
+                        <th>Jours Restant</th> --}}
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($domaines as $item)
                         <tr>
-                            <td>{{$item->nom_domaine}}</td>
+                            <td>{{$item->nom_hebergeur}}</td>
+                            <td>{{$item->type}}</td>
+                            <td>{{$item->date_expiration}}</td>
+                            <td>{{$item->thediff}}</td>
+                            {{-- <td>{{$item->nom_domaine}}</td>
                             <td>{{$item->name}}</td>
                             <td>{{$item->registre}}</td>
                             <td>{{$item->date_expiration}}</td>
-                            <td>{{$item->thediff}}</td>
+                            <td>{{$item->thediff}}</td> --}}
                         </tr>
                     @endforeach
                 </tbody>

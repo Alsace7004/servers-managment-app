@@ -83,7 +83,7 @@
         axiosClient.post("api/logout").then((res)=>{
             console.log("Valeur de res dans logout:",res)
             if(res.data.status){
-                Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success');
+                //Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success');
                     userStore.clearUser();
                     localStorage.removeItem('auth')
                     localStorage.removeItem('user_id')

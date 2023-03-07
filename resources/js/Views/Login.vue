@@ -62,11 +62,11 @@ export default {
                                 this.$router.replace("/modify-staff-password");
                             }else if(res.data.user.checked === 0){
                                 //si checked === 0, return direct sur /
-                                Swal.fire('Success!','Connexion reussie !!!.','success');
+                                //Swal.fire('Success!','Connexion reussie !!!.','success');
                                 userStore.setUserDetails(res)
                                 this.$router.replace("/");
                             }else{
-                                Swal.fire('Success!','Connexion reussie !!!.','success');
+                                //Swal.fire('Success!','Connexion reussie !!!.','success');
                                 userStore.setUserDetails(res)
                                 this.$router.replace("/");
                             }
