@@ -57,14 +57,18 @@ export default {
                         if(res.data.status){
                             if(res.data.user.checked === 1){
                             //si checked === 1, il devra modifier son mot de passe ensuite return direct sur /
-                            this.$router.replace("/modify-staff-password");
+                            localStorage.setItem("user_id",res.data.user.id)
+                                userStore.setUserDetails(res)
+                                this.$router.replace("/modify-staff-password");
                             }else if(res.data.user.checked === 0){
                                 //si checked === 0, return direct sur /
                                 Swal.fire('Success!','Connexion reussie !!!.','success');
                                 userStore.setUserDetails(res)
                                 this.$router.replace("/");
                             }else{
-                                return;
+                                Swal.fire('Success!','Connexion reussie !!!.','success');
+                                userStore.setUserDetails(res)
+                                this.$router.replace("/");
                             }
                         }
                     }).catch((err)=>{

@@ -86,6 +86,7 @@
                 Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success');
                     userStore.clearUser();
                     localStorage.removeItem('auth')
+                    localStorage.removeItem('user_id')
                     localStorage.clear(); 
                     //this.$router.push("/login");   
                 router.push({ path: '/login' }) 

@@ -1,14 +1,19 @@
 <template>
     <div class="login_container">
         <div class="login_text">Modification du mot de passe</div>
+        <!-- Old Password -->
         <div class="login_form_input_control">
-            <input type="password" class="login_form_input" v-model="user.email" placeholder="Mot de passe actuelle">
+            <input type="password" class="login_form_input" v-model="user.old_password" placeholder="Mot de passe actuelle">
         </div>
-        <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
+        <span v-if="errors.old_password" class="error_txt">{{errors.old_password[0]}}</span>
+        <!-- Old Password -->
+
+        <!-- New Password -->
         <div class="login_form_input_control">
-            <input type="password" class="login_form_input" v-model="user.password" name="" id="" placeholder="Nouveau mot de passe">
+            <input type="password" class="login_form_input" v-model="user.new_password" name="" id="" placeholder="Nouveau mot de passe">
         </div>
-        <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
+        <span v-if="errors.new_password" class="error_txt">{{errors.new_password[0]}}</span>
+        <!-- New Password -->
         <div class="login_form_input_control">
             <button class="login_btn" :class="loading ? 'disabled':''" @click="updatePassword">Mettre à jour</button>
         </div>
@@ -17,7 +22,7 @@
 
 <script>
     import {useAuthStore} from "../store/index"
-    const userStore = useAuthStore();
+    //const {id}=useAuthStore()
 export default {
    
     components:{
@@ -27,8 +32,8 @@ export default {
         return{
             errors:[],
             user:{
-                email:'',
-                password:''
+                old_password:'',
+                new_password:'',
             },
             loading:false,
         }
@@ -38,7 +43,25 @@ export default {
             await axios.get('/sanctum/csrf-cookie');
         },
         updatePassword(){
-            alert("mise à jour du mot de passe en cours...")
+            //let id = 25;
+            let id =  localStorage.getItem("user_id")
+            axios.put(`api/updateStaffPassword/${id}`,this.user).then((res)=>{
+                console.log("Valeur de res dans updateStaffPassword:",res)
+                if(res.data.status === false){
+                    Swal.fire('Erreur!',`${res.data.message }`,'error') ;
+                }else if(res.data.status === true){
+                    Swal.fire('Success!',`${res.data.message }`,'success') ;
+                    this.$router.replace("/");
+                }
+            }).catch((err)=>{
+                console.log("Valeur de err dans updateStaffPassword:",err.response)
+                    if(err.response.status === 422){
+                        this.errors = err.response.data.errors
+                    }else{
+                        //console.log("erreur: probleme de connexion")
+                        Swal.fire('Erreur!','Probleme de connexion.','error') ;
+                    }
+            });
         },
         loginUser(){
             this.getToken();

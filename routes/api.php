@@ -65,6 +65,7 @@ Route::middleware('web')->group(function () {
     Route::get('getAllTypeStaff',[TypeStaffController::class,'typeStaffList']);//
     //Staff
     Route::apiResource('staff',StaffController::class);
+    Route::put("updateStaffPassword/{id}",[StaffController::class,'updateStaffPassword']);
     //Get Auth User Permission And Role
     Route::get('/get-permissions',[PermmissionController::class,'getAuthUserPermissionAndRole']);
 });

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class StaffController extends Controller
@@ -278,5 +279,44 @@ class StaffController extends Controller
             return ['status'=>false];
         }
         return ['status'=>false];
+    }
+
+    public function updateStaffPassword(Request $request, $id){
+        //dd($id);
+        $staffPassword = DB::SELECT("SELECT password FROM staff WHERE id = $id");
+        $staffPassword = $staffPassword[0]->password;
+        //dd($staffPassword);
+        $data = $request->only(['old_password','new_password']);
+        
+        $validator = Validator::make($data,[
+            'old_password'=>'required|string|min:8',
+            'new_password'=>'required|string|min:8',
+        ],[
+            'old_password.required' =>'Veuillez remplir ce champ',
+            'old_password.min'      =>'Trop court',
+
+            'new_password.required' =>'Veuillez remplir ce champ',
+            'new_password.min'      =>'Trop court',
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
+
+        //on do les verifications
+        if (!Hash::check($data['old_password'],$staffPassword)){
+            return response()->json([
+                'status'=>false,
+                'message'=>'mot de passe incorrecte !!!'
+            ]);
+        }else{
+            // going to update
+            $finalPassword = bcrypt($data['new_password']);
+            DB::UPDATE("UPDATE staff SET password = '$finalPassword' WHERE id = $id");
+            DB::UPDATE("UPDATE staff SET checked = 0 WHERE id = $id");
+            return response()->json([
+                'status'=>true,
+                'message'=>'Mot de passe mise à jour avec succèss !!!'
+            ]);
+        }
     }
 }
