@@ -118,6 +118,25 @@
         -----Nouveau Menu Staff :
             Action:Creation,Liste,Modification,Retrait
             Creation:Nom,Prenom,adresse,email,departement,type de staff,photo
+            06-03-2023
+                -Au niveau du module des staff, ajouté le champ "password"
+                Faire en sorte a ce que les staff puisse se conneté a l'application
+                en ayant un role et une permission
+                -Ajouté un input de type checkbox,
+                en creant un staff, si le checkbox est coché,
+                    lorsque le staff voudra se connecter, il devra avoir la possibilité
+                    de modifier son mot de passe
+                en creant un staff, si le checkbox n'est pas coché,
+                    lorsque le staff voudra se connecter, on ne lui demande pas de modifier
+                    son mot de passe
+            07-03-2023
+            Au niveau du module des serveurs, ajouté un champ pour la date d'expiration,
+            Ensuite, le tableau qui est envoyé par mail à l'administrateur,
+            on change "NOM DE DOMAINE" en "DOMAINE/HEBERGEMENT"
+            on ajoute une nouvelle colonne type
+
+            si le type est un domaine->DOMAINE/HERGEMENT prend: url
+            si le typz est un serveur->DOMAINE/HEBERGEMMENT prend nom de l'hebergeur
         */
         
     }

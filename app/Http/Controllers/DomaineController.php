@@ -23,7 +23,7 @@ class DomaineController extends Controller
         /* $domaines = Domaine::query()->select('id','nom_domaine','server_id','registre','date_expiration','status','created_at')
                     ->orderBy('id','desc'); */
                     $domaines = Domaine::join('servers','servers.id','=','domaines.server_id')
-                        ->select('domaines.id','nom_domaine','server_id','registre','date_expiration','status','domaines.created_at','servers.name')
+                        ->select('domaines.id','nom_domaine','server_id','registre','domaines.date_expiration','domaines.status','domaines.created_at','servers.name')
                         ->where('domaines.is_deleted',false)
                         ->orderBy('id','desc');
         if($searchValue){
@@ -90,7 +90,7 @@ class DomaineController extends Controller
     {
         //
         $domaines = Domaine::join('servers','servers.id','=','domaines.server_id')
-            ->select('domaines.id','nom_domaine','server_id','registre','date_expiration','status','domaines.created_at','servers.name')
+            ->select('domaines.id','nom_domaine','server_id','registre','domaines.date_expiration','domaines.status','domaines.created_at','servers.name')
             ->where('domaines.id',$domaine->id)->get();
         return $domaines;
     }
