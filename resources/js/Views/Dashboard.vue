@@ -13,32 +13,32 @@
                         <!-- router-view-begin -->
                             <ContentHeader message="Dashboard Page !!!"/>
                             <!--Am The Dashboard Components !!!-->
-                            <div class="card" style="border:1px solid red">
+                            <div class="card" style="">
                                 <!--The First part-->
-                                <div class="card_box" style="display:flex;justify-content:space-between;align-items:center;margin:10px 0px 10px 0px">
-                                    <div style="border:1px solid gray;width:300px;height:100px;border-radius:5px;padding:10px">
+                                <div class="card_box" style="">
+                                    <div class="single_card" style="">
                                         <p>Total Serveur: <span style="font-weight:bold">{{servers}}</span> </p>
                                     </div>
 
-                                    <div style="border:1px solid green;width:300px;height:100px;border-radius:5px;padding:10px">
+                                    <div class="single_card" style="">
                                         <p>Total serveur qui s'expirent dans 1 semaine: <span style="font-weight:bold">{{expire_servers}}</span></p>
                                     </div>
                                     
-                                    <div style="border:1px solid teal;width:300px;height:100px;border-radius:5px;padding:10px">
+                                    <div class="single_card" style="">
                                         <p>Total domaine: <span style="font-weight:bold">{{domaines}}</span></p>
                                     </div>
                                 </div>
                                 <!--The second part-->
-                                <div class="card_box" style="display:flex;justify-content:space-between;align-items:center;margin:10px 0px 10px 0px">
-                                    <div style="border:1px solid gray;width:300px;height:100px;border-radius:5px;padding:10px">
+                                <div class="card_box" style="">
+                                    <div class="single_card" style="">
                                         <p>Total domaine qui s'expirent dans 1 semaine: <span style="font-weight:bold">{{expire_domaines}}</span></p>
                                     </div>
 
-                                    <div style="border:1px solid green;width:300px;height:100px;border-radius:5px;padding:10px">
+                                    <div class="single_card" style="">
                                         <p>Total departement actif: <span style="font-weight:bold">{{departement_actif}}</span></p>
                                     </div>
                                     
-                                    <div style="border:1px solid teal;width:300px;height:100px;border-radius:5px;padding:10px">
+                                    <div class="single_card" style="">
                                         <p>Total staff actif: <span style="font-weight:bold">{{staff_actif}}</span></p>
                                     </div>
                                 </div>
@@ -146,5 +146,10 @@
 </script>
 
 <style scoped>
-
+    .card_box{
+        display:flex;justify-content:space-between;align-items:center;margin:10px 0px 10px 0px
+    }
+    .single_card{
+        border:1px solid gray;width:300px;height:100px;border-radius:5px;padding:10px;background-color:#fff
+    }
 </style>
