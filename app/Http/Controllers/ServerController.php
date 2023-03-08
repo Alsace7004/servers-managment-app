@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Server;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ServerController extends Controller
@@ -188,5 +190,28 @@ class ServerController extends Controller
             return ['status'=>false];
         }
         return ['status'=>false];
+    }
+
+    public function getCountServers(){
+        $servers = Server::query()->where('is_deleted',false)->count();
+        return response()->json([
+            "servers"=>$servers
+        ]);
+    }
+    public function getExpireServer(){
+        $date_actuelle = Carbon::now()->format('Y-m-d');
+        /* $servers = Server::query()
+                ->whereRaw(DB::raw("DATEDIFF(servers.date_expiration,'$date_actuelle')",'<=','7'))
+                ->whereRaw(DB::raw("DATEDIFF(servers.date_expiration,'$date_actuelle')",'>=','0'))
+                ->where('servers.is_deleted',false)
+                ->count(); */
+            $servers = DB::SELECT("SELECT COUNT(*) as nbr_servers FROM servers 
+                WHERE DATEDIFF(servers.date_expiration,'$date_actuelle') <=7 
+                AND   DATEDIFF(servers.date_expiration,'$date_actuelle') >=0 
+                AND   servers.is_deleted = 0");
+            $servers = $servers[0]->nbr_servers;
+        return response()->json([
+            "servers"=>$servers
+        ]);
     }
 }

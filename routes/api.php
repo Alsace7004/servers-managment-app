@@ -49,23 +49,31 @@ Route::middleware('web')->group(function () {
     Route::get('getRoleAndPermission/{role}',[RoleController::class,'showRole']);
     Route::get('getAllRoles',[RoleController::class,'roleList']);
     Route::get('getAllStaffRoles',[RoleController::class,'staffRoleList']);
-    //
+    //Users
     Route::apiResource('users',UserController::class);
+    //Permissions
     Route::apiResource('permissions',PermmissionController::class);
     Route::get('getAllPermissions',[PermmissionController::class,'permissionList']);
+    //Servers
     Route::apiResource('servers',ServerController::class);
     Route::get('getAllServers',[ServerController::class,'serverList']);
+    Route::get("getCountServers",[ServerController::class,'getCountServers']);
+    Route::get("getExpireServer",[ServerController::class,'getExpireServer']);
     //Domaines
     Route::apiResource('domaines',DomaineController::class);
+    Route::get("getCountDomaines",[DomaineController::class,'getCountDomaines']);
+    Route::get("getExpireDomaines",[DomaineController::class,'getExpireDomaines']);
     //Departements
     Route::apiResource('departements',DepartementController::class);
     Route::get('getAllDepartements',[DepartementController::class,'departementList']);//
+    Route::get("getCountDepartements",[DepartementController::class,'getCountDepartements']);
     //Type de Staff
     Route::apiResource('typeStaff',TypeStaffController::class);
     Route::get('getAllTypeStaff',[TypeStaffController::class,'typeStaffList']);//
     //Staff
     Route::apiResource('staff',StaffController::class);
     Route::put("updateStaffPassword/{id}",[StaffController::class,'updateStaffPassword']);
+    Route::get("getCountStaffs",[StaffController::class,'getCountStaffs']);
     //Get Auth User Permission And Role
     Route::get('/get-permissions',[PermmissionController::class,'getAuthUserPermissionAndRole']);
 });

@@ -130,6 +130,7 @@
                     lorsque le staff voudra se connecter, on ne lui demande pas de modifier
                     son mot de passe
             07-03-2023
+            Nouvelles Taches :
             Au niveau du module des serveurs, ajouté un champ pour la date d'expiration,
             Ensuite, le tableau qui est envoyé par mail à l'administrateur,
             on change "NOM DE DOMAINE" en "DOMAINE/HEBERGEMENT"
@@ -137,6 +138,24 @@
 
             si le type est un domaine->DOMAINE/HERGEMENT prend: url
             si le type est un serveur->DOMAINE/HEBERGEMMENT prend nom de l'hebergeur
+
+            08-03-2023
+            Correction sur la tache du 07-03-2023
+            Au niveau du message envoyé par mail:
+            DOMAINE/HEBERGEMENT TYPE
+            nom du domaine      domaine
+            nom du serveur      serveur
+            ---------------------------------
+            Nouvelles Taches à faire:
+            Au niveau du Tableau de bord
+            selon le profile et selon la permission
+                Afficher:
+                -le nombre total de serveur
+                -le nombre total se serveur qui vont expiré dans 1 semaine
+                -le nombre total de domaine
+                -le nombre total de domaine qui vont expiré dans 1 semaine
+                -le nombre total de departement actif
+                -le nombre total de staff actif
         */
         
     }

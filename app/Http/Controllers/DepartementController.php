@@ -138,4 +138,13 @@ class DepartementController extends Controller
         }
         return ['status'=>false]; 
     }
+    //
+    public function getCountDepartements(){
+        $departements = Departement::query()
+                                    ->where('is_deleted',false)
+                                    ->count();
+        return response()->json([
+            'departements'=>$departements
+        ]);
+    }
 }

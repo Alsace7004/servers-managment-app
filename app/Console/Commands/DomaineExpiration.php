@@ -46,19 +46,20 @@ class DomaineExpiration extends Command
                     WHERE DATEDIFF(domaines.date_expiration,'$date_actuelle') <=7 
                     AND domaines.server_id = servers.id"); */
         $domaines = DB::SELECT("SELECT domaines.id,
-                                servers.name as nom_hebergeur,
+                                domaines.nom_domaine,
                                 domaines.type,
                                 domaines.date_expiration,
                                     CASE WHEN DATEDIFF(domaines.date_expiration,'$date_actuelle') <= 0 THEN 'expiré(e)'
                                             ELSE DATEDIFF(domaines.date_expiration,'$date_actuelle')
                                     END AS thediff
                                         
-                                    FROM domaines,servers
+                                    FROM domaines
                                     WHERE DATEDIFF(domaines.date_expiration,'$date_actuelle') <=7 
-                                    AND domaines.server_id = servers.id
+                                    AND   DATEDIFF(domaines.date_expiration,'$date_actuelle') >=0 
+                                    AND   domaines.is_deleted = 0
                     UNION
                                 SELECT servers.id,
-                                        servers.url_connexion,
+                                        servers.name,
                                         servers.type,
                                         servers.date_expiration,
                                                     CASE WHEN DATEDIFF(servers.date_expiration,'$date_actuelle') <= 0 THEN 'expiré(e)'
@@ -66,7 +67,9 @@ class DomaineExpiration extends Command
                                                     END AS thediff
                                                     
                                                     FROM servers
-                                                    WHERE DATEDIFF(servers.date_expiration,'$date_actuelle') <=7;");
+                                                    WHERE DATEDIFF(servers.date_expiration,'$date_actuelle') <=7 
+                                                    AND   DATEDIFF(servers.date_expiration,'$date_actuelle') >=0 
+                                                    AND   servers.is_deleted = 0;");
 
         Mail::to('Olamide@badoshness.lekki')->send(new DomaineExpire($domaines));
                 $domaines_1 = DB::SELECT("SELECT domaines.id,

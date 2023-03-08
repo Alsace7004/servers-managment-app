@@ -319,4 +319,13 @@ class StaffController extends Controller
             ]);
         }
     }
+    //get count
+    public function getCountStaffs(){
+        $staffs = Staff::query()
+                    ->where('is_deleted',false)
+                    ->count();
+        return response()->json([
+            'staffs'=>$staffs
+        ]);
+    }
 }

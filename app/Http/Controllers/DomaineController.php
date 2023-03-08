@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Domaine;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class DomaineController extends Controller
@@ -154,5 +156,30 @@ class DomaineController extends Controller
             return ['status'=>false];
         }
         return ['status'=>false];
+    }
+    //
+    public function getCountDomaines(){
+        $domaines = Domaine::query()
+                    ->where('is_deleted',false)
+                    ->count();
+        return response()->json([
+            'domaines'=>$domaines
+        ]);
+    }
+    //
+    public function getExpireDomaines(){
+        $date_actuelle = Carbon::now()->format('Y-m-d');
+        /* $domaines = Domaine::query()
+                ->whereRaw(DB::raw("DATEDIFF(domaines.date_expiration,'$date_actuelle')",'<=',7))
+                ->whereRaw(DB::raw("DATEDIFF(domaines.date_expiration,'$date_actuelle')",'>=',0))
+                ->count(); */
+        $domaines = DB::SELECT("SELECT COUNT(*) as nbr_domaine FROM domaines 
+        WHERE DATEDIFF(domaines.date_expiration,'$date_actuelle') <=7 
+        AND   DATEDIFF(domaines.date_expiration,'$date_actuelle') >=0 
+        AND   domaines.is_deleted = 0");
+        $domaines = $domaines[0]->nbr_domaine;
+        return response()->json([
+            "domaines"=>$domaines
+        ]);
     }
 }
