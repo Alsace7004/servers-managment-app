@@ -16,7 +16,6 @@ export const useAuthStore = defineStore("auth",{
     }),
     getters:{
         user:(state)=>state.authUser,
-        
     },
     actions:{
         /* async getUser(){

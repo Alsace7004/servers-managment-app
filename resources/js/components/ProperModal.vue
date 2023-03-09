@@ -31,9 +31,9 @@
 </script>
 
 <style scoped>
-.modal{
+/* .modal{
     
-}
+} */
 .modal-dialog{
     position: fixed;
     top: 0;

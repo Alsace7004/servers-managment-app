@@ -82,53 +82,14 @@ export default {
                             this.Permissions    = U_permissions;
                             this.Roles          = role;
                 },
-                /* async getPermission(){
-                    await axiosClient.get('api/get-permissions').then( (response) => {
-                            //console.log("Valeur de response from helper.js: ",response)
-                            //window.Laravel.jsPermissions = response.data;
-                            if(response.status){
-                                this.Permissions= response.data.permissions;
-                                this.Roles= response.data.roles;
-                            }
-                            //console.log("Valeur de window.Laravel.jsPermissions from app.js: ",this.Permissions)
-                        }
-                    ).catch((err)=>{
-                        //console.log("Valeur de err from app.js:",err.response)
-                        //console.log(err.response.data)
-                        console.log(err)
-                    });
-                }, */
-                /* async getPermission(){
-                    const res = await axiosClient.get('api/get-permissions');
-                    //console.log("Valeur de res from helper.js: ",res)
-                    this.Permissions = await res.data.permissions;
-                    this.Roles= await res.data.roles;
-                    //return await res.json();
-                 } */
-                /* getAuthUser(){
-                    axiosClient.get("api/user").then((res)=>{
-                        if(res.status === 200){
-                            let content = res.data;
-                            this._AuthUserEmail = content.email
-                            this._AuthUserRole = content.role_name
-                            console.log("Valeur de res dans getAuthUser:",res)
-                        }
-                        
-                    }).catch((err)=>{
-                        console.log("Valeur de err dans getAuthUser:",err)
-                    })
-                }, */
+                
             },   
             created() {     
-                //this.getAuthUser()  
-                /* this.getPermission() 
-                console.log("Printing from created in helper.js");   */   
+                //   
             },    
             mounted(){
                 this.getPermission() 
                 console.log("Printing from mounted in helper.js");  
-                //console.log("From dashboard:",userStore.getUserRoleAndPermission())
-               // console.log("Valeur de U_permissions:",userStore.U_permissions)
             }
         });
     },

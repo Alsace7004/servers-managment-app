@@ -11,34 +11,41 @@
                 <div class="content">
                     <div class="content_body">
                         <!-- router-view-begin -->
-                            <ContentHeader message="Dashboard Page !!!"/>
+                            <ContentHeader message="Tableau de bord !!!"/>
                             <!--Am The Dashboard Components !!!-->
                             <div class="card" style="">
                                 <!--The First part-->
                                 <div class="card_box" style="">
-                                    <div class="single_card" style="">
+                                    <div v-if="$can('server-list')" class="single_card" style="">
+                                        <span class="icon"><i class="fas fa-server ico_size"></i></span>
                                         <p>Total Serveur: <span style="font-weight:bold">{{servers}}</span> </p>
+                                        
                                     </div>
 
-                                    <div class="single_card" style="">
+                                    <div v-if="$can('server-list')" class="single_card" style="">
+                                        <span class="icon"><i class="fas fa-server ico_size"></i></span>
                                         <p>Total serveur qui s'expirent dans 1 semaine: <span style="font-weight:bold">{{expire_servers}}</span></p>
                                     </div>
                                     
-                                    <div class="single_card" style="">
+                                    <div v-if="$can('domaine-list')" class="single_card" style="">
+                                        <span class="icon"><i class="fas fa-globe ico_size"></i></span>
                                         <p>Total domaine: <span style="font-weight:bold">{{domaines}}</span></p>
                                     </div>
                                 </div>
                                 <!--The second part-->
                                 <div class="card_box" style="">
-                                    <div class="single_card" style="">
+                                    <div v-if="$can('domaine-list')" class="single_card" style="">
+                                        <span class="icon"><i class="fas fa-globe ico_size"></i></span>
                                         <p>Total domaine qui s'expirent dans 1 semaine: <span style="font-weight:bold">{{expire_domaines}}</span></p>
                                     </div>
 
-                                    <div class="single_card" style="">
+                                    <div v-if="$can('departement-list')" class="single_card" style="">
+                                        <span class="icon"><i class="fas fa-building ico_size"></i></span>
                                         <p>Total departement actif: <span style="font-weight:bold">{{departement_actif}}</span></p>
                                     </div>
                                     
-                                    <div class="single_card" style="">
+                                    <div v-if="$can('staff-list')" class="single_card" style="">
+                                        <span class="icon"><i class="fas fa-user-alt ico_size"></i></span>
                                         <p>Total staff actif: <span style="font-weight:bold">{{staff_actif}}</span></p>
                                     </div>
                                 </div>
@@ -147,9 +154,35 @@
 
 <style scoped>
     .card_box{
-        display:flex;justify-content:space-between;align-items:center;margin:10px 0px 10px 0px
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin:30px 0px 10px 0px;/*TRBL*/
+        
     }
     .single_card{
-        border:1px solid gray;width:300px;height:100px;border-radius:5px;padding:10px;background-color:#fff
+        width:390px;
+        height:100px;
+        border-radius:5px;
+        padding:10px;
+        background-color:#fff;
+        box-shadow: 0px 0px 15px -4px rgba(0,0,0,0.20);
+        border:	1px solid rgba(0, 0, 0,  0.1);
+        border-radius:	6px;
+    }
+    .ico_size{
+        font-size: 40px;
+    }
+    /*Responsive design*/
+    @media only screen and (max-width: 680px) {
+        .card_box{
+            /* border: 1px solid red; */
+            display: flex;
+            flex-direction: column;
+        }
+        .single_card{
+            /* border: 1px solid green; */
+            margin:10px 0px 10px 0px ;/*TRBL*/
+        }
     }
 </style>
