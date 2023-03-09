@@ -154,6 +154,14 @@ class StaffController extends Controller
     public function show(Staff $staff)
     {
         //
+        //return $staff;
+        $staff = DB::SELECT("SELECT s.id,s.nom,s.prenom,s.adresse,s.email,s.photo,s.departement_id,s.type_staff_id,
+		r.id as role_id,r.name as role_name 
+        FROM roles r,staff s, model_has_roles 
+        where s.id = $staff->id
+        AND r.id = model_has_roles.role_id 
+        AND model_has_roles.model_id = $staff->id;");
+        $staff = $staff[0];
         return $staff;
     }
 
@@ -229,6 +237,7 @@ class StaffController extends Controller
             $image_path = "img_path/Staff/".$staff->photo;  // Value is not URL but directory file path
             if($request->file('photo') === null){
                 if($staff->update($data)){
+                    $staff->syncRoles($data['role_id']);
                     return ['status'=>true];
                 }
                 return ['status'=>false];
@@ -243,6 +252,7 @@ class StaffController extends Controller
                             $data['photo']=$staffImage;
                         }
                         if($staff->update($data)){
+                            $staff->syncRoles($data['role_id']);
                             return ['status'=>true];
                         }
                         return ['status'=>false];
@@ -254,6 +264,7 @@ class StaffController extends Controller
                             $data['photo']=$staffImage;
                         }
                         if($staff->update($data)){
+                            $staff->syncRoles($data['role_id']);
                             return ['status'=>true];
                         }
                         return ['status'=>false];

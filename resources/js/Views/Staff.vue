@@ -443,7 +443,7 @@
                 this.errors = [];
                 axiosClient.get(`api/staff/${id}`).then((res)=>{
                     $("#edit_domaine").modal("show")
-                    //console.log('valeur de res dans edit staff:',res)
+                    console.log('valeur de res dans edit staff:',res)
                     this.staffImg.img             = '';
                     this.edit_id                  = res.data.id;
                     this.staff.nom                = res.data.nom;
