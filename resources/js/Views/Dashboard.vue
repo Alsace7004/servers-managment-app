@@ -18,30 +18,30 @@
                                 <div class="card_box" style="columns:3 auto">
                                     
                                     
-                                    <div v-if="$can('domaine-list')" class="single_card" style="">
+                                    <div v-if="$can('domaine-total')" class="single_card" style="">
                                         <span class="icon"><i class="fas fa-globe ico_size"></i></span>
                                         <p>Total domaine: <span style="font-weight:bold">{{domaines}}</span></p>
                                     </div>
 
-                                    <div v-if="$can('domaine-list')" class="single_card" style="">
+                                    <div v-if="$can('domaine-expire')" class="single_card" style="">
                                         <span class="icon"><i class="fas fa-globe ico_size"></i></span>
                                         <p>Total domaine s'expirant dans 1 semaine: <span style="font-weight:bold">{{expire_domaines}}</span></p>
                                     </div>
-                                    <div v-if="$can('server-list')" class="single_card" style="">
+                                    <div v-if="$can('serveur-total')" class="single_card" style="">
                                         <span class="icon"><i class="fas fa-server ico_size"></i></span>
                                         <p>Total Serveur: <span style="font-weight:bold">{{servers}}</span> </p>
                                     </div>
                                     
-                                    <div v-if="$can('server-list')" class="single_card" style="">
+                                    <div v-if="$can('serveur-expire')" class="single_card" style="">
                                         <span class="icon"><i class="fas fa-server ico_size"></i></span>
                                         <p>Total serveur s'expirant dans 1 semaine: <span style="font-weight:bold">{{expire_servers}}</span></p>
                                     </div>
-                                    <div v-if="$can('departement-list')" class="single_card" style="">
+                                    <div v-if="$can('departement-total-actif')" class="single_card" style="">
                                         <span class="icon"><i class="fas fa-building ico_size"></i></span>
                                         <p>Total departement actif: <span style="font-weight:bold">{{departement_actif}}</span></p>
                                     </div>
                                     
-                                    <div v-if="$can('staff-list')" class="single_card" style="">
+                                    <div v-if="$can('staff-total-actif')" class="single_card" style="">
                                         <span class="icon"><i class="fas fa-user-alt ico_size"></i></span>
                                         <p>Total staff actif: <span style="font-weight:bold">{{staff_actif}}</span></p>
                                     </div>
@@ -209,9 +209,10 @@
         border-radius:	6px;
         padding:10px;
         height: 100px;
+        background-color:#fff;
         /*  height:100px;
             border-radius:5px;
-            background-color:#fff;
+            
         */
         margin:1rem
     }

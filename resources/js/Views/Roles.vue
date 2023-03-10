@@ -88,7 +88,7 @@
                                 <div class="input_form mb_3">
                                     <!-- <input type="text" class="input_form_item" v-model="role.guard_name" placeholder="guard Ex:web/staffs"> -->
                                     <select  v-model="role.guard_name" id="" class="input_form_item">
-                                        <option value="">Selectionner un guard</option>
+                                        <option value="">Selectionner un garde</option>
                                         <option value="web">web</option>
                                         <option value="staffs">staffs</option>
                                         <!-- <option v-for="role in roles" :key="role.id" :value="role.id">{{role.name}}</option> -->
@@ -131,7 +131,7 @@
                                 <!-- guard_name -->
                                 <div class="input_form mb_3">
                                     <select  v-model="role.guard_name" id="" class="input_form_item">
-                                        <option value="">Selectionner un guard</option>
+                                        <option value="">Selectionner un garde</option>
                                         <option value="web">web</option>
                                         <option value="staffs">staffs</option>
                                     </select>
@@ -200,7 +200,7 @@
             let columns =[
                     {label:'~#',        name:'id'},
                     {label:'Roles',     name:'role'},
-                    {label:'Guard',     name:'role_guard'},
+                    {label:'type de garde',     name:'role_guard'},
                     {label:'Ajouté Le', name:'created_at'},
                     {label:'Actions',   name:'action'},
             ];
