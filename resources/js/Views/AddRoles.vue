@@ -25,7 +25,7 @@
                                 <!-- guard_name -->
                                 <div class="input_form mb_3">
                                     <!-- <input type="text" class="input_form_item" v-model="role.guard_name" placeholder="guard Ex:web/staffs"> -->
-                                    <select  v-model="role.guard_name" id="" class="input_form_item">
+                                    <select  v-model="role.guard_name" id="the_guard" @change="getTheGuard" class="input_form_item">
                                         <option value="">Selectionner un garde</option>
                                         <option value="web">web</option>
                                         <option value="staffs">staffs</option>
@@ -35,61 +35,68 @@
                                 <span v-if="errors.guard_name" class="error_txt">{{errors.guard_name[0]}}</span><br>
                                 <!-- guard_name -->
                                 <label for=""><strong>Choisir une permission :</strong></label>
-                                <div style="display:flex;justify-content:space-between">
+                                <div class="checkbox_container">
                                     <!-- utilisateurs -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Utilisateurs :</strong></label>
-                                        <div class="" style="" v-for="permi in userPermissions" :key="permi.id">
+                                        <div v-if="!userPermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in userPermissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
                                         </div>
                                     </div>
                                     <!-- roles -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Roles :</strong></label>
-                                        <div class="" style="" v-for="permi in rolesPermissions" :key="permi.id">
+                                        <div v-if="!rolesPermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in rolesPermissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
                                         </div>
                                     </div>
                                     <!-- staff -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Staff :</strong></label>
-                                        <div class="" style="" v-for="permi in staffPermissions" :key="permi.id">
+                                        <div v-if="!staffPermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in staffPermissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
                                         </div>
                                     </div>
                                     <!-- type de staff -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Type de staff :</strong></label>
-                                        <div class="" style="" v-for="permi in typeStaffPermissions" :key="permi.id">
+                                        <div v-if="!typeStaffPermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in typeStaffPermissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- second -->
-                                <div style="display:flex;margin-top:1rem;">
+                                <div class="checkbox_container" style="margin-top:1rem;">
                                     <!-- departement -->
-                                    <div style="border:1px solid red;margin-right:12rem">
+                                    <div class="single_checkbox" style="">
                                         <label for=""><strong>Departements :</strong></label>
-                                        <div class="" style="" v-for="permi in departementPermissions" :key="permi.id">
+                                        <div v-if="!departementPermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div v-else v-for="permi in departementPermissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
                                         </div>
                                     </div>
                                     <!-- roles -->
-                                    <div style="border:1px solid red;margin-right:14rem">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Domaines :</strong></label>
-                                        <div class="" style="" v-for="permi in domainePermissions" :key="permi.id">
+                                        <div v-if="!domainePermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in domainePermissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
                                         </div>
                                     </div>
                                     <!-- staff -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Serveurs :</strong></label>
+                                        <div v-if="!serveurPermissions.length" class="my_color">Pas de permissions disponible</div>
                                         <div class="" style="" v-for="permi in serveurPermissions" :key="permi.id">
                                             <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
                                             <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
@@ -354,6 +361,7 @@
                         $('#create_role').modal('hide'); 
                         this.getRoles()
                         Swal.fire('Créer!','Nouveau Role Ajouter avec success.','success') ;
+                        this.$router.push("/roles"); 
                     }
                 }).catch((err)=>{
                     send_role.innerHTML = "Sauvegarder"
@@ -465,9 +473,25 @@
             },
             //
             getUtlisateursPermission(){
-                axios.get("api/elements").then((res)=>{
+                axios.get("api/elements/web").then((res)=>{
                     console.log("valeur de res dans getUtlisateursPermission (AddRoles):",res)
                     //let content = res.data.utilisateurs
+                    this.userPermissions = res.data.utilisateurs
+                    this.rolesPermissions = res.data.roles
+                    this.staffPermissions = res.data.staff
+                    this.typeStaffPermissions = res.data.type_de_staff
+                    this.departementPermissions = res.data.departements
+                    this.domainePermissions = res.data.domaines
+                    this.serveurPermissions = res.data.serveurs
+                })
+            },
+            //The selected Guard
+            getTheGuard(){
+                let tg = document.querySelector("#the_guard").value;
+                console.log("valeur de tg:",tg)
+                //alert("i clicked on : "+tg);
+                axios.get("api/elements/"+tg).then((res)=>{
+                    console.log("Valeur de res dans getTheGuard : ",res)
                     this.userPermissions = res.data.utilisateurs
                     this.rolesPermissions = res.data.roles
                     this.staffPermissions = res.data.staff
@@ -497,5 +521,13 @@
 </script>
 
 <style scoped>
-    
+    .checkbox_container{
+        display:flex;flex-wrap:wrap;
+    }
+    .single_checkbox{
+        border:1px solid #2f3640;width:25%
+    }
+    .my_color{
+        color: #dd3333;
+    }
 </style>

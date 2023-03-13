@@ -198,7 +198,6 @@
         align-items:center; */
        /*  margin:30px 0px 10px 0px;/*TRBL*/ 
        /*  margin:30px 0px 10px 0px; */
-
         display:flex;
         flex-wrap:wrap;
     }
@@ -212,7 +211,6 @@
         background-color:#fff;
         /*  height:100px;
             border-radius:5px;
-            
         */
         margin:1rem
     }

@@ -186,13 +186,37 @@ const routes = [
     {
         path:'/add_roles',
         name:'AddRoles',
-        component:()=>import("../Views/AddRoles.vue")
+        component:()=>import("../Views/AddRoles.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('role-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        }
     },
     {
         path:'/roles/:roleId/edit',
         name:'UpdateRoles',
         component:()=>import("../Views/UpdateRoles.vue"),
         props:true,
+        meta:{
+            requiresAuth:true
+        },
+        beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('role-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        }
     },
 ];
 

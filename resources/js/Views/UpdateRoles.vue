@@ -22,7 +22,7 @@
                                 <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
                                 <!-- guard_name -->
                                 <div class="input_form mb_3">
-                                    <select  v-model="role.guard_name" id="" class="input_form_item">
+                                    <select v-model="role.guard_name" id="the_guard" @change="getTheGuard" class="input_form_item">
                                         <option value="">Selectionner un garde</option>
                                         <option value="web">web</option>
                                         <option value="staffs">staffs</option>
@@ -32,56 +32,63 @@
                                 <!-- guard_name -->
                                 <label for=""><strong>Choisir une permission :</strong></label>
                                 <!-- first part of permissions -->
-                                <div style="display:flex;justify-content:space-between">
+                                <div class="checkbox_container">
                                     <!-- utilisateurs -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Utilisateurs :</strong></label>
-                                        <div class="" style="" v-for="permi in userPermissions" :key="permi.id">
+                                        <div v-if="!userPermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in userPermissions" :key="permi.id">
                                             <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
                                     <!-- roles -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Roles :</strong></label>
-                                        <div class="" style="" v-for="permi in rolesPermissions" :key="permi.id">
+                                        <div v-if="!rolesPermissions.length" class="my_color">Pas de permisions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in rolesPermissions" :key="permi.id">
                                             <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
                                     <!-- staff -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Staff :</strong></label>
-                                        <div class="" style="" v-for="permi in staffPermissions" :key="permi.id">
+                                        <div v-if="!staffPermissions.length" class="my_color">Pas de permisions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in staffPermissions" :key="permi.id">
                                             <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
                                     <!-- type de staff -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Type de staff :</strong></label>
-                                        <div class="" style="" v-for="permi in typeStaffPermissions" :key="permi.id">
+                                        <div v-if="!typeStaffPermissions.length" class="my_color">Pas de permisions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in typeStaffPermissions" :key="permi.id">
                                             <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
                                 </div>
                                 <!-- second part of permissions -->
-                                <div style="display:flex;margin-top:1rem;">
+                                <div class="checkbox_container">
                                     <!-- departement -->
-                                    <div style="border:1px solid red;margin-right:12rem">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Departements :</strong></label>
-                                        <div class="" style="" v-for="permi in departementPermissions" :key="permi.id">
+                                        <div v-if="!departementPermissions.length" class="my_color">Pas de permisions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in departementPermissions" :key="permi.id">
                                             <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
                                     <!-- roles -->
-                                    <div style="border:1px solid red;margin-right:14rem">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Domaines :</strong></label>
-                                        <div class="" style="" v-for="permi in domainePermissions" :key="permi.id">
+                                        <div v-if="!domainePermissions.length" class="my_color">Pas de permisions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in domainePermissions" :key="permi.id">
                                             <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
                                     <!-- staff -->
-                                    <div style="border:1px solid red">
+                                    <div class="single_checkbox">
                                         <label for=""><strong>Serveurs :</strong></label>
-                                        <div class="" style="" v-for="permi in serveurPermissions" :key="permi.id">
+                                        <div v-if="!serveurPermissions.length" class="my_color">Pas de permisions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in serveurPermissions" :key="permi.id">
                                             <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
@@ -261,7 +268,6 @@
                     name:'',
                     guard_name:'',
                     permission:[],
-                 
                 },
                 isModalVisible:false,
                 tData:{
@@ -432,6 +438,7 @@
                             this.getRoles();
                             this.edit_id = "";
                             this.is_Editing = false;
+                            this.$router.push("/roles"); 
                         }
                     }).catch((err)=>{
                         update_role.innerHTML = "Mettre à jour"
@@ -446,23 +453,12 @@
                     })
             },
             //
-            getUtlisateursPermission(){
-                axios.get("api/elements").then((res)=>{
-                    console.log("valeur de res dans getUtlisateursPermission (UpdatesRoles):",res)
-                    //let content = res.data.utilisateurs
-                    this.userPermissions = res.data.utilisateurs
-                    this.rolesPermissions = res.data.roles
-                    this.staffPermissions = res.data.staff
-                    this.typeStaffPermissions = res.data.type_de_staff
-                    this.departementPermissions = res.data.departements
-                    this.domainePermissions = res.data.domaines
-                    this.serveurPermissions = res.data.serveurs
-                })
-            },
             fetchRole(){
                 this.errors = [];
+               
                 axios.get(`api/getRoleAndPermission/${this.roleId}`).then((res)=>{
                     console.log("Valeur de res dans fetchRole dans (UpdateRoles):",res)
+                    localStorage.setItem("get_guard",res.data.role.guard_name)
                     this.edit_id            = res.data.role.id;
                     this.role.name          = res.data.role.name;
                     this.role.guard_name    = res.data.role.guard_name;
@@ -470,7 +466,33 @@
                     this.is_Editing         = true;
                     //console.log("Valeur de this.role.permission:",this.role.permission)
                 })
-            }
+            },
+            //
+            getUtlisateursPermission(){
+                /* 
+                iflicfy
+                */
+               let bb
+                axios.get(`api/getGuardName/${this.roleId}`).then((res)=>{
+                    console.log("1-valeur du guardName (getGuardName) : ",res.data.role.guard_name)
+                    bb = res.data.role.guard_name
+                
+
+                    axios.get(`api/elements/${res.data.role.guard_name}`).then((res)=>{
+                        console.log("2-valeur de res dans getUtlisateursPermission (UpdatesRoles):",res)
+                        //let content = res.data.utilisateurs
+                        this.userPermissions = res.data.utilisateurs
+                        this.rolesPermissions = res.data.roles
+                        this.staffPermissions = res.data.staff
+                        this.typeStaffPermissions = res.data.type_de_staff
+                        this.departementPermissions = res.data.departements
+                        this.domainePermissions = res.data.domaines
+                        this.serveurPermissions = res.data.serveurs
+                    })
+
+                })
+            },
+            
             
         },
         computed: {
@@ -492,5 +514,13 @@
 </script>
 
 <style scoped>
-    
+    .checkbox_container{
+        display:flex;flex-wrap:wrap;
+    }
+    .single_checkbox{
+        border:1px solid #2f3640;width:25%
+    }
+    .my_color{
+        color: #dd3333;
+    }
 </style>

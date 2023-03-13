@@ -136,8 +136,8 @@ Route::get("/staffPermission",function(){
     }
 });
 
-Route::get("elements",[RoleController::class,'getUtilisateurRole']);
-
+Route::get("elements/{the_guard}",[RoleController::class,'getUtilisateurRole']);
+Route::get("getGuardName/{id}",[RoleController::class,'getThisGuardName']);
 
 
 
