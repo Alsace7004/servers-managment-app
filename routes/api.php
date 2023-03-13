@@ -136,6 +136,8 @@ Route::get("/staffPermission",function(){
     }
 });
 
+Route::get("elements",[RoleController::class,'getUtilisateurRole']);
+
 
 
 

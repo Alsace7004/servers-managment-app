@@ -15,6 +15,93 @@
                         <ContentHeader message="Page de modification de Roles  !!!"/>
                         <p>Modifier</p>
                         <!-- router-view-end -->
+                        <!-- content begin -->
+                                <div class="input_form mb_3">
+                                    <input type="text" class="input_form_item" v-model="role.name" placeholder="Role name...">
+                                </div>
+                                <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <!-- guard_name -->
+                                <div class="input_form mb_3">
+                                    <select  v-model="role.guard_name" id="" class="input_form_item">
+                                        <option value="">Selectionner un garde</option>
+                                        <option value="web">web</option>
+                                        <option value="staffs">staffs</option>
+                                    </select>
+                                </div>
+                                <span v-if="errors.guard_name" class="error_txt">{{errors.guard_name[0]}}</span><br>
+                                <!-- guard_name -->
+                                <label for=""><strong>Choisir une permission :</strong></label>
+                                <!-- first part of permissions -->
+                                <div style="display:flex;justify-content:space-between">
+                                    <!-- utilisateurs -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Utilisateurs :</strong></label>
+                                        <div class="" style="" v-for="permi in userPermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                    <!-- roles -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Roles :</strong></label>
+                                        <div class="" style="" v-for="permi in rolesPermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                    <!-- staff -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Staff :</strong></label>
+                                        <div class="" style="" v-for="permi in staffPermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                    <!-- type de staff -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Type de staff :</strong></label>
+                                        <div class="" style="" v-for="permi in typeStaffPermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- second part of permissions -->
+                                <div style="display:flex;margin-top:1rem;">
+                                    <!-- departement -->
+                                    <div style="border:1px solid red;margin-right:12rem">
+                                        <label for=""><strong>Departements :</strong></label>
+                                        <div class="" style="" v-for="permi in departementPermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                    <!-- roles -->
+                                    <div style="border:1px solid red;margin-right:14rem">
+                                        <label for=""><strong>Domaines :</strong></label>
+                                        <div class="" style="" v-for="permi in domainePermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                    <!-- staff -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Serveurs :</strong></label>
+                                        <div class="" style="" v-for="permi in serveurPermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- update part begin-->
+                                <!-- <div class="col-md-12">
+                                    <label for=""><strong>Choisir une permission :</strong></label>
+                                    <div class="row col-md-6" style="columns: 4 auto;">
+                                        <div class="form-group col-md-6" v-for="permi in permissions" :key="permi.id" style="">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- update part end-->
+                                <span v-if="errors.permission" class="error_txt">{{errors.permission[0]}}</span>
+
+                                <div style="margin-top:2rem">
+                                    <button class="mdl-btn-primary" id="update_role" :class="loading ? 'disabled' :''" @click="updateRole">Mettre à jour</button>
+                                </div>
+                        <!-- content end -->
                     </div>
                 </div>
                 <!-- End -->
@@ -145,7 +232,7 @@
         components:{
             Navbar,Sidebar,ContentHeader,vTable,ProperModal,loader
         },
-        props: ['self'],
+        props: ['self','roleId'],
         data(){
             let columns =[
                     {label:'~#',        name:'id'},
@@ -155,6 +242,14 @@
                     {label:'Actions',   name:'action'},
             ];
             return{
+                userPermissions:[],
+                rolesPermissions:[],
+                staffPermissions:[],
+                typeStaffPermissions:[],
+                departementPermissions:[],
+                domainePermissions:[],
+                serveurPermissions:[],
+
                 perPage : ['5','10','20','30'],
                 columns: columns,
                 roles:[],
@@ -187,7 +282,8 @@
         created(){
             this.getRoles()
             this.getPermissions()
-            
+            this.fetchRole()
+            this.getUtlisateursPermission()
         },
         methods:{
             
@@ -349,6 +445,32 @@
                         }
                     })
             },
+            //
+            getUtlisateursPermission(){
+                axios.get("api/elements").then((res)=>{
+                    console.log("valeur de res dans getUtlisateursPermission (UpdatesRoles):",res)
+                    //let content = res.data.utilisateurs
+                    this.userPermissions = res.data.utilisateurs
+                    this.rolesPermissions = res.data.roles
+                    this.staffPermissions = res.data.staff
+                    this.typeStaffPermissions = res.data.type_de_staff
+                    this.departementPermissions = res.data.departements
+                    this.domainePermissions = res.data.domaines
+                    this.serveurPermissions = res.data.serveurs
+                })
+            },
+            fetchRole(){
+                this.errors = [];
+                axios.get(`api/getRoleAndPermission/${this.roleId}`).then((res)=>{
+                    console.log("Valeur de res dans fetchRole dans (UpdateRoles):",res)
+                    this.edit_id            = res.data.role.id;
+                    this.role.name          = res.data.role.name;
+                    this.role.guard_name    = res.data.role.guard_name;
+                    this.role.permission    = res.data.rolePermissions
+                    this.is_Editing         = true;
+                    //console.log("Valeur de this.role.permission:",this.role.permission)
+                })
+            }
             
         },
         computed: {

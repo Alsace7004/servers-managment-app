@@ -23,8 +23,8 @@
                         <div v-else class="data_box">
                             <!-- Create Role Btn begin-->
                             <!--<button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>-->
-                            <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
-                            <router-link :to="{name:'AddRoles'}">Ajouter</router-link>
+                            <!-- <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button> -->
+                            <router-link v-if="$can('role-create')" :to="{name:'AddRoles'}" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer">Ajouter Nouveau Role</router-link>
                             <!-- Create Role Btn end-->
                             <div class="data_box_header">
                                 <div class="per_page">
@@ -46,7 +46,8 @@
                                             <td>{{convert(role.created_at)}}</td>
                                             <td>
                                                 <button class="view_btn" v-if="$can('role-view')" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn" v-if="$can('role-edit')" @click="editRole(role.id)"><i class="fas fa-edit"></i></button>
+                                                <!-- <button class="edit_btn" v-if="$can('role-edit')" @click="editRole(role.id)"><i class="fas fa-edit"></i></button> -->
+                                                <router-link class="edit_btn" :to="'roles/'+role.id+'/edit'"><i class="fas fa-edit"></i></router-link>
                                                 <button class="delete_btn" v-if="$can('role-delete')" @click="deleteRole(role.id)"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>

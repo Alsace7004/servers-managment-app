@@ -19,3 +19,6 @@ Content-Type: application/json
 ### DELETE EXISTING CATEGORIE PERMISSION
 DELETE http://localhost:8000/api/categorie_permissions/1
 
+###
+GET http://localhost:8000/api/elements
+

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use App\Models\CategoriePermission;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
@@ -227,5 +228,55 @@ class RoleController extends Controller
             return ['status'=>false];
         }
         return ['status'=>false];
+    }
+
+    public function getUtilisateurRole(){
+        /* $categorie_permission_id = DB::SELECT("SELECT id FROM categorie_permissions WHERE categorie_permissions.categorie_permission_name = 'utilisateurs'");
+        $categorie_permission_id = $categorie_permission_id[0]->id;
+        return response()->json([
+            'categorie_permission_id'=>$categorie_permission_id
+        ]); */
+        /*********************************************UTILISATEURS**************************************************************/
+        $categorie_permission_id = CategoriePermission::query()->where('categorie_permission_name','utilisateurs')->get('id');
+        $categorie_permission_id = $categorie_permission_id[0]->id; 
+        /*********************************************ROLES*********************************************************************/
+        $role_permission_id = CategoriePermission::query()->where('categorie_permission_name','roles')->get('id');
+        $role_permission_id = $role_permission_id[0]->id; 
+        /*********************************************STAFF*********************************************************************/
+        $staff_permission_id = CategoriePermission::query()->where('categorie_permission_name','staff')->get('id');
+        $staff_permission_id = $staff_permission_id[0]->id; 
+        /*********************************************TYPE_DE_STAFF*************************************************************/
+        $type_de_staff_permission_id = CategoriePermission::query()->where('categorie_permission_name','type_de_staff')->get('id');
+        $type_de_staff_permission_id = $type_de_staff_permission_id[0]->id; 
+        /*********************************************DEPARTEMENTS**************************************************************/
+        $departements_permission_id = CategoriePermission::query()->where('categorie_permission_name','departements')->get('id');
+        $departements_permission_id = $departements_permission_id[0]->id; 
+        /*********************************************DOMAINES******************************************************************/
+        $domaines_permission_id = CategoriePermission::query()->where('categorie_permission_name','domaines')->get('id');
+        $domaines_permission_id = $domaines_permission_id[0]->id; 
+        /*********************************************SERVEURS******************************************************************/
+        $serveurs_permission_id = CategoriePermission::query()->where('categorie_permission_name','serveurs')->get('id');
+        $serveurs_permission_id = $serveurs_permission_id[0]->id; 
+        /***********************************************************************************************************************/
+        /* return response()->json([
+            'categorie_permission_id'=>$categorie_permission_id
+        ]); */
+        $utilisateurs = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$categorie_permission_id)->get();
+        $roles = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$role_permission_id)->get();
+        $staff = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$staff_permission_id)->get();
+        $type_de_staff = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$type_de_staff_permission_id)->get();
+        $departements = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$departements_permission_id)->get();
+        $domaines = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$domaines_permission_id)->get();
+        $serveurs = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$serveurs_permission_id)->get();
+        return response()->json([
+            'utilisateurs'  =>$utilisateurs,
+            'roles'         =>$roles,
+            'staff'         =>$staff,
+            'type_de_staff' =>$type_de_staff,
+            'departements'  =>$departements,
+            'domaines'      =>$domaines,
+            'serveurs'      =>$serveurs,
+        ]);
+        /***********************************************************************************************/
     }
 }
