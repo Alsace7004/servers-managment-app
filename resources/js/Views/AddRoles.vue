@@ -12,61 +12,130 @@
                     <div class="content_body">
                         
                         <!-- router-view-begin -->
-                        <ContentHeader message="Page des Roles  !!!"/>
-                        
-                        <div v-if="!roles.length || !$can('role-list')" class="data_box">
-                                <p style="display:flex;justify-content:center;align-items:center;">
-                                                    Chargement des roles en cours...
-                                                    <loader></loader>
-                                </p>
-                        </div>
-                        <div v-else class="data_box">
-                            <!-- Create Role Btn begin-->
-                            <!--<button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>-->
-                            <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
-                            <router-link :to="{name:'AddRoles'}">Ajouter</router-link>
-                            <!-- Create Role Btn end-->
-                            <div class="data_box_header">
-                                <div class="per_page">
-                                    <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
-                                        <option v-for="(pp,key) in perPage" :key="key" :value="pp">{{pp}}</option>
+                        <ContentHeader message="Page d'ajout de Roles  !!!"/>
+                        <p>Ajouter</p>
+                        <!-- router-view-end -->
+                        <div>
+                                <!-- role_name -->
+                                <div class="input_form mb_3">
+                                    <input type="text" class="input_form_item" v-model="role.name" placeholder="Role name...">
+                                </div>
+                                <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <!-- role_name -->
+                                <!-- guard_name -->
+                                <div class="input_form mb_3">
+                                    <!-- <input type="text" class="input_form_item" v-model="role.guard_name" placeholder="guard Ex:web/staffs"> -->
+                                    <select  v-model="role.guard_name" id="" class="input_form_item">
+                                        <option value="">Selectionner un garde</option>
+                                        <option value="web">web</option>
+                                        <option value="staffs">staffs</option>
+                                        <!-- <option v-for="role in roles" :key="role.id" :value="role.id">{{role.name}}</option> -->
                                     </select>
                                 </div>
-                                <div class="search_bar">
-                                    <input type="text" class="search_bar_form" name="" id="" v-model="tData.search" @input="getSearch" placeholder="Rechercher...">
+                                <span v-if="errors.guard_name" class="error_txt">{{errors.guard_name[0]}}</span>
+                                <!-- guard_name -->
+                                <div style="display:flex;justify-content:space-between">
+                                    <!-- utilisateurs -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Utilisateurs :</strong></label>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> user-list</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> user-create</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> user-edit</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> user-delete</label>
+                                        </div>
+                                    </div>
+                                    <!-- roles -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Roles :</strong></label>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> role-list</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> role-create</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> role-edit</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> role-delete</label>
+                                        </div>
+                                    </div>
+                                    <!-- staff -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Staff :</strong></label>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> staff-list</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> staff-create</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> staff-edit</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> staff-delete</label>
+                                        </div>
+                                    </div>
+                                    <!-- type de staff -->
+                                    <div style="border:1px solid red">
+                                        <label for=""><strong>Type de staff :</strong></label>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> typeStaff-list</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> typeStaff-create</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> typeStaff-edit</label>
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" name="" id="">
+                                            <label for=""> typeStaff-delete</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="data_box_content">
-                                <v-table :columns="columns">
-                                    <tbody>
-                                        <tr v-for="(role,key) in roles" :key="key">
-                                            <td>{{role.id}}</td>
-                                            <td>{{role.name}}</td>
-                                            <td>{{role.guard_name}}</td>
-                                            <td>{{convert(role.created_at)}}</td>
-                                            <td>
-                                                <button class="view_btn" v-if="$can('role-view')" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn" v-if="$can('role-edit')" @click="editRole(role.id)"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn" v-if="$can('role-delete')" @click="deleteRole(role.id)"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </v-table>
-                            </div>
-                            <div class="data_box_footer">
-                                <div>
-                                    ({{pagination.from}}-{{pagination.to}} sur {{pagination.total}})
+                                <!-- <div style="display:flex;justify-content:space-between">
+                                    <label for=""><strong>Departements :</strong></label>
+                                    <label for=""><strong>Domaines :</strong></label>
+                                    <label for=""><strong>Serveurs :</strong></label>
+                                </div> -->
+
+                                <!-- permissions -->
+                                <div class="col-md-12" style="margin-top:2rem">
+                                    <label for=""><strong>Choisir une permission :</strong></label>
+                                    <div class="row col-md-6" style="columns: 4 auto;">
+                                        <div class="" style="" v-for="permi in permissions" :key="permi.id">
+                                            <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
+                                            <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <button class="pagination_btn" style="margin-right:0.5rem;cursor:pointer" v-for="(link,key) in links" :key="key" :class="getClass(link)">
-                                        <a @click.prevent="navigation(link)">
-                                            {{link.label}}
-                                        </a>
-                                    </button>
-                                </div>
-                            </div>
+                                <span v-if="errors.permission" class="error_txt">{{errors.permission[0]}}</span>
+                                <!-- permissions -->
                         </div>
-                        <!-- router-view-end -->
+
                     </div>
                 </div>
                 <!-- End -->

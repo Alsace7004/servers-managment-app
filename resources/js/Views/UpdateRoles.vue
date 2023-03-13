@@ -12,60 +12,8 @@
                     <div class="content_body">
                         
                         <!-- router-view-begin -->
-                        <ContentHeader message="Page des Roles  !!!"/>
-                        
-                        <div v-if="!roles.length || !$can('role-list')" class="data_box">
-                                <p style="display:flex;justify-content:center;align-items:center;">
-                                                    Chargement des roles en cours...
-                                                    <loader></loader>
-                                </p>
-                        </div>
-                        <div v-else class="data_box">
-                            <!-- Create Role Btn begin-->
-                            <!--<button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>-->
-                            <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>
-                            <router-link :to="{name:'AddRoles'}">Ajouter</router-link>
-                            <!-- Create Role Btn end-->
-                            <div class="data_box_header">
-                                <div class="per_page">
-                                    <select name="" class="select_option_form" id="" v-model="tData.length" @change="getPerPage">
-                                        <option v-for="(pp,key) in perPage" :key="key" :value="pp">{{pp}}</option>
-                                    </select>
-                                </div>
-                                <div class="search_bar">
-                                    <input type="text" class="search_bar_form" name="" id="" v-model="tData.search" @input="getSearch" placeholder="Rechercher...">
-                                </div>
-                            </div>
-                            <div class="data_box_content">
-                                <v-table :columns="columns">
-                                    <tbody>
-                                        <tr v-for="(role,key) in roles" :key="key">
-                                            <td>{{role.id}}</td>
-                                            <td>{{role.name}}</td>
-                                            <td>{{role.guard_name}}</td>
-                                            <td>{{convert(role.created_at)}}</td>
-                                            <td>
-                                                <button class="view_btn" v-if="$can('role-view')" @click="viewRole(role.id)"><i class="fas fa-eye"></i></button>
-                                                <button class="edit_btn" v-if="$can('role-edit')" @click="editRole(role.id)"><i class="fas fa-edit"></i></button>
-                                                <button class="delete_btn" v-if="$can('role-delete')" @click="deleteRole(role.id)"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </v-table>
-                            </div>
-                            <div class="data_box_footer">
-                                <div>
-                                    ({{pagination.from}}-{{pagination.to}} sur {{pagination.total}})
-                                </div>
-                                <div>
-                                    <button class="pagination_btn" style="margin-right:0.5rem;cursor:pointer" v-for="(link,key) in links" :key="key" :class="getClass(link)">
-                                        <a @click.prevent="navigation(link)">
-                                            {{link.label}}
-                                        </a>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <ContentHeader message="Page de modification de Roles  !!!"/>
+                        <p>Modifier</p>
                         <!-- router-view-end -->
                     </div>
                 </div>

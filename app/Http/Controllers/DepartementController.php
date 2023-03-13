@@ -58,8 +58,8 @@ class DepartementController extends Controller
         //
         $data = $request->only(['nom_departement','user_id']);
         $validator = Validator::make($data,[
-            'nom_departement'   =>'required|string|unique:departements|min:2|max:100',
-            'user_id'           =>'required'
+            'nom_departement'           =>'required|string|unique:departements|min:2|max:100',
+            'user_id'                   =>'required'
         ],[
             'nom_departement.required'  =>'Veuillez remplir ce champ',
             'nom_departement.unique'    =>'Cette valeur existe déjà',
@@ -103,7 +103,7 @@ class DepartementController extends Controller
             'nom_departement' => ['required','string','min:2','max:100',
                 Rule::unique('departements')->ignore($departement->id)
             ],
-            'user_id'         =>'required'
+            'user_id'                   =>'required'
         ],[
             'nom_departement.required'  =>'Veuillez remplir ce champ',
             'nom_departement.unique'    =>'Valeur déjà utilisé.',

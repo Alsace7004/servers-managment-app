@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('domaines', function (Blueprint $table) {
+        Schema::create('categorie_permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_domaine');
-            $table->foreignId('server_id')->constrained();
-            $table->string('registre');
-            $table->string('date_expiration');
-            $table->string('type')->default('domaine');
-            $table->boolean('status')->default(0);
-            $table->boolean('is_deleted')->default(0);
+            $table->string('categorie_permission_name');
             $table->timestamps();
         });
     }
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('domaines');
+        Schema::dropIfExists('categorie_permissions');
     }
 };

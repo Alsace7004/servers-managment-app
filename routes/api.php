@@ -15,6 +15,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\TypeStaffController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\PermmissionController;
+use App\Http\Controllers\CategoriePermissionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -76,22 +77,26 @@ Route::middleware('web')->group(function () {
     Route::get("getCountStaffs",[StaffController::class,'getCountStaffs']);
     //Get Auth User Permission And Role
     Route::get('/get-permissions',[PermmissionController::class,'getAuthUserPermissionAndRole']);
+    //categorie_permissions
+    Route::apiResource('categorie_permissions',CategoriePermissionController::class);
 });
 
 //
 Route::get("/staffPermission",function(){
     $permissions = [
         //users
-        /* ['name'=>'user-list',          'guard_name'=>'staffs','slug'=>'liste utilisateurs'],
-        ['name'=>'user-create',        'guard_name'=>'staffs','slug'=>'creation utilisateurs'],
-        ['name'=>'user-edit',          'guard_name'=>'staffs','slug'=>'edition utilisateurs'],
-        ['name'=>'user-delete',        'guard_name'=>'staffs','slug'=>'suppretion utilisateurs'],
-        //roles
-        ['name'=>'role-list',          'guard_name'=>'staffs','slug'=>'liste de role'],
-        ['name'=>'role-create',        'guard_name'=>'staffs','slug'=>'creation de role'],
-        ['name'=>'role-view',          'guard_name'=>'staffs','slug'=>'voire role'],
-        ['name'=>'role-edit',          'guard_name'=>'staffs','slug'=>'edition de role'],
-        ['name'=>'role-delete',        'guard_name'=>'staffs','slug'=>'suppretion de role'], */
+        /*
+            ['name'=>'user-list',          'guard_name'=>'staffs','slug'=>'liste utilisateurs'],
+            ['name'=>'user-create',        'guard_name'=>'staffs','slug'=>'creation utilisateurs'],
+            ['name'=>'user-edit',          'guard_name'=>'staffs','slug'=>'edition utilisateurs'],
+            ['name'=>'user-delete',        'guard_name'=>'staffs','slug'=>'suppretion utilisateurs'],
+            //roles
+            ['name'=>'role-list',          'guard_name'=>'staffs','slug'=>'liste de role'],
+            ['name'=>'role-create',        'guard_name'=>'staffs','slug'=>'creation de role'],
+            ['name'=>'role-view',          'guard_name'=>'staffs','slug'=>'voire role'],
+            ['name'=>'role-edit',          'guard_name'=>'staffs','slug'=>'edition de role'],
+            ['name'=>'role-delete',        'guard_name'=>'staffs','slug'=>'suppretion de role'], 
+        */
         //servers
         ['name'=>'server-list',        'guard_name'=>'staffs','slug'=>'liste des serveurs'],
         ['name'=>'server-create',      'guard_name'=>'staffs','slug'=>'creation de serveur'],

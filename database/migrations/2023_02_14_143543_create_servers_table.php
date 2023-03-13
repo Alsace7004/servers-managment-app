@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('url_connexion');
             $table->longText('description');
             $table->string('date_expiration');
+            $table->string('type')->default('serveur');
             $table->boolean('status')->default(0);
             $table->boolean('is_deleted')->default(0);
             $table->timestamps();

@@ -182,7 +182,12 @@ const routes = [
         path:'/:pathMatch(.*)*',
         name:'NotFound',
         component:()=>import("../components/NotFound.vue")
-    }
+    },
+    {
+        path:'/add_roles',
+        name:'AddRoles',
+        component:()=>import("../Views/AddRoles.vue")
+    },
 ];
 
 const router = createRouter({
