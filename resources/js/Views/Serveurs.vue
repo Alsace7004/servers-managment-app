@@ -145,28 +145,45 @@
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
+                                <!-- server name -->
                                 <div class="input_form mb_3">
                                     <input type="text" class="input_form_item" v-model="server.name" placeholder="Server name...">
                                 </div>
                                 <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <!-- server username -->
                                 <div class="input_form mb_3">
                                     <input type="text" class="input_form_item" v-model="server.username" placeholder="Server username...">
                                 </div>
                                 <span v-if="errors.username" class="error_txt">{{errors.username[0]}}</span>
+                                <!-- server password -->
                                 <div class="input_form mb_3">
                                     <input type="password" class="input_form_item" v-model="server.password" placeholder="Server password...">
                                 </div>
                                 <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
+                                <!-- server url_connexion -->
                                 <div class="input_form mb_3">
                                     <input type="url" class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
                                 </div>
                                 <span v-if="errors.url_connexion" class="error_txt">{{errors.url_connexion[0]}}</span>
-                                <!--  -->
+                                <!-- categorie serveur -->
+                                <div class="input_form mb_3">
+                                    <select name="" id="" v-model="server.categorie_serveur_id" class="input_form_item">
+                                        <option value="">Choisir la categorie de serveur</option>
+                                        <option v-for="server in categorie_servers" :key="server.id" :value="server.id">{{server.categorie_serveur_name}}</option>
+                                    </select>
+                                </div>
+                                <span v-if="errors.categorie_serveur_id" class="error_txt">{{errors.categorie_serveur_id[0]}}</span>
+                                <!-- server proprietaire -->
+                                <div class="input_form mb_3">
+                                    <input type="text" class="input_form_item" v-model="server.proprietaire_serveur" placeholder="Proprietaire du serveur...">
+                                </div>
+                                <span v-if="errors.proprietaire_serveur" class="error_txt">{{errors.proprietaire_serveur[0]}}</span>
+                                <!-- server date expiration -->
                                 <div class="input_form mb_3">
                                     <input type="date" class="input_form_item" v-model="server.date_expiration" placeholder="Date Expiration du serveur...">
                                 </div>
                                 <span v-if="errors.date_expiration" class="error_txt">{{errors.date_expiration[0]}}</span>
-                                <!--  -->
+                                <!-- server description -->
                                 <!-- editor -->
                                 <ckeditor :editor="editor" v-model="server.description" :config="editorConfig"></ckeditor>
                                 <span v-if="errors.description" class="error_txt">{{errors.description[0]}}</span>
@@ -204,6 +221,16 @@
                                 <label for=""><strong>URL du Serveur :</strong></label>
                                 <div class="mb_3">
                                     <p>{{server.url_connexion}}</p>
+                                </div>
+
+                                <label for=""><strong>Proprietaire du Serveur :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{server.proprietaire_serveur}}</p>
+                                </div>
+
+                                <label for=""><strong>Categorie du Serveur :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{server.categorie_serveur_id}}</p>
                                 </div>
 
                                 <label for=""><strong>Description du Serveur :</strong></label>
@@ -386,12 +413,15 @@
                 axiosClient.get(`api/servers/${id}`).then((res)=>{
                     $("#edit_server").modal("show")
                     console.log('valeur de res dans edit server:',res)
-                    this.edit_id    = res.data.id;
-                    this.server.name  = res.data.name;
-                    this.server.username  = res.data.username;
-                    this.server.url_connexion  = res.data.url_connexion;
-                    this.server.description  = res.data.description;
-                    this.server.date_expiration  = res.data.date_expiration;
+                    this.edit_id    = res.data[0].id;
+                    this.server.name  = res.data[0].name;
+                    this.server.username  = res.data[0].username;
+                    this.server.password  = res.data[0].password;
+                    this.server.url_connexion  = res.data[0].url_connexion;
+                    this.server.description  = res.data[0].description;
+                    this.server.date_expiration  = res.data[0].date_expiration;
+                    this.server.proprietaire_serveur  = res.data[0].proprietaire_serveur;
+                    this.server.categorie_serveur_id  = res.data[0].categorie_serveur_id;
                     this.is_Editing = true;
                 })
             },
@@ -401,13 +431,15 @@
                     $("#view_server").modal("show")
                     //console.log('valeur de res dans edit server:',res)
                     //this.edit_id    = res.data.id;
-                    this.server.name  = res.data.name;
-                    this.server.username  = res.data.username;
-                    this.server.password  = res.data.password;
-                    this.server.url_connexion  = res.data.url_connexion;
-                    this.server.description  = res.data.description;
-                    this.server.date_expiration  = res.data.date_expiration;
-                    this.server.status  = res.data.status;
+                    this.server.name  = res.data[0].name;
+                    this.server.username  = res.data[0].username;
+                    this.server.password  = res.data[0].password;
+                    this.server.url_connexion  = res.data[0].url_connexion;
+                    this.server.description  = res.data[0].description;
+                    this.server.date_expiration  = res.data[0].date_expiration;
+                    this.server.status  = res.data[0].status;
+                    this.server.proprietaire_serveur  = res.data[0].proprietaire_serveur;
+                    this.server.categorie_serveur_id  = res.data[0].categorie_serveur_name;
                     //this.is_Editing = true;
                 })
             },  
@@ -467,9 +499,9 @@
                 axios.get("api/categorie_serveurs").then((res)=>{
                     let content = res.data.categorie_serveurs;
                     this.categorie_servers = content
-                    console.log("valeur de res dans categorie_serveurs:",content)
+                    //console.log("valeur de res dans categorie_serveurs:",content)
                 })
-            }
+            },
         },
 
         created(){
