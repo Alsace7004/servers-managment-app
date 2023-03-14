@@ -1,0 +1,24 @@
+
+### GET ALL CATEGORIE PERMISSIONS
+GET http://localhost:8000/api/categorie_serveurs
+
+### ADD NEW CATEGORIE PERMISSION
+POST http://localhost:8000/api/categorie_serveurs
+Content-Type: application/json
+
+{
+    "categorie_serveur_name":"cloud"
+}
+### UPDATE EXISTING CATEGORIE PERMISSION
+PUT http://localhost:8000/api/categorie_serveurs/1
+Content-Type: application/json
+
+{
+    "categorie_serveur_name":"serveurs"
+}
+### DELETE EXISTING CATEGORIE PERMISSION
+DELETE http://localhost:8000/api/categorie_serveurs/1
+
+###
+GET http://localhost:8000/api/elements
+

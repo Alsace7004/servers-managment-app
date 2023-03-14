@@ -9,7 +9,7 @@
                     <Navbar />
                 <!-- The Content -->
                 <div class="content">
-                    <div class="content_body">
+                    <div class="content_body" style="background-color:#fff;border-radius:5px">
                         
                         <!-- router-view-begin -->
                         <ContentHeader message="Page d'ajout de Roles  !!!"/>
@@ -17,13 +17,13 @@
                         <!-- router-view-end -->
                         <div>
                                 <!-- role_name -->
-                                <div class="input_form mb_3">
+                                <div class="input_form mb_3" style="width:25%">
                                     <input type="text" class="input_form_item" v-model="role.name" placeholder="Role name...">
                                 </div>
                                 <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
                                 <!-- role_name -->
                                 <!-- guard_name -->
-                                <div class="input_form mb_3">
+                                <div class="input_form mb_3" style="width:25%">
                                     <!-- <input type="text" class="input_form_item" v-model="role.guard_name" placeholder="guard Ex:web/staffs"> -->
                                     <select  v-model="role.guard_name" id="the_guard" @change="getTheGuard" class="input_form_item">
                                         <option value="">Selectionner un garde</option>
@@ -525,7 +525,8 @@
         display:flex;flex-wrap:wrap;
     }
     .single_checkbox{
-        border:1px solid #2f3640;width:25%
+        /* border:1px solid #2f3640; */
+        width:25%
     }
     .my_color{
         color: #dd3333;

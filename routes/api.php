@@ -16,6 +16,7 @@ use App\Http\Controllers\TypeStaffController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\PermmissionController;
 use App\Http\Controllers\CategoriePermissionController;
+use App\Http\Controllers\CategorieServeurController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -79,6 +80,8 @@ Route::middleware('web')->group(function () {
     Route::get('/get-permissions',[PermmissionController::class,'getAuthUserPermissionAndRole']);
     //categorie_permissions
     Route::apiResource('categorie_permissions',CategoriePermissionController::class);
+    //categorie_serveurs
+    Route::apiResource('categorie_serveurs',CategorieServeurController::class);
 });
 
 //

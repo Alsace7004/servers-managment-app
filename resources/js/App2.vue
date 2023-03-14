@@ -156,6 +156,15 @@
                 -le nombre total de domaine qui vont expiré dans 1 semaine
                 -le nombre total de departement actif
                 -le nombre total de staff actif
+            14-03-2023
+            Nouvelles Taches à faire:
+                -Creation d'une nouvelle table CategeorieServeur
+                qui aura comme attribut (id,name)
+                name prend uniquement deux valeurs(local-client & cloud)
+                Pour Ajouter un Serveur, il y aura un select pour selectionner 
+                la categorie de serveur
+                -Au niveau de la table Serveur, Ajouter un nouveau attribut (Proprietaire-Serveur)
+                qui aura par defaut EBA
         */
         
     }

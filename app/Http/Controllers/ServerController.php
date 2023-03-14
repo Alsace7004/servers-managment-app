@@ -22,11 +22,10 @@ class ServerController extends Controller
         $length = $request->input('length');
         $searchValue = $request->input('search');
 
-        $servers = Server::query()
-                        ->select('id','name','username','url_connexion','date_expiration','status','created_at')
-                        ->where('is_deleted',false)
+        $servers = Server::join('categorie_serveurs','servers.categorie_serveur_id','=','categorie_serveurs.id')
+                        ->select('servers.id','servers.name','servers.username','servers.url_connexion','servers.proprietaire_serveur','servers.date_expiration','servers.status','servers.created_at','categorie_serveurs.categorie_serveur_name')
+                        ->where('servers.is_deleted',false)
                         ->orderBy('id','desc');
-        
         if($searchValue){
             $servers->where(function($query) use ($searchValue){
                 $query->where('name','like','%'.$searchValue.'%')
@@ -59,7 +58,7 @@ class ServerController extends Controller
     public function store(Request $request)
     {
         //
-        $data = $request->only(['name','username','password','url_connexion','description','date_expiration']);
+        $data = $request->only(['name','username','password','url_connexion','description','date_expiration','proprietaire_serveur','categorie_serveur_id']);
         //dd($data);
         $validator = Validator::make($data,[
             'name'                      =>'required|string|unique:servers|min:2|max:50',
@@ -68,27 +67,41 @@ class ServerController extends Controller
             'url_connexion'             =>'required|string|url|unique:servers|min:2|max:100',
             'description'               =>'required|string|min:2|max:255',
             'date_expiration'           =>'required|date|after:today',
+            'proprietaire_serveur'      =>'required|string|min:2|max:50',
+            'categorie_serveur_id'      =>'required|integer'
         ],[
             'name.required'             =>'Veuillez remplir ce champ',
             'name.unique'               =>'Cette valeur existe déjà',
             'name.min'                  =>'Trop court',
             'name.max'                  =>'Trop long',
+            //
             'username.required'         =>'Veuillez remplir ce champ',
             'username.min'              =>'Trop court',
             'username.max'              =>'Trop long',
+            //
             'password.required'         =>'Veuillez remplir ce champ',
             'password.min'              =>'Trop court',
+            //
             'url_connexion.required'    =>'Veuillez remplir ce champ',
             'url_connexion.url'         =>'Veuillez entrer une URL',
             'url_connexion.min'         =>'Trop court',
             'url_connexion.max'         =>'Trop long',
             'url_connexion.unique'      =>'Cette valeur existe déjà',
+            //
             'description.required'      =>'Veuillez remplir ce champ',
             'description.min'           =>'Trop court',
             'description.max'           =>'Trop long',
+            //
             'date_expiration.required'  =>'Veuillez remplir ce champ',
             'date_expiration.date'      =>'Veuillez entrer une date',
             'date_expiration.after'     =>"Cette date doit etre ulterieure à la date d'aujourd'hui",
+            //
+            'proprietaire_serveur.required'         =>'Veuillez remplir ce champ',
+            'proprietaire_serveur.min'              =>'Trop court',
+            'proprietaire_serveur.max'              =>'Trop long',
+            //
+            'categorie_serveur_id.required'         =>'Veuillez remplir ce champ',
+            'categorie_serveur_id.integer'          =>'Veuillez remplir ce champ',
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
@@ -100,6 +113,8 @@ class ServerController extends Controller
         $ser->url_connexion     = $data['url_connexion'];
         $ser->description       = $data['description'];
         $ser->date_expiration   = $data['date_expiration'];
+        $ser->proprietaire_serveur   = $data['proprietaire_serveur'];
+        $ser->categorie_serveur_id   = $data['categorie_serveur_id'];
         if($ser->save()){
             return ['status'=>true];
         }

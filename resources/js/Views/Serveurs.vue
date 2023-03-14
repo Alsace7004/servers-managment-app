@@ -44,6 +44,8 @@
                                                 <td>{{item.id}}</td>
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.url_connexion}}</td>
+                                                <td>{{item.proprietaire_serveur}}</td>
+                                                <td>{{item.categorie_serveur_name}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>{{convert(item.date_expiration)}}</td>
                                                 <td>
@@ -86,22 +88,40 @@
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
+                                <!-- server name -->
                                 <div class="input_form mb_3">
                                     <input type="text" class="input_form_item" v-model="server.name" placeholder="Server name...">
                                 </div>
                                 <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                                <!-- server username -->
                                 <div class="input_form mb_3">
                                     <input type="text" class="input_form_item" v-model="server.username" placeholder="Server username...">
                                 </div>
                                 <span v-if="errors.username" class="error_txt">{{errors.username[0]}}</span>
+                                <!-- server password -->
                                 <div class="input_form mb_3">
                                     <input type="password" class="input_form_item" v-model="server.password" placeholder="Server password...">
                                 </div>
                                 <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
+                                <!-- server connexion_url -->
                                 <div class="input_form mb_3">
                                     <input type="url" class="input_form_item" v-model="server.url_connexion" placeholder="Server url...">
                                 </div>
                                 <span v-if="errors.url_connexion" class="error_txt">{{errors.url_connexion[0]}}</span>
+                                <!-- categorie serveur -->
+                                <div class="input_form mb_3">
+                                    <select name="" id="" v-model="server.categorie_serveur_id" class="input_form_item">
+                                        <option value="">Choisir la categorie de serveur</option>
+                                        <option v-for="server in categorie_servers" :key="server.id" :value="server.id">{{server.categorie_serveur_name}}</option>
+                                    </select>
+                                </div>
+                                <span v-if="errors.categorie_serveur_id" class="error_txt">{{errors.categorie_serveur_id[0]}}</span>
+                                <!-- server proprietaire -->
+                                <div class="input_form mb_3">
+                                    <input type="text" class="input_form_item" v-model="server.proprietaire_serveur" placeholder="Proprietaire du serveur...">
+                                </div>
+                                <span v-if="errors.proprietaire_serveur" class="error_txt">{{errors.proprietaire_serveur[0]}}</span>
+                                <!-- server date expiration -->
                                 <div class="input_form mb_3">
                                     <input type="date" class="input_form_item" v-model="server.date_expiration" placeholder="Date Expiration du serveur...">
                                 </div>
@@ -236,6 +256,8 @@
                 {label:'~#',name:''},
                 {label:'Nom',name:''},
                 {label:'Url_Connexion',name:''},
+                {label:'Proprietaire',name:''},
+                {label:'Type Serveur',name:''},
                 {label:'Ajouté Le',name:''},
                 {label:"Date d'expiration",name:''},
                 {label:"Status",name:''},
@@ -245,6 +267,7 @@
                 
                 perPage : ['5','10','20','30'],
                 columns: columns,
+                categorie_servers:[],
                 servers:[],
                 errors:[],
                 links:[],
@@ -255,6 +278,8 @@
                     url_connexion:'',
                     description:'<p>Content of the editor.</p>',
                     date_expiration:'',
+                    proprietaire_serveur:'hello',
+                    categorie_serveur_id:'',
                 },
                 isModalVisible:false,
                 tData:{
@@ -288,6 +313,8 @@
                     url_connexion:'',
                     description:'',
                     date_expiration:'',
+                    proprietaire_serveur:'EBA',
+                    categorie_serveur_id:'',
                 }
                 $("#create_server").modal("show")
             },
@@ -435,10 +462,19 @@
                         }
                     })
             },
+            //categorie_serveur
+            getCategorieServeur(){
+                axios.get("api/categorie_serveurs").then((res)=>{
+                    let content = res.data.categorie_serveurs;
+                    this.categorie_servers = content
+                    console.log("valeur de res dans categorie_serveurs:",content)
+                })
+            }
         },
 
         created(){
             this.getServers()
+            this.getCategorieServeur()
         },
     }
 </script>

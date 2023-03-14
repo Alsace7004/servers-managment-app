@@ -1,5 +1,5 @@
 <template>
-                <div class="navbar">
+                <div class="navbar" style="box-shadow: 0 2px 0px 0 rgba(0,0,0,0.16);">
                     <div class="hambuger">
                         <i class="fas fa-bars"></i>
                     </div>
@@ -32,5 +32,5 @@
 </script>
 
 <style scoped>
-
+    /*  */
 </style>
