@@ -1,0 +1,30 @@
+
+### GET ALL OUTILS 
+GET http://localhost:8000/api/outils
+
+### ADD NEW OUTILS 
+POST http://localhost:8000/api/outils
+Content-Type: application/json
+
+{
+    "name":"cloud",
+    "username":"cloud",
+    "password":"cloud",
+    "url":"cloud",
+    "type_outil_id":"cloud"
+}
+### UPDATE EXISTING OUTILS
+PUT http://localhost:8000/api/outils/1
+Content-Type: application/json
+
+{
+    "name":"cloud",
+    "username":"cloud",
+    "password":"cloud",
+    "url":"cloud",
+    "type_outil_id":"cloud"
+}
+### DELETE EXISTING OUTILS
+DELETE http://localhost:8000/api/outils/1
+
+

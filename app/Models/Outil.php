@@ -10,4 +10,8 @@ class Outil extends Model
     use HasFactory;
 
     protected $fillable = ['name','username','password','url','is_deleted','type_outil_id'];
+
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

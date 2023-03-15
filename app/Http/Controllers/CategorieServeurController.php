@@ -85,7 +85,7 @@ class CategorieServeurController extends Controller
             'categorie_serveur_name.required'    =>'veuillez remplir ce champ',
             'categorie_serveur_name.min'         =>'Trop court',
             'categorie_serveur_name.max'         =>'Trop long',
-            'categorie_serveur_name.uniques'     =>'Cette valeur existe déjà',
+            'categorie_serveur_name.unique'     =>'Cette valeur existe déjà',
         ]);
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);

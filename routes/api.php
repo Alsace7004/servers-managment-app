@@ -17,6 +17,8 @@ use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\PermmissionController;
 use App\Http\Controllers\CategoriePermissionController;
 use App\Http\Controllers\CategorieServeurController;
+use App\Http\Controllers\TypeOutilController;
+use App\Http\Controllers\OutilController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -82,6 +84,10 @@ Route::middleware('web')->group(function () {
     Route::apiResource('categorie_permissions',CategoriePermissionController::class);
     //categorie_serveurs
     Route::apiResource('categorie_serveurs',CategorieServeurController::class);
+    //type_outils
+    Route::apiResource('type_outils',TypeOutilController::class);
+    //outils
+    Route::apiResource('outils',OutilController::class);
 });
 
 //

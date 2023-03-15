@@ -1,0 +1,22 @@
+
+### GET ALL TYPE OUTILS 
+GET http://localhost:8000/api/type_outils
+
+### ADD NEW TYPE OUTILS 
+POST http://localhost:8000/api/type_outils
+Content-Type: application/json
+
+{
+    "name":"serveurs"
+}
+### UPDATE EXISTING TYPE OUTILS
+PUT http://localhost:8000/api/type_outils/4
+Content-Type: application/json
+
+{
+    "name":"serveurs less"
+}
+### DELETE EXISTING TYPE OUTILS
+DELETE http://localhost:8000/api/type_outils/1
+
+
