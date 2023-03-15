@@ -165,6 +165,24 @@
                 la categorie de serveur
                 -Au niveau de la table Serveur, Ajouter un nouveau attribut (Proprietaire-Serveur)
                 qui aura par defaut EBA
+                Montré-Verifié-ok
+            15-03-2023
+            Nouvelles Taches à faire
+                -Creation d'une nouvelle table TypeOutil
+                    TypeOutil(id,name)
+                    Action a faire: (Creation,Liste,Modification,Suppretion(logique))
+                -Creation d'une nouvelle table Outil
+                    Outil(id,type-outil,name,username,password,url(optionnel))
+                NB: Pas d'outils ayant le meme nom
+
+                
+                
+        */
+        /*
+            PascalCase/CapitalCase
+            camelCase
+            Kebab-case
+            snake_case
         */
         
     }
