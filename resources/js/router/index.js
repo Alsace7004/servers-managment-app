@@ -218,6 +218,42 @@ const routes = [
             }
         }
     },
+    //type-outils
+    {
+        path:'/type-outils',
+        name:'typeOutils',
+        component:()=>import("../Views/TypeOutils.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        /* beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('user-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        } */
+    },
+    //outils
+    {
+        path:'/outils',
+        name:'outils',
+        component:()=>import("../Views/Outils.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        /* beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('user-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        } */
+    },
 ];
 
 const router = createRouter({

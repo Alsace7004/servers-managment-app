@@ -14,14 +14,34 @@ class TypeOutilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //
+        $length      = $request->input('length');
+        $searchValue = $request->input('search');
         //
         $type_outils = TypeOutil::query()
         ->select('id','name','created_at')
         ->where('is_deleted',false)
-        ->orderBy('id','desc')
-        ->get();
+        ->orderBy('id','desc');
+        //
+        if($searchValue){
+            $type_outils->where(function($query) use($searchValue){
+                $query->where('name','like',"%".$searchValue."%");
+            });
+        }
+        //
+        return response()->json([
+            'status'=>true,
+            'type_outils'=>$type_outils->paginate($length)
+        ]);
+    }
+    public function getTypeOutils(){
+        $type_outils = TypeOutil::query()
+            ->select('id','name','created_at')
+            ->where('is_deleted',false)
+            ->orderBy('id','desc')
+            ->get();
         return response()->json([
             'status'=>true,
             'type_outils'=>$type_outils

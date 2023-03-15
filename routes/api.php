@@ -86,8 +86,10 @@ Route::middleware('web')->group(function () {
     Route::apiResource('categorie_serveurs',CategorieServeurController::class);
     //type_outils
     Route::apiResource('type_outils',TypeOutilController::class);
+    Route::get("getTypeOutils",[TypeOutilController::class,'getTypeOutils']);
     //outils
     Route::apiResource('outils',OutilController::class);
+    
 });
 
 //

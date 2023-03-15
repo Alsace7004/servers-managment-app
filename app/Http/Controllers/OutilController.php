@@ -14,21 +14,32 @@ class OutilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $length      = $request->input('length');
+        $searchValue = $request->input('search');
+        //
         $outils = Outil::join('type_outils','outils.type_outil_id','type_outils.id')
-                        ->select('outils.id','outils.name','outils.url','type_outils.name','outils.created_at')
+                        ->select('outils.id','outils.name as nom_outil','outils.username','outils.url','type_outils.name as nom_type_outil','outils.created_at')
                         ->where('outils.is_deleted',false)
-                        ->orderBy('outils.id','desc')
-                        ->get();
-
+                        ->orderBy('outils.id','desc');
+        //
+                        if($searchValue){
+                            $outils->where(function($query) use($searchValue){
+                                $query->where('outils.name','like',"%".$searchValue."%");
+                                $query->orWhere('username','like',"%".$searchValue."%");
+                                $query->orWhere('outils.url','like',"%".$searchValue."%");
+                                $query->orWhere('type_outils.name','like',"%".$searchValue."%");
+                            });
+                        }
+        //
         return response()->json([
             'status'=>true,
-            'outils'=>$outils
+            'outils'=>$outils->paginate($length)
         ]);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -44,7 +55,7 @@ class OutilController extends Controller
             'name'                      =>'required|string|unique:outils|min:2|max:50',
             'username'                  =>'required|string|min:2|max:50',
             'password'                  =>'required|string|min:8',
-            'url'                       =>'required|string|url|unique:outils|min:2|max:100',
+            'url'                       =>'nullable|string|url|unique:outils|min:2|max:100',
             'type_outil_id'             =>'required|integer',
         ],[
             'name.required'             =>'Veuillez remplir ce champ',
@@ -59,7 +70,6 @@ class OutilController extends Controller
             'password.required'         =>'Veuillez remplir ce champ',
             'password.min'              =>'Trop court',
             //
-            'url.required'              =>'Veuillez remplir ce champ',
             'url.url'                   =>'Veuillez entrer une URL',
             'url.min'                   =>'Trop court',
             'url.max'                   =>'Trop long',
@@ -87,7 +97,7 @@ class OutilController extends Controller
     {
         //
         $outils = Outil::join('type_outils','outils.type_outil_id','type_outils.id')
-                        ->select('outils.id','outils.name','outils.url','type_outils.name','outils.type_outil_id','outils.created_at')
+                        ->select('outils.id','outils.name','outils.username','outils.url','outils.type_outil_id','outils.created_at')
                         ->where('outils.id',$outil->id)->get();
         return $outils;
     }
@@ -106,8 +116,8 @@ class OutilController extends Controller
         $validator = Validator::make($data,[
             'name'          =>['required','string',Rule::unique('outils','name')->ignore($outil->id),'min:2','max:50'],
             'username'      =>'required|string|min:2|max:50',
-            'password'      =>'required|string|min:8',
-            'url'           =>['required','string',Rule::unique('outils','url')->ignore($outil->id),'url','min:2','max:100'],
+            'password'      =>'nullable|string|min:8',
+            'url'           =>['nullable','string',Rule::unique('outils','url')->ignore($outil->id),'url','min:2','max:100'],
             'type_outil_id' =>'required|integer',
         ],[
             'name.required'             =>'Veuillez remplir ce champ',
@@ -119,10 +129,10 @@ class OutilController extends Controller
             'username.min'              =>'Trop court',
             'username.max'              =>'Trop long',
             //
-            'password.required'         =>'Veuillez remplir ce champ',
+            //'password.required'         =>'Veuillez remplir ce champ',
             'password.min'              =>'Trop court',
             //
-            'url.required'              =>'Veuillez remplir ce champ',
+            //'url.required'              =>'Veuillez remplir ce champ',
             'url.url'                   =>'Veuillez entrer une URL',
             'url.min'                   =>'Trop court',
             'url.max'                   =>'Trop long',
