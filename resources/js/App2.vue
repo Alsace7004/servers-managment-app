@@ -70,7 +70,17 @@
         mounted(){
             //
         },
+        /* 
+        Module domaine
 
+        -nom de domaine
+        -hebergeur
+        -registre personne chez qui on prend le domaine
+        -date expirartion
+
+            arrive dans une semaine on envoi notification mail pour informer que la date arrive a expirartion 
+            et on donne la date d'expirartion
+        */
         /* 
         23-02-2023
         Probleme de validation au niveau du nom de domaine (Resolut)
@@ -179,13 +189,13 @@
                 Au niveau des outils: Ajouter l'option pour voir les details
                 Le mot de passe ne doit pas etre haché au niveau de la BDD
                 Ajouter des permissions pour les modules type-outils et outils
-                
+
         */
         /*
-            PascalCase/CapitalCase
-            camelCase
-            Kebab-case
-            snake_case
+            PascalCase/CapitalCase ex: FirstName
+            camelCase   ex:firstName
+            Kebab-case  ex:first-name
+            snake_case  ex:first_name
         */
         
     }

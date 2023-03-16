@@ -122,15 +122,31 @@
 .deconnexion_btn{
     cursor: pointer;
 }
-/* 
-Module domaine
+.sidebar > ul:hover{
+    scrollbar-width: thin;
+    overflow-y : scroll;
+    scrollbar-color: gray;
+ 
+}
+.sidebar{
+    /* scrollbar-width: thin;
+    overflow-y : scroll;
+    scrollbar-color: gray; */
+}
+/* .sidebar:hover{
+                overflow-y : scroll;
+} */
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
 
--nom de domaine
--hebergeur
--registre personne chez qui on prend le domaine
--date expirartion
-
-    arrive dans une semaine on envoi notification mail pour informer que la date arrive a expirartion 
-    et on donne la date d'expirartion
-*/
 </style>

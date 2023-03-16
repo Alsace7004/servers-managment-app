@@ -233,6 +233,7 @@ class StaffController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
+       
         //delete the existing file in public_path and add new one
             $image_path = "img_path/Staff/".$staff->photo;  // Value is not URL but directory file path
             if($request->file('photo') === null){
