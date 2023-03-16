@@ -128,11 +128,7 @@
     scrollbar-color: gray;
  
 }
-.sidebar{
-    /* scrollbar-width: thin;
-    overflow-y : scroll;
-    scrollbar-color: gray; */
-}
+
 /* .sidebar:hover{
                 overflow-y : scroll;
 } */
