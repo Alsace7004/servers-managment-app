@@ -259,6 +259,12 @@ class RoleController extends Controller
         $serveurs_permission_id = CategoriePermission::query()->where('categorie_permission_name','serveurs')->get('id');
         $serveurs_permission_id = $serveurs_permission_id[0]->id; 
         /***********************************************************************************************************************/
+        $outils_permission_id = CategoriePermission::query()->where('categorie_permission_name','outils')->get('id');
+        $outils_permission_id = $outils_permission_id[0]->id; 
+        /***********************************************************************************************************************/
+        $type_outil_permission_id = CategoriePermission::query()->where('categorie_permission_name','typeOutils')->get('id');
+        $type_outil_permission_id = $type_outil_permission_id[0]->id; 
+        /***********************************************************************************************************************/
         /* return response()->json([
             'categorie_permission_id'=>$categorie_permission_id
         ]); */
@@ -276,6 +282,10 @@ class RoleController extends Controller
         ->where('guard_name',$the_guard)->get();
         $serveurs = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$serveurs_permission_id)
         ->where('guard_name',$the_guard)->get();
+        $outils = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$outils_permission_id)
+        ->where('guard_name',$the_guard)->get();
+        $typeOutils = Permission::query()->select('id','name','slug','guard_name')->where('categorie_permission_id',$type_outil_permission_id)
+        ->where('guard_name',$the_guard)->get();
         return response()->json([
             'utilisateurs'  =>$utilisateurs,
             'roles'         =>$roles,
@@ -284,6 +294,8 @@ class RoleController extends Controller
             'departements'  =>$departements,
             'domaines'      =>$domaines,
             'serveurs'      =>$serveurs,
+            'outils'        =>$outils,
+            'typeOutils'    =>$typeOutils,
         ]);
         /***********************************************************************************************/
     }

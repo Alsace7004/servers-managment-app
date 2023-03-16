@@ -173,7 +173,13 @@
                     Action a faire: (Creation,Liste,Modification,Suppretion(logique))
                 -Creation d'une nouvelle table Outil
                     Outil(id,type-outil,name,username,password,url(optionnel))
-                NB: Pas d'outils ayant le meme nom    
+                NB: Pas d'outils ayant le meme nom   
+            16-03-2023
+                Apres demo, Rectificatifs a faire:
+                Au niveau des outils: Ajouter l'option pour voir les details
+                Le mot de passe ne doit pas etre haché au niveau de la BDD
+                Ajouter des permissions pour les modules type-outils et outils
+                
         */
         /*
             PascalCase/CapitalCase

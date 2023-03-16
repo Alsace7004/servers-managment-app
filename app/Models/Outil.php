@@ -11,7 +11,8 @@ class Outil extends Model
 
     protected $fillable = ['name','username','password','url','is_deleted','type_outil_id'];
 
-    public function setPasswordAttribute($value){
+    //Password don't need to be hashed !!!
+    /* public function setPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);
-    }
+    } */
 }

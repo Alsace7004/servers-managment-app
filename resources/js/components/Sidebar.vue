@@ -55,13 +55,13 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link v-if="$can('user-list')" :to="{name:'typeOutils'}" class="item">
+                        <router-link v-if="$can('typeOutil-list')" :to="{name:'typeOutils'}" class="item">
                             <span class="icon"><i class="fas fa-tools"></i></span>
                             <span>Type Outils</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link v-if="$can('user-list')" :to="{name:'outils'}" class="item">
+                        <router-link v-if="$can('outil-list')" :to="{name:'outils'}" class="item">
                             <span class="icon"><i class="fas fa-fire"></i></span>
                             <span>Outils</span>
                         </router-link>

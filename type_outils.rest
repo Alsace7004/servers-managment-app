@@ -19,4 +19,7 @@ Content-Type: application/json
 ### DELETE EXISTING TYPE OUTILS
 DELETE http://localhost:8000/api/type_outils/1
 
+### CREATION NEW PERMISSIONS
+GET http://localhost:8000/api/outilsPermission
+
 

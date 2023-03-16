@@ -37,6 +37,7 @@ const routes = [
         name:'modifyStaffPassword',
         component:()=>import("../Views/ModifyStaffPassword.vue")
     },
+    //utilisateurs
     {
         path:'/users',
         name:'users',
@@ -54,6 +55,7 @@ const routes = [
             }
         }
     },
+    //roles
     {
         path:'/roles',
         name:'roles',
@@ -71,6 +73,7 @@ const routes = [
             }
         }
     },
+    //permissions
     {
         path:'/permissions',
         name:'permissions',
@@ -88,6 +91,7 @@ const routes = [
             }
         }
     },
+    //serveurs
     {
         path:'/serveurs',
         name:'serveurs',
@@ -105,6 +109,7 @@ const routes = [
             }
         }
     },
+    //domaines
     {
         path:'/domaines',
         name:'domaines',
@@ -122,6 +127,7 @@ const routes = [
             }
         }
     },
+    //departements
     {
         path:'/departements',
         name:'departements',
@@ -139,6 +145,7 @@ const routes = [
             }
         }
     },
+    //type_de_staff
     {
         path:'/type_de_staff',
         name:'type_de_staff',
@@ -156,6 +163,7 @@ const routes = [
             }
         }
     },
+    //staff
     {
         path:'/staff',
         name:'staff',
@@ -183,6 +191,7 @@ const routes = [
         name:'NotFound',
         component:()=>import("../components/NotFound.vue")
     },
+    //addRole
     {
         path:'/add_roles',
         name:'AddRoles',
@@ -200,6 +209,7 @@ const routes = [
             }
         }
     },
+    //updateRole
     {
         path:'/roles/:roleId/edit',
         name:'UpdateRoles',
@@ -226,15 +236,15 @@ const routes = [
         meta:{
             requiresAuth:true
         },
-        /* beforeEnter(to,from,next){
+        beforeEnter(to,from,next){
             let {U_permissions}=useAuthStore()
-            if(U_permissions.includes('user-list')){
+            if(U_permissions.includes('typeOutil-list')){
                 //verifier la permission
                 next()
             }else{
                 next({name:'notAuthorised'})
             }
-        } */
+        }
     },
     //outils
     {
@@ -244,16 +254,17 @@ const routes = [
         meta:{
             requiresAuth:true
         },
-        /* beforeEnter(to,from,next){
+        beforeEnter(to,from,next){
             let {U_permissions}=useAuthStore()
-            if(U_permissions.includes('user-list')){
+            if(U_permissions.includes('outil-list')){
                 //verifier la permission
                 next()
             }else{
                 next({name:'notAuthorised'})
             }
-        } */
+        }
     },
+    //blank
 ];
 
 const router = createRouter({

@@ -25,6 +25,8 @@ class PermissionTableSeeder extends Seeder
             ['categorie_permission_name'=>'departements'],  //5
             ['categorie_permission_name'=>'domaines'],      //6
             ['categorie_permission_name'=>'serveurs'],      //7
+            ['categorie_permission_name'=>'outils'],        //8
+            ['categorie_permission_name'=>'typeOutils'],    //9
         ];
         foreach ($categorie_permissions as $p) {
             CategoriePermission::create($p);
@@ -33,22 +35,22 @@ class PermissionTableSeeder extends Seeder
         $permissions = [
             /******************for-web************************/
             //users
-            ['name'=>'user-list',               'guard_name'=>'web','slug'=>'liste utilisateurs'],
-            ['name'=>'user-create',             'guard_name'=>'web','slug'=>'creation utilisateurs'],
-            ['name'=>'user-edit',               'guard_name'=>'web','slug'=>'edition utilisateurs'],
-            ['name'=>'user-delete',             'guard_name'=>'web','slug'=>'suppretion utilisateurs'],
+            ['name'=>'user-list',               'guard_name'=>'web','slug'=>'liste utilisateurs',       'categorie_permission_id '=>'2'],
+            ['name'=>'user-create',             'guard_name'=>'web','slug'=>'creation utilisateurs',    'categorie_permission_id '=>'2'],
+            ['name'=>'user-edit',               'guard_name'=>'web','slug'=>'edition utilisateurs',     'categorie_permission_id '=>'2'],
+            ['name'=>'user-delete',             'guard_name'=>'web','slug'=>'suppretion utilisateurs',  'categorie_permission_id '=>'2'],
             //roles
-            ['name'=>'role-list',               'guard_name'=>'web','slug'=>'liste de role','categorie_permission_id '=>'2'],
-            ['name'=>'role-create',             'guard_name'=>'web','slug'=>'creation de role','categorie_permission_id '=>'2'],
-            ['name'=>'role-view',               'guard_name'=>'web','slug'=>'voire role','categorie_permission_id '=>'2'],
-            ['name'=>'role-edit',               'guard_name'=>'web','slug'=>'edition de role','categorie_permission_id '=>'2'],
-            ['name'=>'role-delete',             'guard_name'=>'web','slug'=>'suppretion de role','categorie_permission_id '=>'2'],
+            ['name'=>'role-list',               'guard_name'=>'web','slug'=>'liste de role',            'categorie_permission_id '=>'2'],
+            ['name'=>'role-create',             'guard_name'=>'web','slug'=>'creation de role',         'categorie_permission_id '=>'2'],
+            ['name'=>'role-view',               'guard_name'=>'web','slug'=>'voire role',               'categorie_permission_id '=>'2'],
+            ['name'=>'role-edit',               'guard_name'=>'web','slug'=>'edition de role',          'categorie_permission_id '=>'2'],
+            ['name'=>'role-delete',             'guard_name'=>'web','slug'=>'suppretion de role',       'categorie_permission_id '=>'2'],
             //staff
-            ['name'=>'staff-list',              'guard_name'=>'web','slug'=>'liste de staff','categorie_permission_id '=>'3'],
-            ['name'=>'staff-create',            'guard_name'=>'web','slug'=>'creation de staff','categorie_permission_id '=>'3'],
-            ['name'=>'staff-edit',              'guard_name'=>'web','slug'=>'edition de staff','categorie_permission_id '=>'3'],
-            ['name'=>'staff-delete',            'guard_name'=>'web','slug'=>'suppretion de staff','categorie_permission_id '=>'3'],
-            ['name'=>'staff-total-actif',       'guard_name'=>'web','slug'=>'nombre de staff actif','categorie_permission_id '=>'3'],
+            ['name'=>'staff-list',              'guard_name'=>'web','slug'=>'liste de staff',           'categorie_permission_id '=>'3'],
+            ['name'=>'staff-create',            'guard_name'=>'web','slug'=>'creation de staff',        'categorie_permission_id '=>'3'],
+            ['name'=>'staff-edit',              'guard_name'=>'web','slug'=>'edition de staff',         'categorie_permission_id '=>'3'],
+            ['name'=>'staff-delete',            'guard_name'=>'web','slug'=>'suppretion de staff',      'categorie_permission_id '=>'3'],
+            ['name'=>'staff-total-actif',       'guard_name'=>'web','slug'=>'nombre de staff actif',    'categorie_permission_id '=>'3'],
             //typeStaff
             ['name'=>'typeStaff-list',          'guard_name'=>'web','slug'=>'liste de type staff','categorie_permission_id '=>'4'],
             ['name'=>'typeStaff-create',        'guard_name'=>'web','slug'=>'creation de type staff','categorie_permission_id '=>'4'],
@@ -60,7 +62,7 @@ class PermissionTableSeeder extends Seeder
             ['name'=>'departement-edit',        'guard_name'=>'web','slug'=>'edition de departement','categorie_permission_id '=>'5'],
             ['name'=>'departement-delete',      'guard_name'=>'web','slug'=>'suppretion de departement','categorie_permission_id '=>'5'],
             ['name'=>'departement-total-actif', 'guard_name'=>'web','slug'=>'nombre de departement actif','categorie_permission_id '=>'5'],
-             //domaines
+            //domaines
             ['name'=>'domaine-list',            'guard_name'=>'web','slug'=>'liste de domaine','categorie_permission_id '=>'6'],
             ['name'=>'domaine-create',          'guard_name'=>'web','slug'=>'creation de domaine','categorie_permission_id '=>'6'],
             ['name'=>'domaine-view',            'guard_name'=>'web','slug'=>'voir domaine','categorie_permission_id '=>'6'],

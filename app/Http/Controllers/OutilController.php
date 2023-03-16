@@ -97,7 +97,7 @@ class OutilController extends Controller
     {
         //
         $outils = Outil::join('type_outils','outils.type_outil_id','type_outils.id')
-                        ->select('outils.id','outils.name','outils.username','outils.url','outils.type_outil_id','outils.created_at')
+                        ->select('outils.id','outils.name as outils_name','outils.username','outils.password','outils.url','outils.type_outil_id','type_outils.name as type_outils_name','outils.created_at')
                         ->where('outils.id',$outil->id)->get();
         return $outils;
     }

@@ -102,6 +102,24 @@
                                             <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
                                         </div>
                                     </div>
+                                    <!-- outils -->
+                                    <div class="single_checkbox">
+                                        <label for=""><strong>Outils :</strong></label>
+                                        <div v-if="!outilPermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div class="" style="" v-for="permi in outilPermissions" :key="permi.id">
+                                            <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
+                                            <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
+                                        </div>
+                                    </div>
+                                    <!--type outils -->
+                                    <div class="single_checkbox">
+                                        <label for=""><strong>Type d'Outils :</strong></label>
+                                        <div v-if="!typeOutilPermissions.length" class="my_color">Pas de permissions disponible</div>
+                                        <div class="" style="" v-for="permi in typeOutilPermissions" :key="permi.id">
+                                            <input type="checkbox" v-model="role.permission" id="permis" :key="permi.id" :value="permi.id" name=""  class="form-control">
+                                            <label style="margin-left:0.5rem" >{{ permi.slug }} ({{permi.guard_name}})</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- <div style="display:flex;justify-content:space-between">
                                     <label for=""><strong>Departements :</strong></label>
@@ -273,6 +291,8 @@
                 departementPermissions:[],
                 domainePermissions:[],
                 serveurPermissions:[],
+                outilPermissions:[],
+                typeOutilPermissions:[],
 
                 perPage : ['5','10','20','30'],
                 columns: columns,
@@ -476,13 +496,15 @@
                 axios.get("api/elements/web").then((res)=>{
                     console.log("valeur de res dans getUtlisateursPermission (AddRoles):",res)
                     //let content = res.data.utilisateurs
-                    this.userPermissions = res.data.utilisateurs
-                    this.rolesPermissions = res.data.roles
-                    this.staffPermissions = res.data.staff
-                    this.typeStaffPermissions = res.data.type_de_staff
+                    this.userPermissions        = res.data.utilisateurs
+                    this.rolesPermissions       = res.data.roles
+                    this.staffPermissions       = res.data.staff
+                    this.typeStaffPermissions   = res.data.type_de_staff
                     this.departementPermissions = res.data.departements
-                    this.domainePermissions = res.data.domaines
-                    this.serveurPermissions = res.data.serveurs
+                    this.domainePermissions     = res.data.domaines
+                    this.serveurPermissions     = res.data.serveurs
+                    this.outilPermissions       = res.data.outils
+                    this.typeOutilPermissions   = res.data.typeOutils
                 })
             },
             //The selected Guard
@@ -492,13 +514,15 @@
                 //alert("i clicked on : "+tg);
                 axios.get("api/elements/"+tg).then((res)=>{
                     console.log("Valeur de res dans getTheGuard : ",res)
-                    this.userPermissions = res.data.utilisateurs
-                    this.rolesPermissions = res.data.roles
-                    this.staffPermissions = res.data.staff
-                    this.typeStaffPermissions = res.data.type_de_staff
+                    this.userPermissions        = res.data.utilisateurs
+                    this.rolesPermissions       = res.data.roles
+                    this.staffPermissions       = res.data.staff
+                    this.typeStaffPermissions   = res.data.type_de_staff
                     this.departementPermissions = res.data.departements
-                    this.domainePermissions = res.data.domaines
-                    this.serveurPermissions = res.data.serveurs
+                    this.domainePermissions     = res.data.domaines
+                    this.serveurPermissions     = res.data.serveurs
+                    this.outilPermissions       = res.data.outils
+                    this.typeOutilPermissions   = res.data.typeOutils
                 })
             }
         },

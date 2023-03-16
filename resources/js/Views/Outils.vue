@@ -14,7 +14,7 @@
                         <!-- router-view-begin -->
                             <ContentHeader message="Page des Outils !!!"/>
                             
-                            <div v-if="!outils.length || !$can('typeStaff-list')" class="data_box">
+                            <div v-if="!outils.length || !$can('outil-list')" class="data_box">
                                 <p style="display:flex;justify-content:center;align-items:center;">
                                         Chargement des outils en cours...
                                         <loader></loader>
@@ -23,7 +23,7 @@
                             
                             <div v-else class="data_box">
                                 <!-- Create Domaine Btn Begin-->
-                                <div v-if="$is('Admin') || $can('typeStaff-create')">
+                                <div v-if="$is('Admin') || $can('outil-create')">
                                     <button style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter outil</button>
                                 </div>
                                 <!-- Create Domaine Btn end-->
@@ -48,8 +48,9 @@
                                                 <td>{{item.nom_type_outil}}</td>
                                                 <td>{{convert(item.created_at)}}</td>
                                                 <td>
-                                                    <button class="edit_btn" v-if="$can('typeStaff-edit')"  @click="editOutil(item.id)"><i class="fas fa-edit"></i></button>
-                                                    <button class="delete_btn" v-if="$can('typeStaff-delete')" @click="deleteOutil(item.id)"><i class="fas fa-trash"></i></button>
+                                                    <button class="view_btn" v-if="$can('outil-view')" @click="viewOutil(item.id)"><i class="fas fa-eye"></i></button>
+                                                    <button class="edit_btn" v-if="$can('outil-edit')"  @click="editOutil(item.id)"><i class="fas fa-edit"></i></button>
+                                                    <button class="delete_btn" v-if="$can('outil-delete')" @click="deleteOutil(item.id)"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -123,7 +124,7 @@
                         <!-- Editing Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="edit_domaine">
                             <template v-slot:header>
-                                <h4>Editer le type de staff :</h4>
+                                <h4>Editer l' outil :</h4>
                                 <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
                             </template>
                             <template v-slot:body>
@@ -165,6 +166,54 @@
                             </template>
                         </proper-modal>
                         <!-- Editing Modal End -->
+                        <!-- view Modal Begin -->
+                        <proper-modal v-show="isModalVisible" modalName="view_server">
+                            <template v-slot:header>
+                                <h4>Les details de l'outil :</h4>
+                                <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
+                            </template>
+                            <template v-slot:body>
+                                <!-- nom -->
+                                <label for=""><strong>Nom de l'outil :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{outil.name}}</p>
+                                </div>
+                                <!-- username -->
+                                <label for=""><strong>Username du Serveur :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{outil.username}}</p>
+                                </div>
+                                <!-- password  -->
+                                <label for=""><strong>Mot de passe du Serveur :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{outil.password}}</p>
+                                </div>
+                                <!-- url -->
+                                <label for=""><strong>URL du Serveur :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{outil.url}}</p>
+                                </div>
+                                <!-- type outil -->
+                                <label for=""><strong>Type de l'outil :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{outil.type_outil_id}}</p>
+                                </div>
+                                <!-- ajouté le -->
+                                <label for=""><strong>Ajouté le :</strong></label>
+                                <div class="mb_3">
+                                    <p>{{convert(outil.created_at)}}</p>
+                                </div>
+                                <!--  -->
+                                
+                                <!--  -->
+                            </template>
+                            <template v-slot:footer>
+                                <div>
+                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
+                                </div>
+                            </template>
+                        </proper-modal>
+                        <!-- view Modal End -->
     
 </template>
 
@@ -310,7 +359,7 @@
                     $("#edit_domaine").modal("show")
                     console.log('valeur de res dans edit outil:',res)
                     this.edit_id                  = res.data[0].id;
-                    this.outil.name               = res.data[0].name;
+                    this.outil.name               = res.data[0].outils_name;
                     this.outil.username           = res.data[0].username;
                     this.outil.password           = res.data[0].password;
                     this.outil.url                = res.data[0].url;
@@ -318,6 +367,21 @@
                     this.is_Editing               = true;
                 })
             },
+            viewOutil(id){
+                this.errors = [];
+                axiosClient.get(`api/outils/${id}`).then((res)=>{
+                    $("#view_server").modal("show")
+                    console.log('valeur de res dans view outil:',res)
+                    //this.edit_id    = res.data.id;
+                    this.outil.name             = res.data[0].outils_name;
+                    this.outil.username         = res.data[0].username;
+                    this.outil.password         = res.data[0].password;
+                    this.outil.url              = res.data[0].url;
+                    this.outil.type_outil_id    = res.data[0].type_outils_name;
+                    this.outil.created_at       = res.data[0].created_at;
+                    //this.is_Editing = true;
+                })
+            }, 
             updateOutil(){
                     let update_server = document.querySelector("#update_server")
                     update_server.innerHTML = "Mise à jour en cours..."

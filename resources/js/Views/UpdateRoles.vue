@@ -92,6 +92,22 @@
                                             <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
                                         </div>
                                     </div>
+                                    <!-- Outils -->
+                                    <div class="single_checkbox">
+                                        <label for=""><strong>Outils :</strong></label>
+                                        <div v-if="!outilPermissions.length" class="my_color">Pas de permisions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in outilPermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
+                                    <!-- Type d'outils -->
+                                    <div class="single_checkbox">
+                                        <label for=""><strong>Type d'Outils :</strong></label>
+                                        <div v-if="!typeOutilPermissions.length" class="my_color">Pas de permisions disponible</div>
+                                        <div v-else class="" style="" v-for="permi in typeOutilPermissions" :key="permi.id">
+                                            <input class="uk-checkbox" type="checkbox" :value="permi.id" v-model="hasCar[permi.id]"> {{ permi.slug }} ({{permi.guard_name}})
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- update part begin-->
                                 <!-- <div class="col-md-12">
@@ -256,6 +272,8 @@
                 departementPermissions:[],
                 domainePermissions:[],
                 serveurPermissions:[],
+                outilPermissions:[],
+                typeOutilPermissions:[],
 
                 perPage : ['5','10','20','30'],
                 columns: columns,
@@ -472,24 +490,22 @@
                 /* 
                 iflicfy
                 */
-               let bb
                 axios.get(`api/getGuardName/${this.roleId}`).then((res)=>{
-                    console.log("1-valeur du guardName (getGuardName) : ",res.data.role.guard_name)
-                    bb = res.data.role.guard_name
-                
-
+                    //console.log("1-valeur du guardName (getGuardName) : ",res.data.role.guard_name)
+                    //bb = res.data.role.guard_name
                     axios.get(`api/elements/${res.data.role.guard_name}`).then((res)=>{
-                        console.log("2-valeur de res dans getUtlisateursPermission (UpdatesRoles):",res)
+                        //console.log("2-valeur de res dans getUtlisateursPermission (UpdatesRoles):",res)
                         //let content = res.data.utilisateurs
-                        this.userPermissions = res.data.utilisateurs
-                        this.rolesPermissions = res.data.roles
-                        this.staffPermissions = res.data.staff
-                        this.typeStaffPermissions = res.data.type_de_staff
+                        this.userPermissions        = res.data.utilisateurs
+                        this.rolesPermissions       = res.data.roles
+                        this.staffPermissions       = res.data.staff
+                        this.typeStaffPermissions   = res.data.type_de_staff
                         this.departementPermissions = res.data.departements
-                        this.domainePermissions = res.data.domaines
-                        this.serveurPermissions = res.data.serveurs
+                        this.domainePermissions     = res.data.domaines
+                        this.serveurPermissions     = res.data.serveurs
+                        this.outilPermissions       = res.data.outils
+                        this.typeOutilPermissions   = res.data.typeOutils
                     })
-
                 })
             },
             

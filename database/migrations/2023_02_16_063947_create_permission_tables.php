@@ -30,7 +30,8 @@ class CreatePermissionTables extends Migration
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->string('slug');
-            $table->foreignId('categorie_permission_id')->nullable()->constrained();
+            //$table->foreignId('categorie_permission_id')->nullable()->constrained();
+            $table->foreignId('categorie_permission_id')->constrained('categorie_permissions');
             /* $table->unsignedBigInteger('categorie_permission_id');
             $table->foreign('categorie_permission_id')
                 ->references('id') // categorie_permission_id
@@ -38,7 +39,7 @@ class CreatePermissionTables extends Migration
                 ->onDelete('cascade'); */
             $table->timestamps();
 
-            $table->unique(['name', 'guard_name','categorie_permission_id']);
+            $table->unique(['name', 'guard_name']);
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
