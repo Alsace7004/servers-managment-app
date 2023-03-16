@@ -33,7 +33,7 @@ class DomaineExpire extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('portable@omonolalomi.com', 'Portable Zazu'),
+            from: new Address('portable@OmonOlaLomi.com', 'Portable Zazu'),
             replyTo: [
                 new Address('ORI@ORUNMILA.IFA', 'ORI ORUNMILA'),
             ],

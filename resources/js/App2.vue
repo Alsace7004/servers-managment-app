@@ -173,10 +173,7 @@
                     Action a faire: (Creation,Liste,Modification,Suppretion(logique))
                 -Creation d'une nouvelle table Outil
                     Outil(id,type-outil,name,username,password,url(optionnel))
-                NB: Pas d'outils ayant le meme nom
-
-                
-                
+                NB: Pas d'outils ayant le meme nom    
         */
         /*
             PascalCase/CapitalCase

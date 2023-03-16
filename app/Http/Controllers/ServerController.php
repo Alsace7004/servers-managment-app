@@ -194,6 +194,7 @@ class ServerController extends Controller
         if($validator->fails()){
             return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
         }
+        /************************************************/
             $server->name          = $data['name'];
             $server->username      = $data['username'];
             $server->password      = $data['password'];
@@ -202,6 +203,7 @@ class ServerController extends Controller
             $server->date_expiration  = $data['date_expiration'];
             $server->proprietaire_serveur   = $data['proprietaire_serveur'];
             $server->categorie_serveur_id   = $data['categorie_serveur_id'];
+        /************************************************/
             if($server->save()){
                 return ['status'=>true];
             }
