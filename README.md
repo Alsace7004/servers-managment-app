@@ -37,12 +37,4 @@
 - **[CUSTUM CSS]()**
 - **[CUSTUM JS]()**
 
-## Contribution
 
-Merci de bien vouloir s'inspirer ou de contribuer au developpement de cette application !!!
-
-## Securité et Vulnerabilité
-Si vous decouvrez une vulnerabilté de securité ou un quelconque bug, veuillez bien vouloir créer une nouvelle branche et y apporter vos solutions
-
-## License
-Cette Application est open-source.

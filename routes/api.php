@@ -89,11 +89,40 @@ Route::middleware('web')->group(function () {
     Route::get("getTypeOutils",[TypeOutilController::class,'getTypeOutils']);
     //outils
     Route::apiResource('outils',OutilController::class);
-    
 });
 
 /************************************************************************************************/
-
+/*************************For new permissions***********************************************************************/
+/*Route::get("/outilsPermission",function(){
+    $permissions = [
+            //outils
+            ['name'=>'outil-list',              'guard_name'=>'web','slug'=>'liste des outils',                 'categorie_permission_id '=>8],
+            ['name'=>'outil-create',            'guard_name'=>'web','slug'=>"creation d'un outil",              'categorie_permission_id '=>8],
+            ['name'=>'outil-view',              'guard_name'=>'web','slug'=>'voir outil',                       'categorie_permission_id '=>8],
+            ['name'=>'outil-edit',              'guard_name'=>'web','slug'=>"edition d'un outil",               'categorie_permission_id '=>8],
+            ['name'=>'outil-delete',            'guard_name'=>'web','slug'=>"suppretion d'un outil",            'categorie_permission_id '=>8],
+            //typeOutils
+            ['name'=>'typeOutil-list',          'guard_name'=>'web','slug'=>"liste des type d'outils",          'categorie_permission_id '=>9],
+            ['name'=>'typeOutil-create',        'guard_name'=>'web','slug'=>"creation de type d'outils",        'categorie_permission_id '=>9],
+            ['name'=>'typeOutil-edit',          'guard_name'=>'web','slug'=>"edition du type d'outil",          'categorie_permission_id '=>9],
+            ['name'=>'typeOutil-delete',        'guard_name'=>'web','slug'=>"suppretion du type d'outil",       'categorie_permission_id '=>9],
+            //outils
+            ['name'=>'outil-list',              'guard_name'=>'staffs','slug'=>'liste des outils',              'categorie_permission_id '=>8],
+            ['name'=>'outil-create',            'guard_name'=>'staffs','slug'=>"creation d'un outil",           'categorie_permission_id '=>8],
+            ['name'=>'outil-view',              'guard_name'=>'staffs','slug'=>'voir outil',                    'categorie_permission_id '=>8],
+            ['name'=>'outil-edit',              'guard_name'=>'staffs','slug'=>"edition d'un outil",            'categorie_permission_id '=>8],
+            ['name'=>'outil-delete',            'guard_name'=>'staffs','slug'=>"suppretion d'un outil",         'categorie_permission_id '=>8],
+            //typeOutils
+            ['name'=>'typeOutil-list',          'guard_name'=>'staffs','slug'=>"liste des type d'outils",       'categorie_permission_id '=>9],
+            ['name'=>'typeOutil-create',        'guard_name'=>'staffs','slug'=>"creation de type d'outils",     'categorie_permission_id '=>9],
+            ['name'=>'typeOutil-edit',          'guard_name'=>'staffs','slug'=>"edition du type d'outil",       'categorie_permission_id '=>9],
+            ['name'=>'typeOutil-delete',        'guard_name'=>'staffs','slug'=>"suppretion du type d'outil",    'categorie_permission_id '=>9],
+            
+    ];
+    foreach ($permissions as $permission) {
+        Permission::create($permission);
+    }
+});*/
 /************************************************************************************************/
 Route::get("elements/{the_guard}",[RoleController::class,'getUtilisateurRole']);
 Route::get("getGuardName/{id}",[RoleController::class,'getThisGuardName']);
