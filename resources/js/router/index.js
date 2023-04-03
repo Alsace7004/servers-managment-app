@@ -264,6 +264,24 @@ const routes = [
             }
         }
     },
+    //messagerie
+    {
+        path:'/messageries',
+        name:'messageries',
+        component:()=>import("../Views/Messageries.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        beforeEnter(to,from,next){
+            let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('outil-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            }
+        }
+    },
     //blank
 ];
 

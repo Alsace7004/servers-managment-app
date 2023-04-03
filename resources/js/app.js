@@ -1,6 +1,7 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
+import "./settings.js";
 import App from './App.vue'
 import router from './router';
 import CKEditor from '@ckeditor/ckeditor5-vue';
