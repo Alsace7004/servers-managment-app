@@ -73,7 +73,7 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link v-if="$can('outil-list')" :to="{name:'messageries'}" class="item">
+                                    <router-link  :to="{name:'messageries'}" class="item">
                                         <span class="icon"><i class="far fa-comments"></i></span>
                                         <span>Messagerie</span>
                                     </router-link>

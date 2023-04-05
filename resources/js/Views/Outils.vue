@@ -296,7 +296,7 @@
                 })
             },
             getTypeOutil(){
-                axios.get("api/getTypeOutils").then((res)=>{
+                axiosClient.get("api/getTypeOutils").then((res)=>{
                     let content = res.data.type_outils;
                     this.typeOutils = content
                     //console.log("valeur de res dans getTypeOutil:",content)

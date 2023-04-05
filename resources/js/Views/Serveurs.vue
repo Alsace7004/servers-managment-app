@@ -496,7 +496,7 @@
             },
             //categorie_serveur
             getCategorieServeur(){
-                axios.get("api/categorie_serveurs").then((res)=>{
+                axiosClient.get("api/categorie_serveurs").then((res)=>{
                     let content = res.data.categorie_serveurs;
                     this.categorie_servers = content
                     //console.log("valeur de res dans categorie_serveurs:",content)

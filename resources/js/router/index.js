@@ -272,7 +272,7 @@ const routes = [
         meta:{
             requiresAuth:true
         },
-        beforeEnter(to,from,next){
+        /* beforeEnter(to,from,next){
             let {U_permissions}=useAuthStore()
             if(U_permissions.includes('outil-list')){
                 //verifier la permission
@@ -280,7 +280,7 @@ const routes = [
             }else{
                 next({name:'notAuthorised'})
             }
-        }
+        } */
     },
     //blank
 ];

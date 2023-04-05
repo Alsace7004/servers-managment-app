@@ -19,17 +19,19 @@
                         <div class="content2__left_body"> 
                             <div class="content2__left_body_inner">
                                 <!-- The beginning -->
-                                <div class="user_box">
+                                <div class="user_box" v-for="item in departementFriends" :key="item.id" @click="messageToUser(item.id,item.nom,item.prenom,item.nom_departement,item.photo)">
                                     <div class="user_box_img">
-                                        <img class="user_box__avatar" :src="'../profile/chats_img/avatar-13.png'" alt="" srcset="">
+                                        <!-- <img class="user_box__avatar" :src="'../profile/chats_img/avatar-13.png'" alt="" srcset=""> -->
+                                        <img v-if="item.photo === null || item.photo === undefined" class="user_box__avatar" :src="'../profile/img/user.png'" alt="" srcset="">
+                                        <img v-else class="user_box__avatar" :src="'../img_path/Staff/'+item.photo" alt="" srcset="">
                                     </div>
                                     <div class="user_box__info">
-                                        <p class="user_box__info_name">ADJAO Laleye</p>
-                                        <p class="user_box__info_department">Finance</p>
+                                        <p class="user_box__info_name">{{item.nom}} {{item.prenom}}</p>
+                                        <p class="user_box__info_department">{{item.nom_departement}}</p>
                                     </div>
                                 </div>
-                                <!--  -->
-                                <div class="user_box">
+                                
+                                <!-- <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-2.jpg'" alt="" srcset="">
                                     </div>
@@ -38,7 +40,7 @@
                                         <p class="user_box__info_department">Commercial</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-3.jpg'" alt="" srcset="">
@@ -48,7 +50,7 @@
                                         <p class="user_box__info_department">Resource Humaines</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-4.jpg'" alt="" srcset="">
@@ -58,7 +60,7 @@
                                         <p class="user_box__info_department">Service Achat</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-5.jpg'" alt="" srcset="">
@@ -68,7 +70,7 @@
                                         <p class="user_box__info_department">Banque & Finance</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-6.jpg'" alt="" srcset="">
@@ -78,7 +80,7 @@
                                         <span class="user_box__info_department">Logistique Operation</span>
                                     </div>
                                 </div>
-                                <!--  -->
+                               
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-7.jpg'" alt="" srcset="">
@@ -88,7 +90,7 @@
                                         <p class="user_box__info_department">Control de Gestion</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-8.png'" alt="" srcset="">
@@ -98,7 +100,7 @@
                                         <p class="user_box__info_department">Achat et ventes</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-9.png'" alt="" srcset="">
@@ -108,7 +110,7 @@
                                         <p class="user_box__info_department">Sciences Culturelles</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-10.png'" alt="" srcset="">
@@ -118,7 +120,7 @@
                                         <p class="user_box__info_department">Science</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-11.png'" alt="" srcset="">
@@ -128,7 +130,7 @@
                                         <p class="user_box__info_department">Droit Juridique</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-12.png'" alt="" srcset="">
@@ -138,8 +140,7 @@
                                         <p class="user_box__info_department">Droit commercial</p>
                                     </div>
                                 </div>
-                                <!-- Another (Duplicate Entry) -->
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-1.jpg'" alt="" srcset="">
@@ -149,7 +150,7 @@
                                         <p class="user_box__info_department">Finance</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-14.jpg'" alt="" srcset="">
@@ -159,7 +160,7 @@
                                         <p class="user_box__info_department">Commercial</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-15.jpg'" alt="" srcset="">
@@ -169,7 +170,7 @@
                                         <span class="user_box__info_department">Resource Humaines</span>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-16.jpg'" alt="" srcset="">
@@ -179,7 +180,7 @@
                                         <p class="user_box__info_department">Service Achat</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-17.jpg'" alt="" srcset="">
@@ -189,7 +190,7 @@
                                         <p class="user_box__info_department">Banque & Finance</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-18.jpg'" alt="" srcset="">
@@ -199,7 +200,7 @@
                                         <p class="user_box__info_department">Logistique Operation</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                               
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-19.jpg'" alt="" srcset="">
@@ -209,7 +210,7 @@
                                         <p class="user_box__info_department">Control de Gestion</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-20.jpg'" alt="" srcset="">
@@ -219,7 +220,7 @@
                                         <p class="user_box__info_department">Achat et ventes</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                              
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-21.jpg'" alt="" srcset="">
@@ -229,7 +230,7 @@
                                         <p class="user_box__info_department">Sciences Culturelles</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-22.jpg'" alt="" srcset="">
@@ -239,7 +240,7 @@
                                         <p class="user_box__info_department">Science</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                               
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-23.jpg'" alt="" srcset="">
@@ -249,7 +250,7 @@
                                         <p class="user_box__info_department">Droit Juridique</p>
                                     </div>
                                 </div>
-                                <!--  -->
+                                
                                 <div class="user_box">
                                     <div class="user_box_img">
                                         <img class="user_box__avatar" :src="'../profile/chats_img/avatar-24.jpg'" alt="" srcset="">
@@ -258,7 +259,7 @@
                                         <p class="user_box__info_name">ASAKE Laleye</p>
                                         <p class="user_box__info_department">Droit commercial</p>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- The end -->
                             </div>
                         </div>
@@ -270,11 +271,13 @@
                         <div class="content2__right_header"> 
                             <div class="content2__right_user_box">
                                     <div class="">
-                                        <img class="content2__right_user_box__avatar" :src="'../profile/chats_img/avatar-13.png'" alt="" srcset="">
+                                        <!--<img class="content2__right_user_box__avatar" :src="'../profile/chats_img/avatar-13.png'" alt="" srcset="">-->
+                                        <img v-if="selectedUser.photo === null || selectedUser.photo === undefined" class="content2__right_user_box__avatar" :src="'../profile/img/user.png'" alt="" srcset="">
+                                        <img v-else class="content2__right_user_box__avatar" :src="'../img_path/Staff/'+selectedUser.photo" alt="" srcset="">
                                     </div>
                                     <div class="user_box__info">
-                                        <p>ADJAO Laleye</p>
-                                        <p>Finance</p>
+                                        <p>{{selectedUser.nom}} {{selectedUser.prenom}}</p>
+                                        <p>{{selectedUser.departement}}</p>
                                     </div>
                             </div>
                             <div class="content2__right_icon_box">
@@ -282,7 +285,7 @@
                             </div>
                         </div>
                         <!-- body -->
-                        <div class="content2__right_body" style="position:relative"> 
+                        <div class="content2__right_body" style="position:relative;left:0" v-chat-scroll> 
                             <div class="image_preview_box" style="">
                                 <div style="display:flex;flex-direction:column;gap:10rem">
                                     <!-- border:1px solid red; -->
@@ -296,7 +299,32 @@
                                 </div>
                             </div>
                             <!-- begin -->
-                            <div class="content2__right_body_correspondant">
+                            
+                                <div class="container" v-for="item in conversationMessages" :key="item.id" :class="{'darker':item.sender_id == authUserId}" >
+                                    <img src="/w3images/bandmember.jpg" alt="Avatar" :class="{'right':item.sender_id == authUserId}">
+                                    <p>{{item.message}}</p>
+                                    <span class="time-right" :class="{'time-left':item.sender_id == authUserId}">{{item.created_at}}</span>
+                                </div>
+
+                                <!-- <div class="container darker">
+                                    <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+                                    <p>Hey! I'm fine. Thanks for asking!</p>
+                                    <span class="time-left">11:01</span>
+                                </div> -->
+
+                                <!-- <div class="container">
+                                    <img src="/w3images/bandmember.jpg" alt="Avatar">
+                                    <p>Sweet! So, what do you wanna do today?</p>
+                                    <span class="time-right">11:02</span>
+                                </div>
+
+                                <div class="container darker">
+                                    <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+                                    <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+                                    <span class="time-left">11:05</span>
+                                </div> --> 
+                                
+                            <!-- <div class="content2__right_body_correspondant">
                                 <p class="content2__right_body_msg_right">
                                     Hello
                                 </p>
@@ -305,48 +333,48 @@
                                 <p class="content2__right_body_msg_left">
                                     bonjour,j'espere que vous aller bien,                                    
                                 </p>
-                            </div>
-                            <div class="content2__right_body_correspondant">
+                            </div> -->
+                            <!-- <div class="content2__right_body_correspondant">
                                 <p class="content2__right_body_msg_right">
                                     Il vis à jamais
                                 </p>
-                            </div>
-                            <div class="content2__right_body_owner">
+                            </div> -->
+                            <!-- <div class="content2__right_body_owner">
                                 <p class="content2__right_body_msg_left">
                                     non, plutot à djamé                                    
                                 </p>
-                            </div>
-                            <div class="content2__right_body_correspondant">
+                            </div> -->
+                            <!-- <div class="content2__right_body_correspondant">
                                 <p class="content2__right_body_msg_right">
                                     Les leviatans viennent tous des levitiques,
                                     sa a été ecrit dans le livre des damnés
                                 </p>
-                            </div>
-                            <div class="content2__right_body_owner">
+                            </div> -->
+                            <!-- <div class="content2__right_body_owner">
                                 <p class="content2__right_body_msg_left">
                                     Ce livre a longtemps appartenu aux franck enstein                                   
                                 </p>
-                            </div>
-                            <div class="content2__right_body_correspondant">
+                            </div> -->
+                            <!-- <div class="content2__right_body_correspondant">
                                 <p class="content2__right_body_msg_right">
                                     c'est exact, mais depuis un bon bout de temps,
                                     elle a été derobé de leur main et est protégé
                                     actuellement par un sort si puissant qu'on ne 
                                     la detecte plus
                                 </p>
-                            </div>
-                            <div class="content2__right_body_owner">
+                            </div> -->
+                            <!-- <div class="content2__right_body_owner">
                                 <p class="content2__right_body_msg_left">
                                     mais, il y a toujours une solution à tout problème                                   
                                 </p>
-                            </div>
-                            <div class="content2__right_body_correspondant">
+                            </div> -->
+                            <!-- <div class="content2__right_body_correspondant">
                                 <p class="content2__right_body_msg_right">
                                     Oui, en effet, Mme rowina a prévu nous trouvé 
                                     la solution grace au livre des damnés et de l'aide
                                     de ses semblables.
                                 </p>
-                            </div>
+                            </div> -->
                             <!-- end -->
                         </div>
                         <!-- footer -->
@@ -371,11 +399,12 @@
                                 <i class="fas fa-paperclip bt_icon" @click="attach_btn"></i>
                             </div>
                             <div class="content2__right_footer_middle">
-                                
-                                <EmojiPicker :native="true" theme='dark' pickerType='input'  :static-texts="{ placeholder: 'Search emoji'}" @select="onSelectEmoji" />
-                                <!--<input type="text" class="content2__right_footer_middle_input" placeholder="type a message">-->  
+                            
+                                <EmojiPicker :native="true" theme='dark' pickerType='input' @update:text="onChangeText"  :static-texts="{ placeholder: 'Search emoji'}" @select="onSelectEmoji" />
+                                <!--<input type="text" class="content2__right_footer_middle_input" v-model="chat.message" placeholder="type a message">-->
                             </div>
                             <div class="content2__right_footer_right">
+                                <i class="fas fa-paper-plane bt_icon" @click="sendMessage"></i>
                                 <i class="fas fa-microphone bt_icon"></i>
                             </div>
                         </div>
@@ -386,99 +415,6 @@
             </div>
         </div>
     <!-- End -->
-                        <!-- Adding Modal Begin -->
-                        <proper-modal v-show="isModalVisible" modalName="create_domaine">
-                            <template v-slot:header>
-                                <h4>Ajouter un outil</h4>
-                                <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
-                            </template>
-                            <template v-slot:body>
-                                <!-- name -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="outil.name" placeholder="Nom de l'outil...">
-                                </div>
-                                <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
-                                <!-- username -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="outil.username" placeholder="username de l'outil...">
-                                </div>
-                                <span v-if="errors.username" class="error_txt">{{errors.username[0]}}</span>
-                                <!-- password -->
-                                <div class="input_form mb_3">
-                                    <input type="password" class="input_form_item" v-model="outil.password" placeholder="password de l'outil...">
-                                </div>
-                                <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
-                                <!-- url -->
-                                <div class="input_form mb_3">
-                                    <input type="text" class="input_form_item" v-model="outil.url" placeholder="url de l'outil...">
-                                </div>
-                                <span v-if="errors.url" class="error_txt">{{errors.url[0]}}</span>
-                                <!-- type outil -->
-                                <div class="input_form mb_3">
-                                    <select name="" id="" v-model="outil.type_outil_id" class="input_form_item">
-                                        <option value="">Choisir le type d'outil</option>
-                                        <option v-for="server in typeOutils" :key="server.id" :value="server.id">{{server.name}}</option>
-                                    </select>
-                                </div>
-                                <span v-if="errors.type_outil_id" class="error_txt">{{errors.type_outil_id[0]}}</span>
-                                <!-- end -->
-                            </template>
-                            <template v-slot:footer>
-                                <div>
-                                    <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveOutil">Sauvegarder</button>
-                                </div>
-                            </template>
-                        </proper-modal>
-                        <!-- Adding Modal End -->
-                        <!-- view Modal Begin -->
-                        <proper-modal v-show="isModalVisible" modalName="view_server">
-                            <template v-slot:header>
-                                <h4>Les details de l'outil :</h4>
-                                <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
-                            </template>
-                            <template v-slot:body>
-                                <!-- nom -->
-                                <label for=""><strong>Nom de l'outil :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{outil.name}}</p>
-                                </div>
-                                <!-- username -->
-                                <label for=""><strong>Username du Serveur :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{outil.username}}</p>
-                                </div>
-                                <!-- password  -->
-                                <label for=""><strong>Mot de passe du Serveur :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{outil.password}}</p>
-                                </div>
-                                <!-- url -->
-                                <label for=""><strong>URL du Serveur :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{outil.url}}</p>
-                                </div>
-                                <!-- type outil -->
-                                <label for=""><strong>Type de l'outil :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{outil.type_outil_id}}</p>
-                                </div>
-                                <!-- ajouté le -->
-                                <label for=""><strong>Ajouté le :</strong></label>
-                                <div class="mb_3">
-                                    <p>{{convert(outil.created_at)}}</p>
-                                </div>
-                                <!--  -->
-                                
-                                <!--  -->
-                            </template>
-                            <template v-slot:footer>
-                                <div>
-                                    <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                </div>
-                            </template>
-                        </proper-modal>
-                        <!-- view Modal End -->
                         <!----------------------------------------------------------------------------------------->
                         <!-- Editing Modal Begin -->
                         <proper-modal v-show="isModalVisible" modalName="edit_domaine">
@@ -520,6 +456,8 @@
     import axiosClient from "../axios/index"
 
     import TextareaEmojiPicker from "../components/TextareaEmojiPicker.vue"; 
+    import {useAuthStore} from "../store/index"
+    const {id} = useAuthStore();
     /**********************************************************************/
     // import picker compopnent
     import EmojiPicker from 'vue3-emoji-picker'
@@ -527,47 +465,35 @@
     import 'vue3-emoji-picker/css';
 
     export default {
-        name:'outils',
+        name:'Messageries',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,TextareaEmojiPicker,EmojiPicker
         },
         data(){
-            let columns =[
-                {label:'~#',            name:''},
-                {label:'Nom',           name:''},
-                {label:'Username',      name:''},
-                {label:'Url',           name:''},
-                {label:'Type outil',    name:''},
-                {label:'Ajouté Le',     name:''},
-                {label:'Actions',       name:''},
-            ];
+            
             return{
                 
-                perPage : ['5','10','20','30'],
-                columns: columns,
-                outils:[],
-                typeOutils:[],
+                authUserId:id,
+                departementFriends:[],
+                conversationMessages:[],
+                
                 errors:[],
-                links:[],
-                outil:{
+ 
+                chat:{
+                    sender_id:'',
+                    sent_to_id:'',
                     name:'',
-                    username:'',
-                    password:'',
-                    url:'',
-                    type_outil_id:'',
+                    message:'',
                 },
+                selectedUser:{
+                    nom:'',
+                    prenom:'',
+                    departement:'',
+                    photo:'',
+                },
+
                 isModalVisible:false,
-                tData:{
-                    page:0,
-                    length:'5',
-                    search:'',
-                },
-                pagination:{
-                    from:'',
-                    to :'',
-                    total:'',
-                },
                 edit_id:'',
                 is_Editing:false,
                 loading:false,
@@ -592,75 +518,6 @@
                     type_outil_id:'',
                 }
                 $("#create_domaine").modal("show")
-            },
-            getOutil(pageGet){
-                this.tData.page = pageGet
-                axiosClient.get("api/outils",{params:this.tData}).then((res)=>{
-                    let content = res.data.outils
-                    //console.log("Valeur de content dans getOutil:",content)
-                    this.outils = content.data
-                    this.configPagination(content)
-                }).catch((err)=>{
-                    console.log("Valeur de err dans getOutil:",err.response)
-                })
-            },
-            getTypeOutil(){
-                axios.get("api/getTypeOutils").then((res)=>{
-                    let content = res.data.type_outils;
-                    this.typeOutils = content
-                    //console.log("valeur de res dans getTypeOutil:",content)
-                })
-            },
-            saveOutil(){
-                this.errors = []
-                let send_server = document.querySelector("#send_server")
-                send_server.innerHTML = "Sauvegarde en cours..."
-                this.loading = true;
-                axiosClient.post("api/outils",this.outil).then((res)=>{
-                    send_server.innerHTML = "Sauvegarder"
-                    this.loading = false;
-                    //console.log("Valeur de res dans saveOutil:",res)
-                    if(res.data.status){
-                        $('#create_domaine').modal('hide'); 
-                        this.getOutil()
-                        Swal.fire('Créer!',"Nouveau outil Ajouter avec success.",'success') ;
-                    }
-                }).catch((err)=>{
-                    send_server.innerHTML = "Sauvegarder"
-                    this.loading = false;
-                    //console.log("Valeur de err dans saveOutil:",err.response)
-                    if(err.response.status === 422){
-                        this.errors = err.response.data.errors
-                    }else{
-                        //console.log("erreur: probleme de connexion")
-                        Swal.fire('Erreur!','Probleme de connexion.','error') ;
-                    }
-                })
-            },
-            getPerPage(){
-                this.getOutil()
-            },
-            getSearch(){
-                this.getOutil()
-            },
-            configPagination(data){
-                this.pagination.from    =data.from,
-                this.pagination.to      =data.to,
-                this.pagination.total   =data.total
-                this.links              =data.links
-            },
-            navigation(nav){
-                const url = nav.url.split("=");
-                const page = url[1];
-                this.getOutil(page)
-            },
-            getClass(item){
-                if(item.url === null) return "page-item disabled no-cursor"
-                if(item.url != null){
-                    if(item.active === true){
-                        return "page-item active no-cursor";
-                    }else return "page-item";
-                }
             },
             editOutil(id){
                 this.errors = [];
@@ -691,57 +548,6 @@
                     //this.is_Editing = true;
                 })
             }, 
-            updateOutil(){
-                    let update_server = document.querySelector("#update_server")
-                    update_server.innerHTML = "Mise à jour en cours..."
-                    this.loading = true;
-                    axiosClient.put(`api/outils/${this.edit_id}`,this.outil).then((res)=>{
-                        update_server.innerHTML = "Mettre à jour"
-                        this.loading = false;
-                        if(res.data.status){
-                            $('#edit_domaine').modal('hide');
-                            Swal.fire('Mise à jour!',"Outil mise à jour avec success.",'success')    
-                            this.getOutil();
-                            this.edit_id = "";
-                            this.is_Editing = false;
-                        }
-                    }).catch((err)=>{
-                        update_server.innerHTML = "Mettre à jour"
-                        this.loading = false;
-                        //console.log("Valeur de err dans updateOutil:",err.response)
-                        if(err.response.status === 422){
-                            this.errors = err.response.data.errors
-                        }else{
-                            //console.log("erreur: probleme de connexion")
-                            Swal.fire('Erreur!','Probleme de connexion.','error') ;
-                        }
-                    })
-            },
-            deleteOutil(id){
-                    Swal.fire({
-                    title: 'Etes-vous sûr?',
-                    text: "Vous ne pourrez pas annuler cette action !!!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Annuler!',
-                    confirmButtonText: 'Oui, supprimez-le!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                                axiosClient.delete(`api/outils/${id}`).then((res)=>{
-                                    if(res.data.status){
-                                        Swal.fire('Supprimé!',"L'outil a été supprimé.",'success') 
-                                        this.getOutil()
-                                    }
-                                }).catch((err)=>{
-                                    Swal.fire('Erreur !!!',"Une erreur s'est produite !!!",'error')
-                                })
-                        }else{
-                            Swal.fire('Conserver !!!',"L'outil est toujours disponible !!!",'success')
-                        }
-                    })
-            },
             /**********************Make-a-call-begin***************************/
             makeCall(){
                 $("#edit_domaine").modal("show")
@@ -766,6 +572,11 @@
                     }
                     */
             },
+            onChangeText(text) { 
+                /* do something */ 
+                console.log("Valeur du text saisi :",text)
+                this.chat.message = text;
+            },
             //
             selectImage(e){
                 //console.log("uploading begin")
@@ -778,16 +589,66 @@
             //
             closeImagePreview(){
                 document.querySelector('.image_preview_box').classList.toggle('image_preview_box__see_image')
-            }
+            },
             //
-            
+            getDepartementUsers(){
+                axiosClient.get("api/getDepartementFriends").then((res)=>{
+                    let content = res.data.departementFriends;
+                    this.departementFriends = content
+                    //console.log("valeur de res dans departementFriends:",content)
+                })
+            },
+            sendMessage(){
+                /* alert("going to send the message : "+this.chat.message);
+                console.log("Valeur de message:",this.chat.message) */
+                axiosClient.post(`api/sendMessage`,this.chat).then((res)=>{
+                    console.log("Valeur de res dans sendMessage : ",res)
+                    if(res.data.status){
+                        //alert("message envoyé avec succes !!!")
+                        this.getConversationMessage();
+                        this.chat.message="";
+                    }
+                }).catch((err)=>{
+                    console.log("Erreur de l'envoi du message !!!")
+                })
+            },
+            messageToUser(s_id,s_nom,s_prenom,s_departement,s_photo){
+                //alert("s_id : "+s_id+"\n s_nom : "+s_nom+"\n s_prenom : "+s_prenom+"\n s_departement : "+s_departement+"\n s_photo : "+s_photo);
+                this.selectedUser.nom           = s_nom;
+                this.selectedUser.prenom        = s_prenom;
+                this.selectedUser.photo         = s_photo;
+                this.selectedUser.departement   = s_departement;
+                this.chat.sent_to_id            = s_id;
+                this.getConversationMessage();
+            },
+            getConversationMessage(){
+                axiosClient.get("api/fetchConversationMessages",{params:this.chat}).then((res)=>{
+                    let content = res.data.messages;
+                    this.conversationMessages = content;
+                    console.log("Valeur de res dans getConversationMessage:",content)
+                    //console.log("Valeur de res.data dans getDomaines:",res.data)
+                }).catch((err)=>{
+                    console.log("Valeur de err dans getConversationMessage:",err)
+                })
+            },
         },
 
 
         created(){
-            this.getOutil()
-            this.getTypeOutil()
+            /*****************************/
+            this.getDepartementUsers();
+            //this.getConversationMessage();
+            /*****************************/
+            window.Echo.channel('chat').
+                    listen('MessageSent',(event)=>{
+                        this.conversationMessages.push(event.message)
+                    console.log("Valeur de event Echo.join : ",event)
+            })
         },
+        onMounted(){
+            //this.getDepartementUsers();
+            //this.getConversationMessage();
+        }
     }
 </script>
 
@@ -810,14 +671,14 @@
         margin-left: 1rem;
         display: flex;
         flex-direction: column;
-        border: 1px solid red;
+        /* border: 1px solid red; */
     }
     .user_box__info_name{
-        border:1px solid orange;
+        /* border:1px solid orange; */
         font-weight:bold
     }
     .user_box__info_department{
-        border:1px solid green;
+        /* border:1px solid green; */
         font-style:italic;
     }
     .user_box{
@@ -864,13 +725,13 @@
     }
     /**************************************************************/
     .content2{
-        border:1px solid crimson;
+        /* border:1px solid crimson; */
         flex-grow: 1;
         position: fixed;
-        width: calc(100% -250px);
+        width:83.6% ;
       /*   width: 83.7%; */
         height: 92.5%;
-        border-bottom: 2px dotted rebeccapurple;
+        /* border-bottom: 2px dotted rebeccapurple; */
         display: flex;
         margin-right: 0px;
         transition: all 0.5s ease;
@@ -885,7 +746,8 @@
         background-color: gray;
     }
     .content2__right_header{
-        border: 1px solid red;
+        /* border: 1px solid red; */
+        border-bottom: 2px solid #2f3640;
         height: 50px;
         display: flex;
         justify-content: space-between;
@@ -900,26 +762,33 @@
     .content2__right_icon_box{
         margin-right: 1.5rem;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
     }
     .content2__right_user_box__avatar{
-        border: 1px solid #000;
+        /* border: 1px solid #000; */
         height: 45px;
         width: 45px;
         border-radius: 50%;
         object-fit: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .content2__right_body{
-        border: 1px solid rebeccapurple;
+        /* border: 1px solid rebeccapurple; */
         height: 85.5%;
+        width: 100%;
         padding-top: 2rem;
         padding-left: 1rem;
         padding-right: 1rem;
         padding-bottom: 2rem;
         overflow: auto;
+       
     }
     .content2__right_body_msg_right{
         width:50%;
-        border:1px dashed dodgerblue;
+        /* border:1px dashed dodgerblue; */
         flex-wrap: wrap;
         border-radius: 5px;
         background: gainsboro;
@@ -927,7 +796,7 @@
     }
     .content2__right_body_msg_left{
         width:50%;
-        border:1px dashed dodgerblue;
+        /* border:1px dashed dodgerblue; */
         flex-wrap: wrap;
         border-radius: 5px;
         padding:1rem 1rem 1rem 1rem ;/*TRBL*/
@@ -939,15 +808,17 @@
         display: flex;
         justify-content: start;
         padding: 1rem 1rem;
+        width: 100%;
     }
     .content2__right_body_owner{
-        border: 1px solid yellowgreen;
+        /* border: 1px solid yellowgreen; */
         display: flex;
         justify-content: flex-end;
         padding: 1rem 1rem;
+        width: 100%;
     }
     .content2__right_footer{
-        border: 1px solid dodgerblue;
+        /* border: 1px solid dodgerblue; */
         height: 50px;
         background-color: gainsboro;
         display: flex;
@@ -973,6 +844,8 @@
     }
     .content2__right_footer_right{
         /* border: 1px solid green; */
+        display: flex;
+        flex-direction: row;
     }
     /************************STYLES-IN-MODAL************************/
     .call__box{
@@ -993,7 +866,7 @@
     /************************STYLES-IN-MODAL************************/
     /*-----------------------ATTACH-BTN-BEGIN-----------------------*/
     .attach_btn{
-        border:1px solid red;
+        /* border:1px solid red; */
         display:flex;
         flex-direction:column;
         gap:1rem;
@@ -1132,6 +1005,56 @@
         padding:1px 15px;
         border-radius:5px
     }
+    /***********************************************************/
+     /* Chat containers */
+            .container {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            }
+
+            /* Darker chat container */
+            .darker {
+            border-color: #ccc;
+            background-color: rgb(255, 255, 201);
+            }
+
+            /* Clear floats */
+            .container::after {
+            content: "";
+            clear: both;
+            display: table;
+            }
+
+            /* Style images */
+            .container img {
+            float: left;
+            max-width: 60px;
+            width: 100%;
+            margin-right: 20px;
+            border-radius: 50%;
+            }
+
+            /* Style the right image */
+            .container img.right {
+            float: right;
+            margin-left: 20px;
+            margin-right:0;
+            }
+
+            /* Style time text */
+            .time-right {
+            float: right;
+            color: #aaa;
+            }
+
+            /* Style time text */
+            .time-left {
+            float: left;
+            color: #999;
+            } 
     /***********************Media Queries***********************/
     /* Extra small devices (portrait phones, less than 576px)*/
     @media (max-width: 575.98px) { 
@@ -1145,12 +1068,12 @@
             background-color: var(--secondary-color);
             transition: all 0.5s ease;
         } 
-        .navbar{
+        /* .navbar{
             color: #fff;
             background:linear-gradient(orangered,gray,firebrick);
-        }
+        } */
         body.actives .wrapper .sidebar{
-            margin-left: 250px;
+            margin-left: 0px;
             z-index: 10;
         }
         body.actives .wrapper .section{
@@ -1172,9 +1095,27 @@
             margin-left: 0px;
             transition: all 0.5s ease;
         }
-        .navbar{
+        .sidebar{
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: var(--secondary-color);
+            transition: all 0.5s ease;
+        } 
+        /* .navbar{
             color: #fff;
             background:linear-gradient(#192a56,tomato,#3333dd);
+        } */
+        body.actives .wrapper .sidebar{
+            margin-left: 0px;
+            z-index: 10;
+        }
+        body.actives .wrapper .section{
+            margin-left: 0px;
+            width: 100%;
         }
     }
     /* Medium devices (tablets, 768px and up)*/
@@ -1188,9 +1129,27 @@
             margin-left: 0px;
             transition: all 0.5s ease;
         }
-        .navbar{
+        .sidebar{
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: var(--secondary-color);
+            transition: all 0.5s ease;
+        } 
+        /* .navbar{
             color: #fff;
             background:linear-gradient(dodgerblue,turquoise,#3333dd);
+        } */
+        body.actives .wrapper .sidebar{
+            margin-left: 0px;
+            z-index: 10;
+        }
+        body.actives .wrapper .section{
+            margin-left: 0px;
+            width: 100%;
         }
     }
     /* Large devices (desktops, 992px and up)*/
@@ -1205,18 +1164,36 @@
             margin-left: 0px;
             transition: all 0.5s ease;
         }
-        .navbar{
+        .sidebar{
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: var(--secondary-color);
+            transition: all 0.5s ease;
+        } 
+        /* .navbar{
             color: #fff;
             background:linear-gradient(rebeccapurple,gold,#3333dd);
+        } */
+         body.actives .wrapper .sidebar{
+            margin-left: 0px;
+            z-index: 10;
+        }
+        body.actives .wrapper .section{
+            margin-left: 0px;
+            width: 100%;
         }
         
     }
     /* Extra large devices (large desktops, 1200px and up)*/
     @media (min-width: 1200px) { 
         
-        .navbar{
+        /* .navbar{
             color: #fff;
             background:linear-gradient(rebeccapurple,springgreen,#3333dd);
-        }
+        } */
     }
 </style>

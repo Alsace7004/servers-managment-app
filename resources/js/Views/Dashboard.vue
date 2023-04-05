@@ -8,7 +8,7 @@
                 <!-- The navbar -->
                     <Navbar />
                 <!-- The Content -->
-                <div class="content">
+                <div class="content" style="border:1px solid red;z-index:10">
                     <div class="content_body">
                         <!-- router-view-begin -->
                             <ContentHeader message="Tableau de bord !!!"/>
@@ -125,7 +125,7 @@
         },
         methods:{
             getCountServers(){
-                axios.get("api/getCountServers").then((res)=>{
+                axiosClient.get("api/getCountServers").then((res)=>{
                     let content = res.data;
                     this.servers = content.servers
                     //console.log("Valeur de res dans getCountServers:",content)
@@ -134,7 +134,7 @@
                 })
             },
             getCountDomaines(){
-                axios.get("api/getCountDomaines").then((res)=>{
+                axiosClient.get("api/getCountDomaines").then((res)=>{
                     let content = res.data;
                     this.domaines = content.domaines
                     //console.log("Valeur de res dans getCountDomaines:",content)
@@ -143,7 +143,7 @@
                 })
             },
             getCountDepartements(){
-                axios.get("api/getCountDepartements").then((res)=>{
+                axiosClient.get("api/getCountDepartements").then((res)=>{
                     let content = res.data;
                     this.departement_actif = content.departements
                     //console.log("Valeur de res dans getCountDepartements:",content)
@@ -152,7 +152,7 @@
                 })
             },
             getCountStaffs(){
-                axios.get("api/getCountStaffs").then((res)=>{
+                axiosClient.get("api/getCountStaffs").then((res)=>{
                     let content = res.data;
                     this.staff_actif = content.staffs
                     //console.log("Valeur de res dans getCountStaffs:",content)
@@ -161,7 +161,7 @@
                 })
             },
             getExpireServer(){
-                axios.get("api/getExpireServer").then((res)=>{
+                axiosClient.get("api/getExpireServer").then((res)=>{
                     let content = res.data;
                     this.expire_servers = content.servers
                     //console.log("Valeur de res dans getExpireServer:",content)
@@ -170,7 +170,7 @@
                 })
             },
             getExpireDomaines(){
-                axios.get("api/getExpireDomaines").then((res)=>{
+                axiosClient.get("api/getExpireDomaines").then((res)=>{
                     let content = res.data;
                     this.expire_domaines = content.domaines
                     //console.log("Valeur de res dans getExpireDomaines:",content)

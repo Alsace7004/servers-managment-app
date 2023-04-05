@@ -148,7 +148,12 @@
             <script>window.authUser=null;</script>
         @endif --}}
         {{-- <script src="{{asset('admin/script.js')}}" defer></script> --}}
-        <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
+        <script>
+            window.Laravel = {
+                csrfToken: '{{ csrf_token() }}',
+                user:'{{Auth::guard("web")->user()}}',
+            }
+        </script>
 
     </body>
 </html>

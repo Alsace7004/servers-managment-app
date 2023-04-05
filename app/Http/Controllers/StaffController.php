@@ -340,4 +340,17 @@ class StaffController extends Controller
             'staffs'=>$staffs
         ]);
     }
+    //get Selected User Info
+    public function getSelectedUserInfo($id){
+        
+        $user = DB::SELECT("SELECT staff.nom,staff.prenom,staff.photo,departements.nom_departement 
+        FROM staff,departements 
+        WHERE staff.departement_id = departements.id
+        AND staff.id = $id");
+
+        return response()->json([
+            'status'=>true,
+            'user'=>$user
+        ]);
+    }
 }

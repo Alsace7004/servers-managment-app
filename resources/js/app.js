@@ -17,6 +17,9 @@ import Swal from 'sweetalert2';
 import "sweetalert2/dist/sweetalert2.min.css"
 window.Swal = Swal
 /*************SWEET-ALERT-2-CONFIG-END***************************/
+/*************VUE-CHAT-SCROLL-CONFIG-BEGIN*************************/
+import VueChatScroll from 'vue3-chat-scroll';
+/*************VUE-CHAT-SCROLL-CONFIG-END***************************/
 /*************STORE***************************/
 import { useAuthStore } from './store';
 /****************************************************************/
@@ -50,6 +53,7 @@ import "vue-loading-overlay/dist/css/index.css";
 const app = createApp(App)
 //app.component("Login_view", PopupWindow); // global registration - can be used anywhere
     app.use(useLoading)
+        .use(VueChatScroll)
         .use(CKEditor)
         .use(helper)
         .use(pinia)

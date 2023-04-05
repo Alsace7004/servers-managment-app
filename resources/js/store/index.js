@@ -12,7 +12,8 @@ export const useAuthStore = defineStore("auth",{
         name:null,
         email:null,
         photo:null,
-        role:null
+        role:null,
+   
     }),
     getters:{
         user:(state)=>state.authUser,

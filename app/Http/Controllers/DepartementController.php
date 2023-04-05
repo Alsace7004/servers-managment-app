@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Staff;
 use App\Models\Departement;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DepartementController extends Controller
@@ -35,7 +38,29 @@ class DepartementController extends Controller
             'departements'=>$departements->paginate($length)
         ]);
     }
+    public function getDepartementFriends(){
+        /* $departementFriends = Staff::join('departements','departements.id','=','staff.departement_id')
+                        ->select('staff.id','staff.nom','staff.prenom','staff.photo','departements.nom_departement')
+                        ->where('staff.departement_id','=','departements.id')
+                        ->where('staff.departement_id','=',4)
+                        ->get(); */
+                        //$id = Auth::guard('web')->user()->id;
+        //$departId = Auth::guard('staffs')->user();
+        $departId = Auth::user()->departement_id;//work
+        //$departId = Auth::guard('auth:sanctum')->user();
+        //dd($departId); 
+        //dd(Auth::guard('staffs')->guest());
+        //dd($id);
+        $departementFriends = DB::SELECT("SELECT staff.id,staff.nom,staff.prenom,staff.photo,departements.nom_departement 
+        FROM staff,departements 
+        WHERE staff.departement_id = departements.id
+        AND staff.departement_id =".$departId."");
 
+        return response()->json([
+            'status'=>true,
+            'departementFriends'=>$departementFriends
+        ]);
+    }
     public function departementList(){
         $departements = Departement::query()->select('id','nom_departement')
                                     ->where('is_deleted',false)
