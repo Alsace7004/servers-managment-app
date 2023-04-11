@@ -1,4 +1,7 @@
 @import url(./badge.css);
+@import url(./messagerie_last.css);
+@import url(../../public/admin/icofont/icofont.min.css);
+/* @import url(./messagerie.css); */
 /********************************MODAL-FONT-AWESOME-ICON-BEGIN*********************/
 .md_icon{
     font-size: 20px;
