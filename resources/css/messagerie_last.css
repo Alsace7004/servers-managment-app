@@ -453,7 +453,64 @@
         transform:scale(1)
     }
 }
-
+/*********************Audio Preview Box Begin*********************/
+.audio_preview_box{
+    border: 1px solid red;
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, .898);
+    z-index: 9;
+}
+.audio_preview_box_header{
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--padding-commun-3);
+}
+.audio_preview_box_header>div{
+    cursor: pointer;
+    font-size: var(--font-size-9);
+    border: 1px solid var(--gray-low-important-text);
+    background-color: var(--gray);
+    border-radius: 50%;
+    height: 33px;
+    width: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 1s ease;
+}
+.audio_preview_box_body{
+    border: 1px solid red;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+.record_control_btn{
+    display: flex;
+    gap: 5rem;
+    margin-bottom: 1rem;
+}
+.record_play_btn, .record_stop_btn{
+    border: 1px solid var(--gray-low-important-text);
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer
+}
+.recorded_data{
+    display:flex;
+    gap:1rem
+}
+/*********************Audio Preview Box End*********************/
 /******************** Image Preview Box *******************/
 .image_preview_box{
     position: sticky;

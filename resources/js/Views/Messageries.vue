@@ -345,6 +345,38 @@
                 <div class="loadMessage" id="loadTheMessage">
                   <loader />
                 </div>
+                <!-- audio file record begin -->
+                <div class="audio_preview_box dnone">
+                  <!-- header -->
+                  <div class="audio_preview_box_header">
+                    <div @click="closeAudioPreview">
+                      <i class="fas fa-times image_preview_close_btn"></i>
+                    </div>
+                  </div>
+                  <!-- body -->
+                  <div class="audio_preview_box_body">
+                    <div class="record_control_btn">
+                        <div class="record_play_btn" @click="startRecordingAudio">
+                          <i class="icofont-ui-play"></i>
+                        </div>
+                        <div class="record_stop_btn" @click="stopRecordingAudio">
+                          <i class="icofont-ui-play-stop"></i>
+                        </div>
+                    </div>
+                    <div class="recorded_data dnone">
+                      <audio id="audio" controls src="" style="border-radius:5px"></audio>
+                      <div class="record_stop_btn">
+                          <i class="icofont-trash"></i>
+                      </div>
+                      <div class="record_stop_btn">
+                          <i class="icofont-paper-plane"></i>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <!-- audio file record end -->
+                <!-- file upload modal begin-->
                 <div class="image_preview_box modal-preview-image dnone">
                   <!-- header -->
                   <div class="image_preview_box_header">
@@ -352,8 +384,8 @@
                       <i class="fas fa-times image_preview_close_btn"></i>
                     </div>
                   </div>
+                  <!-- body -->
                   <div class="modal-body-box zoom-modal">
-                    <!-- body -->
                     <div class="image_preview_box_body">
                       <img
                         class="image_preview_box_body_img"
@@ -364,6 +396,7 @@
                   </div>
                   <!-- end -->
                 </div>
+                <!-- file upload modal end -->
                 <!-- begin -->
                 <div class="all_message_box">
                   <div class="container dnone">
@@ -465,7 +498,7 @@
                       @click="sendMessage"
                     ></i>
                   </div>
-                  <div>
+                  <div @click="startRecording">
                     <i class="icofont-mic bt_icon" id="microPhone"></i>
                   </div>
                 </div>
@@ -559,7 +592,7 @@ export default {
       conversationMessages: [],
 
       errors: [],
-
+      calls:[],
       chat: {
         sender_id: "",
         sent_to_id: "",
@@ -587,6 +620,7 @@ export default {
       /*---------------------------*/
       text: "",
       collapsed: true,
+      kpe:33,
       /***************AGORA-BEGIN*******************/
       options: {
         // Pass your App ID here.
@@ -661,10 +695,21 @@ export default {
       document.getElementById("call_box_agora").classList.remove("dnone");
       /* alert("going to make a call"); */
       console.log("Nous allons commencé l'appel par ici pour voir :");
+      alert(`Moi : ${this.authUserId} je veux appeler : ${this.chat.sent_to_id}`)
+      axiosClient.post(`api/callThisUser/${this.chat.sent_to_id}`).then((res)=>{
+        console.log("Valeur de res from callThisUser : ",res)
+        //this.toggleCallEvent();
+         window.Echo.channel(`callingStaff.${this.chat.sent_to_id}`).listen('CallingUserEvent', (e) => {
+                alert("Je suis sensé prevenir le correspondant de l'appel en cours")
+                console.log("valeur de e from CallingUserEvent broadcast: ",e)
+        });
+      }).catch((err)=>{
+        console.log("Valeur de err dans makeCall : ",err)
+      })
       // Create an instance of the Agora Engine
       //const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
       console.log("Begin joinning here...");
-      this.join().then(() => {
+      /* this.join().then(() => {
         this.startVideo();
         this.startAudio();
         this.rtc.client.on("user-published", async (user, mediaType) => {
@@ -677,7 +722,7 @@ export default {
             remoteAudioTrack.play();
           }
         });
-      });
+      }); */
       console.log("Here is the end of Agora calling");
     },
     async join() {
@@ -721,7 +766,7 @@ export default {
       console.log("You left the channel");
       
     },
-    
+    //Toggle The Micro Phone
     ToggleMicrophone() {
       //this.collapsed =! this.collapsed
       if(!this.collapsed){
@@ -772,6 +817,57 @@ export default {
     closeImagePreview() {
       document.querySelector(".modal-preview-image").classList.add("dnone");
     },
+    //startRecording
+    startRecording(){
+      document.querySelector(".audio_preview_box").classList.remove("dnone");
+    },
+    //closeAudioBox
+    closeAudioPreview() {
+      document.querySelector(".audio_preview_box").classList.add("dnone");
+      document.querySelector('#audio').src = "";
+      document.querySelector(".recorded_data").classList.add("dnone")
+      document.querySelector('.record_play_btn').classList.remove("disabled")
+    },
+    //startRecordingAudio
+    async startRecordingAudio(){
+      //alert("Begin recording audio")
+      document.querySelector('.record_play_btn').classList.add("glowing-circle-1")
+      document.querySelector('.record_play_btn').classList.add("disabled")
+      
+      let btnStop = document.querySelector('.record_stop_btn');
+      let audio = document.querySelector('#audio');
+      let stream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
+      let mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.start();
+        let chunks = [];
+        mediaRecorder.ondataavailable = (e)=>{
+             chunks.push(e.data);
+        }
+        //function to catch error
+        mediaRecorder.onerror = (e)=>{
+             alert(e.error);
+        }
+
+        mediaRecorder.onstop = (e)=>{
+            let blod = new Blob(chunks);
+            //create url for audio
+            let url = URL.createObjectURL(blod,{type:'audio/mpeg-3'});
+            console.log("valeur de url:",url)
+            //pass url into audio tag
+            audio.src = url;
+        }
+        btnStop.addEventListener('click',()=>{
+            mediaRecorder.stop();
+            document.querySelector('.record_play_btn').classList.remove("glowing-circle-1")
+            document.querySelector(".recorded_data").classList.remove("dnone")
+            
+        })
+        
+    },
+    //stopRecordingAudio
+    /* stopRecordingAudio(){
+      alert("stop recording audio")
+    }, */
     //
     getDepartementUsers() {
       axiosClient.get("api/getDepartementFriends").then((res) => {
@@ -846,6 +942,7 @@ export default {
       }
       document.getElementById(e.target.dataset.modal).classList.remove("dnone");
       this.leave();
+      this.calls = []
     },
     loadOff() {
       document.getElementById("loadTheMessage").classList.add("dnone");
@@ -853,6 +950,13 @@ export default {
     loadOn() {
       document.getElementById("loadTheMessage").classList.remove("dnone");
     },
+    toggleCallEvent(){
+      window.Echo.channel(`staffCallNotification.${this.chat.sent_to_id}`).listen('CallUser', (e) => {
+                alert("Normalement je suis appelé Apres le click de l'appel...")
+                console.log("valeur de e from staffCall_notification broadcast: ",e)
+                this.calls.push(e.staff)
+      });
+    }
   },
 
   created() {
@@ -864,13 +968,11 @@ export default {
       this.conversationMessages.push(event.message);
       console.log("Valeur de event Echo.channel : ", event);
     });
+    //
+     
   },
   mounted() {
-    /* console.log('depuis monted')
-            let em = document.querySelector('#kpe');
-            console.log("Valeur de emoji : ",em) */
-    //this.getDepartementUsers();
-    //this.getConversationMessage();
+    //
   },
 };
 </script>

@@ -76,6 +76,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("getCountDepartements", [DepartementController::class, 'getCountDepartements']);
     //Type de Staff
     Route::apiResource('typeStaff', TypeStaffController::class);
+    //call This Specific User
+    Route::post('callThisUser/{staff}', [StaffController::class,'callThisUser']); //
     Route::get('getAllTypeStaff', [TypeStaffController::class, 'typeStaffList']); //
     //Staff
     Route::apiResource('staff', StaffController::class);

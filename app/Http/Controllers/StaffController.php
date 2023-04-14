@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Staff;
+use App\Events\CallUser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Events\CallingUserEvent;
+use App\Events\WebsocketDemoEvent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -352,5 +355,9 @@ class StaffController extends Controller
             'status'=>true,
             'user'=>$user
         ]);
+    }
+    //call This User
+    public function callThisUser(Staff $staff){
+        broadcast(new CallingUserEvent($staff))->toOthers();
     }
 }
