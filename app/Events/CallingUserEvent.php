@@ -15,15 +15,17 @@ class CallingUserEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $staff;
+    public $email;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Staff $staff)
+    public function __construct(Staff $staff,$email)
     {
         //
         $this->staff = $staff;
+        $this->email = $email;
     }
 
     /**
@@ -35,5 +37,12 @@ class CallingUserEvent implements ShouldBroadcast
     {
         //return new PrivateChannel('channel-name');
         return new Channel('callingStaff.'.$this->staff->id);
+    }
+    public function broadcastWith(): array
+    {
+        return [
+            'id' => $this->staff->id,
+            'email' => $this->email,
+        ];
     }
 }

@@ -196,6 +196,9 @@
             camelCase   ex:firstName
             Kebab-case  ex:first-name
             snake_case  ex:first_name
+            Remove animate-left from conversationMessages
+
+            
         */
         
     }

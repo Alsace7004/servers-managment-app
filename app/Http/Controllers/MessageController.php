@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MessageSent;
+use Carbon\Carbon;
 use App\Models\Message;
+use App\Events\MessageSent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,9 @@ class MessageController extends Controller
         AND     messages.sent_to_id 	= ".$sent_to_id."
         OR      messages.sender_id 		= ".$sent_to_id."
         AND     messages.sent_to_id 	= ".$authId." ");
-
+        //dd($messages[0]->created_at);
+        //Carbon::parse($messages[0]->created_at)->format("d/m/Y H:i");
+        //dd($messages);
         return response()->json([
             'status'=>true,
             'messages'=>$messages

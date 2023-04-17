@@ -26,6 +26,12 @@ export default {
                     let  date =  new Date(jour);
                     return  date.toLocaleDateString('en-GB') // "day-month-year"
                 },
+                // British English uses day-month-year order and 24-hour time without AM/PM
+                // Expected output: "20/12/2012, 03:00:00"
+                dateForHumans(jour){
+                    let  date =  new Date(jour);
+                    return  date.toLocaleString('en-GB', { timeZone: 'UTC' }) // "day-month-year"
+                },
                 //Verify Permissions
                 $can(permissionName){
                     let permissions = this.Permissions

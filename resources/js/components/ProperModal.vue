@@ -48,6 +48,7 @@
     overflow-x: auto;
     display: flex;
     flex-direction: column;
+    z-index: 1000;
 }
 .modal-content{
     background: #fff;

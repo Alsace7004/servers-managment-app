@@ -4,3 +4,30 @@
     cursor: not-allowed;
     pointer-events: none;
 }
+.d-flex{
+    display: flex;
+}
+.justify-content-between{
+    justify-content: space-between;
+}
+.justify-content-center{
+    justify-content: center;
+}
+/***************CIRCLE-SHAPES**********************/
+.circle_shapes{
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    font-weight: bold;
+    font-size: large;
+}
+.circle_shapes_danger{
+    background-color:#f44a36;color:#fff
+}
+.circle_shapes_success{
+    background-color:#79d06f;color:#fff
+}

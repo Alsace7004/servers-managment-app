@@ -403,7 +403,7 @@
                     <div>Accun message</div>
                   </div>
                   <div
-                    class="container animate-left"
+                    class="container "
                     v-for="(item, i) in conversationMessages"
                     :key="item.id"
                     :class="{
@@ -426,7 +426,7 @@
                         <span
                           class="time-right"
                           :class="{ 'time-left': item.sender_id == authUserId }"
-                          >{{ item.created_at }}</span
+                          >{{ dateForHumans(item.created_at) }}</span
                         >
                       </div>
                     </div>
@@ -469,15 +469,37 @@
                     <!--  -->
                   </div>
                 </div>
-
+                <div class="emoji_btn" style="">
+                  <div class="emoji_btn_item" v-for="emoji in emojis" :key="emoji" @click="getEmoji(emoji.emoji)">{{emoji.emoji}}</div>
+                  <!-- <div class="emoji_btn_item" @click="getEmoji(this)">🙂</div>
+                  <div class="emoji_btn_item">😀</div>
+                  <div class="emoji_btn_item">😃</div>
+                  <div class="emoji_btn_item">😄</div>
+                  <div class="emoji_btn_item">😁</div>
+                  <div class="emoji_btn_item">😅</div>
+                  <div class="emoji_btn_item">😆</div>
+                  <div class="emoji_btn_item">🤣</div>
+                  <div class="emoji_btn_item">😂</div>
+                  <div class="emoji_btn_item">🙃</div>
+                  <div class="emoji_btn_item">😉</div>
+                  <div class="emoji_btn_item">😊</div>
+                  <div class="emoji_btn_item">😇</div>
+                  <div class="emoji_btn_item">😎</div>
+                  <div class="emoji_btn_item">🤓</div>
+                  <div class="emoji_btn_item">🧐</div>
+                  <div class="emoji_btn_item">🥳</div> -->
+                </div>
                 <div class="content2__right_footer_left">
                   <div @click="hiddenThefilesOption()">
                     <i class="icofont-clip bt_icon" @click="attach_btn"></i>
                   </div>
+                  <div>
+                    <i class="icofont-simple-smile bt_icon" id="microPhone"></i>
+                  </div>
                 </div>
 
                 <div class="content2__right_footer_middle">
-                  <EmojiPicker
+                  <!--<EmojiPicker
                     id="kpe"
                     class="message_content"
                     :native="true"
@@ -487,7 +509,11 @@
                     @update:text="onChangeText"
                     :static-texts="{ placeholder: 'Search emoji' }"
                     @select="onSelectEmoji"
-                  />
+                  />-->
+                  <div class="content2__right_footer_middle_input">
+                    <textarea name="" id="" @keyup.enter="sendMessage" v-model="chat.message" placeholder="veuillez entrer un message..." cols="30" rows="1"></textarea>
+                  </div>
+                  <!--<input type="text" class="message_content" placeholder="veuillez entrer un message...">-->
                   <!--<input type="text" class="content2__right_footer_middle_input" v-model="chat.message" placeholder="type a message">-->
                 </div>
 
@@ -536,7 +562,7 @@
       <div class="call__box_btn">
         <div>
           <button @click="leave()" class="btn-call-danger">
-            <i class="fas fa-phone-slash"></i>
+            <i class="fas fa-phone-slash "></i>
           </button>
           <button class="btn-call-secondary" id="ss" @click="ToggleMicrophone">
            
@@ -548,6 +574,31 @@
     </div>
   </div>
   <!----------------------------------------MAKE-CALL-WITH-AGORA-MODAL-END------------------------------------------------->
+
+  <!----------------------------------------ACCEPT-CALL-FROM-AGORA-MODAL-BEGIN------------------------------------------------->
+                        <proper-modal v-show="isModalVisible" modalName="edit_role">
+                            <template v-slot:header>
+                                <h4>Appel entrant</h4>
+                                <i class="far fa-times-circle md_icon" data-dismiss="modal" aria-label="Close"></i>
+                            </template>
+                            <template v-slot:body>
+                                <div style="text-align:center;margin-bottom:2.5rem">
+                                  <p>Appel entrant venant de : {{appelEntrantEmail}}</p>
+                                </div>
+                                <!-- accept/decline -->
+                                <div class="d-flex justify-content-center" style="gap:5rem">
+                                  <div class="circle_shapes circle_shapes_danger" data-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-phone-slash"></i>
+                                  </div>
+                                  <div class="circle_shapes circle_shapes_success" @click="acceptCall">
+                                    <i class="fas fa-phone-alt"></i>
+                                  </div>
+                                </div>
+                                <!-- accept/decline -->
+                            </template>
+                           
+                        </proper-modal>
+  <!----------------------------------------ACCEPT-CALL-FROM-AGORA-MODAL-END--------------------------------------------------->
 </template>
 
 <script>
@@ -558,7 +609,7 @@ import vTable from "../components/vTable/vTable.vue";
 import ProperModal from "../components/ProperModal.vue";
 import loader from "../components/loader3.vue";
 import axiosClient from "../axios/index";
-
+import emojis from "../emoji.js"
 import TextareaEmojiPicker from "../components/TextareaEmojiPicker.vue";
 import { useAuthStore } from "../store/index";
 const { id } = useAuthStore();
@@ -620,7 +671,92 @@ export default {
       /*---------------------------*/
       text: "",
       collapsed: true,
-      kpe:33,
+      /* emojis : [
+              {
+                  "emoji":"🙂",
+                  "meaning":"Slightly smiling face",
+                  "unicode":"U+1F642"
+              },
+              {
+                  "emoji":"😀",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😄",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😁",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😅",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😆",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"🤣",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😂",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"🙃",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😉",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😊",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😇",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"😎",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"🤓",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"🧐",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              },
+              {
+                  "emoji":"🥳",
+                  "meaning":"Smiling face",
+                  "unicode":"U+1F600"
+              }
+      ], */
+      emojis:emojis,
+      /*-----------APPEL-ENTRANT----------------*/
+      appelEntrantEmail:"",
+      /*-----------APPEL-ENTRANT----------------*/
       /***************AGORA-BEGIN*******************/
       options: {
         // Pass your App ID here.
@@ -698,18 +834,13 @@ export default {
       alert(`Moi : ${this.authUserId} je veux appeler : ${this.chat.sent_to_id}`)
       axiosClient.post(`api/callThisUser/${this.chat.sent_to_id}`).then((res)=>{
         console.log("Valeur de res from callThisUser : ",res)
-        //this.toggleCallEvent();
-         window.Echo.channel(`callingStaff.${this.chat.sent_to_id}`).listen('CallingUserEvent', (e) => {
-                alert("Je suis sensé prevenir le correspondant de l'appel en cours")
-                console.log("valeur de e from CallingUserEvent broadcast: ",e)
-        });
       }).catch((err)=>{
         console.log("Valeur de err dans makeCall : ",err)
       })
       // Create an instance of the Agora Engine
       //const agoraEngine = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
       console.log("Begin joinning here...");
-      /* this.join().then(() => {
+      this.join().then(() => {
         this.startVideo();
         this.startAudio();
         this.rtc.client.on("user-published", async (user, mediaType) => {
@@ -722,8 +853,27 @@ export default {
             remoteAudioTrack.play();
           }
         });
-      }); */
+      });
       console.log("Here is the end of Agora calling");
+    },
+    acceptCall(){
+      alert("Appel Accepter")
+      $("#edit_role").modal('hide')
+      document.getElementById("call_box_agora").classList.remove("dnone");
+      this.join().then(() => {
+        this.startVideo();
+        this.startAudio();
+        this.rtc.client.on("user-published", async (user, mediaType) => {
+          // Subscribe to the remote user when the SDK triggers the "user-published" event.
+          await this.rtc.client.subscribe(user, mediaType);
+          console.log("subscribe success");
+          // Subscribe and play the remote audio track.
+          if (mediaType == "audio") {
+            const remoteAudioTrack = user.audioTrack;
+            remoteAudioTrack.play();
+          }
+        });
+      });
     },
     async join() {
       this.rtc.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -849,9 +999,9 @@ export default {
         }
 
         mediaRecorder.onstop = (e)=>{
-            let blod = new Blob(chunks);
+            let blod = new Blob(chunks,{ type: 'audio/webm' });
             //create url for audio
-            let url = URL.createObjectURL(blod,{type:'audio/mpeg-3'});
+            let url = URL.createObjectURL(blod,{type:'audio/webm'});
             console.log("valeur de url:",url)
             //pass url into audio tag
             audio.src = url;
@@ -877,21 +1027,13 @@ export default {
       });
     },
     sendMessage() {
-      /* alert("going to send the message : "+this.chat.message);
-                console.log("Valeur de message:",this.chat.message) */
       axiosClient
         .post(`api/sendMessage`, this.chat)
         .then((res) => {
           console.log("Valeur de res dans sendMessage : ", res);
           if (res.data.status) {
             //alert("message envoyé avec succes !!!")
-            this.getConversationMessage();
             this.chat.message = "";
-            //this.text  = "";
-            //this.$refs.text = null;
-            //this.$refs.text.reset();
-            //this.chat.message.target = "";
-            this.onChangeText(this.chat.message);
           }
         })
         .catch((err) => {
@@ -950,13 +1092,10 @@ export default {
     loadOn() {
       document.getElementById("loadTheMessage").classList.remove("dnone");
     },
-    toggleCallEvent(){
-      window.Echo.channel(`staffCallNotification.${this.chat.sent_to_id}`).listen('CallUser', (e) => {
-                alert("Normalement je suis appelé Apres le click de l'appel...")
-                console.log("valeur de e from staffCall_notification broadcast: ",e)
-                this.calls.push(e.staff)
-      });
-    }
+    getEmoji(d){
+      console.log("valeur de emoji cliqué :",d);
+      this.chat.message =this.chat.message + d
+    },
   },
 
   created() {
@@ -966,13 +1105,21 @@ export default {
     /*****************************/
     window.Echo.channel("chat").listen("MessageSent", (event) => {
       this.conversationMessages.push(event.message);
-      console.log("Valeur de event Echo.channel : ", event);
+      //console.log("Valeur de event Echo.channel : ", event);
     });
     //
-     
+      window.Echo.channel(`callingStaff.${this.authUserId}`).listen('CallingUserEvent', (e) => {
+                //alert("Je suis sensé prevenir le correspondant de l'appel en cours")
+                //alert("Appel vocal entrant de : "+e.staff.email+" Son id est : "+e.staff.id)
+                alert("Appel vocal entrant venant de : "+e.email)
+                this.appelEntrantEmail = e.email
+                $("#edit_role").modal('show')
+                console.log("valeur de e from CallingUserEvent broadcast: ",e)
+      });
   },
   mounted() {
     //
+    //$("#edit_role").modal('show')
   },
 };
 </script>

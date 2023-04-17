@@ -358,6 +358,8 @@ class StaffController extends Controller
     }
     //call This User
     public function callThisUser(Staff $staff){
-        broadcast(new CallingUserEvent($staff))->toOthers();
+        $email = auth()->user()->email;
+        //dd($email);
+        broadcast(new CallingUserEvent($staff,$email))->toOthers();
     }
 }
