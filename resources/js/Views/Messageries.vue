@@ -469,31 +469,21 @@
                     <!--  -->
                   </div>
                 </div>
-                <div class="emoji_btn" style="">
-                  <div class="emoji_btn_item" v-for="emoji in emojis" :key="emoji" @click="getEmoji(emoji.emoji)">{{emoji.emoji}}</div>
-                  <!-- <div class="emoji_btn_item" @click="getEmoji(this)">🙂</div>
-                  <div class="emoji_btn_item">😀</div>
-                  <div class="emoji_btn_item">😃</div>
-                  <div class="emoji_btn_item">😄</div>
-                  <div class="emoji_btn_item">😁</div>
-                  <div class="emoji_btn_item">😅</div>
-                  <div class="emoji_btn_item">😆</div>
-                  <div class="emoji_btn_item">🤣</div>
-                  <div class="emoji_btn_item">😂</div>
-                  <div class="emoji_btn_item">🙃</div>
-                  <div class="emoji_btn_item">😉</div>
-                  <div class="emoji_btn_item">😊</div>
-                  <div class="emoji_btn_item">😇</div>
-                  <div class="emoji_btn_item">😎</div>
-                  <div class="emoji_btn_item">🤓</div>
-                  <div class="emoji_btn_item">🧐</div>
-                  <div class="emoji_btn_item">🥳</div> -->
+                <!-- emojis box begin -->
+                <div class="emoji_box dnone animate-bottom" style="">
+                  <div class="emoji_box_header">
+                    Emojis
+                  </div>
+                  <div class="emoji_box_body">
+                    <div class="emoji_btn_item" v-for="emoji in emojis" :key="emoji" @click="getEmoji(emoji.emoji)">{{emoji.emoji}}</div>
+                  </div>
                 </div>
+                <!-- emojis box end -->
                 <div class="content2__right_footer_left">
                   <div @click="hiddenThefilesOption()">
-                    <i class="icofont-clip bt_icon" @click="attach_btn"></i>
+                    <i class="icofont-clip bt_icon"></i>
                   </div>
-                  <div>
+                  <div @click="toggleEmojis">
                     <i class="icofont-simple-smile bt_icon" id="microPhone"></i>
                   </div>
                 </div>
@@ -511,7 +501,12 @@
                     @select="onSelectEmoji"
                   />-->
                   <div class="content2__right_footer_middle_input">
-                    <textarea name="" id="" @keyup.enter="sendMessage" v-model="chat.message" placeholder="veuillez entrer un message..." cols="30" rows="1"></textarea>
+                    <textarea name="" 
+                      id="" 
+                      @keyup.enter="sendMessage" 
+                      @focus="toggleEmojisBox"
+                      v-model="chat.message" 
+                      placeholder="veuillez entrer un message..." cols="30" rows="1"></textarea>
                   </div>
                   <!--<input type="text" class="message_content" placeholder="veuillez entrer un message...">-->
                   <!--<input type="text" class="content2__right_footer_middle_input" v-model="chat.message" placeholder="type a message">-->
@@ -670,89 +665,7 @@ export default {
       },
       /*---------------------------*/
       text: "",
-      collapsed: true,
-      /* emojis : [
-              {
-                  "emoji":"🙂",
-                  "meaning":"Slightly smiling face",
-                  "unicode":"U+1F642"
-              },
-              {
-                  "emoji":"😀",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😄",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😁",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😅",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😆",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"🤣",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😂",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"🙃",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😉",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😊",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😇",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"😎",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"🤓",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"🧐",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              },
-              {
-                  "emoji":"🥳",
-                  "meaning":"Smiling face",
-                  "unicode":"U+1F600"
-              }
-      ], */
+      collapsed: true, 
       emojis:emojis,
       /*-----------APPEL-ENTRANT----------------*/
       appelEntrantEmail:"",
@@ -929,31 +842,7 @@ export default {
         this.stopAudio()
       }
     },
-
     /**********************Make-a-call-end***************************/
-    attach_btn() {
-      console.log("Hello");
-      document.querySelector(".attach_btn").classList.toggle("show_attach_btn");
-    },
-    // event callback
-    onSelectEmoji(emoji) {
-      console.log(emoji);
-      /*
-                    // result
-                    { 
-                        i: "😚", 
-                        n: ["kissing face"], 
-                        r: "1f61a", // with skin tone
-                        t: "neutral", // skin tone
-                        u: "1f61a" // without tone
-                    }
-                    */
-    },
-    onChangeText(text) {
-      /* do something */
-      console.log("Valeur du text saisi :", text);
-      this.chat.message = text;
-    },
     //
     selectImage(e) {
       let file = e.target.files[0];
@@ -1066,16 +955,28 @@ export default {
         .then((res) => {
           let content = res.data.messages;
           this.conversationMessages = content;
-          console.log("Valeur de res dans getConversationMessage:", content);
+          //console.log("Valeur de res dans getConversationMessage:", content);
           //console.log("Valeur de res.data dans getDomaines:",res.data)
         })
         .catch((err) => {
           console.log("Valeur de err dans getConversationMessage:", err);
         });
     },
+    /**********************************************************************************/
+    //show/hide Upload File Box
     hiddenThefilesOption() {
       document.querySelector(".mode-file").classList.toggle("dnone");
     },
+    //show/hide Emoji Box
+    toggleEmojis() {
+      document.querySelector(".emoji_box").classList.toggle("dnone");
+    },
+    //show/hide Emoji Box
+    toggleEmojisBox(){
+      //alert("EBF");
+      document.querySelector(".emoji_box").classList.add("dnone");
+    },
+    /**********************************************************************************/
     closeAllModal(e) {
       e.preventDefault();
       const allModal = Array.from(document.querySelectorAll(".modebox"));
@@ -1092,10 +993,12 @@ export default {
     loadOn() {
       document.getElementById("loadTheMessage").classList.remove("dnone");
     },
+    /**************************RECUPERATION-DE-EMOJI-CLIQUE-BEGIN********************************/
     getEmoji(d){
-      console.log("valeur de emoji cliqué :",d);
+      /* console.log("valeur de emoji cliqué :",d); */
       this.chat.message =this.chat.message + d
     },
+    /**************************RECUPERATION-DE-EMOJI-CLIQUE-END********************************/
   },
 
   created() {
