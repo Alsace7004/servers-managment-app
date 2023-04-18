@@ -19,31 +19,34 @@ class MessageController extends Controller
     //
     public function sendMessage(Request $request)
     {
-       /* $message = [
-           "id" => $request->userid, //`id` is the id of the user to whom the message is being sent
-           "sourceuserid" => Auth::user()->id,//`sourceid` is the user id who is sending the message
-           "name" => Auth::user()->name, //and `name` is the username
-           "message" => $request->message
-       ]; */
-       /* return response()->json([
-            "sender_id"     =>Auth::user()->id,
-            "sent_to_id"    =>$request->sent_to_id,
-            "message"       =>$request->message,
-       ]); */
+        $image=($request->file('photo'));
+        //dd($image);
 
-       $message = [
-           "sender_id"  =>Auth::user()->id,     //`sourceid` is the user id who is sending the message
-           "sent_to_id" =>$request->sent_to_id ,    //`id` is the id of the user to whom the message is being sent
-           //"name"       =>Auth::user()->name,  //and `name` is the username
-           "message"    =>$request->message
-       ];
-       $sms = new Message;
-       $sms->sender_id  = Auth::user()->id;
-       $sms->sent_to_id = $request->sent_to_id;
-       $sms->message    = $request->message;
-       $sms->save();
-       //event(new ChatMessage($message));
-       //return "true";
+        $message = [
+            "sender_id"  =>Auth::user()->id,     //`sourceid` is the user id who is sending the message
+            "sent_to_id" =>$request->sent_to_id ,//`id` is the id of the user to whom the message is being sent
+            "message"    =>$request->message
+        ];
+        if($image == null){
+            $sms = new Message;
+            $sms->sender_id  = Auth::user()->id;
+            $sms->sent_to_id = $request->sent_to_id;
+            $sms->message    = $request->message;
+            $sms->save();
+        }else{
+            if($image=($request->file('photo'))){
+                    $destinationPath = public_path('img_path/ChatMessages');
+                    $messageImage = date('YmdHis').".".$image->getClientOriginalExtension();
+                    $image->move($destinationPath,$messageImage);
+            }
+            $sms = new Message;
+            $sms->sender_id  = Auth::user()->id;
+            $sms->sent_to_id = $request->sent_to_id;
+            $sms->message    = $request->message;
+            $sms->photo      = $messageImage;
+            $sms->save();
+        }
+       
        broadcast(new MessageSent($sms))->toOthers();
         return response()->json([
             "status"     =>true,
@@ -54,7 +57,7 @@ class MessageController extends Controller
     public function fetchMessages(Request $request){
         $sent_to_id = $request->sent_to_id;  
         $authId = Auth::user()->id;
-        $messages = DB::SELECT("SELECT messages.message,messages.sender_id,messages.sent_to_id,messages.created_at
+        $messages = DB::SELECT("SELECT messages.message,messages.sender_id,messages.sent_to_id,messages.photo,messages.created_at
         FROM `messages` 
         WHERE   messages.sender_id 	    = ".$authId."
         AND     messages.sent_to_id 	= ".$sent_to_id."

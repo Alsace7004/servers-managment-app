@@ -184,9 +184,9 @@
     width: 100%;
     border-radius: 50%;
 }
-.user_box__info{
+/* .user_box__info{
 
-}
+} */
 .user_box__info>p:first-child{
     font-size: .8rem;
     font-weight: bold;

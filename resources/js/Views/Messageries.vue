@@ -421,7 +421,27 @@
                     <div class="text_message">
                       <div>
                         <p>{{ item.message }}</p>
+                        <img
+                          v-if="item.photo === null || item.photo === undefined"
+                          class="user_box__avatar"
+                          src=""
+                          alt="rien"
+                          srcset=""
+                          style="display:none"
+                        />
+                        <img
+                          v-else
+                          style="border:1px solid red;width:100%;height:100%;object-fit:cover"
+                          class=""
+                          :src="'../img_path/ChatMessages/' + item.photo"
+                          alt=""
+                          srcset=""
+                        />
                       </div>
+
+                      <!-- <div class="text_message" style="">
+                        
+                      </div> -->
                       <div class="time-right-container">
                         <span
                           class="time-right"
@@ -644,6 +664,7 @@ export default {
         sent_to_id: "",
         name: "",
         message: "",
+        photo:"",
       },
       selectedUser: {
         nom: "",
@@ -850,6 +871,7 @@ export default {
       document.querySelector(".modal-preview-image").classList.remove("dnone");
       document.querySelector(".mode-file").classList.toggle("dnone");
       this.staff.photo = file;
+      this.chat.photo = file;
       this.staffImg.img = URL.createObjectURL(file);
     },
     //
@@ -916,13 +938,23 @@ export default {
       });
     },
     sendMessage() {
+      let fd = new FormData();
+      fd.append("sender_id",this.chat.sender_id);
+      fd.append("sent_to_id",this.chat.sent_to_id);
+      fd.append("name",this.chat.name);
+      fd.append("message",this.chat.message);
+      fd.append("photo",this.chat.photo);
       axiosClient
-        .post(`api/sendMessage`, this.chat)
+        .post(`api/sendMessage`, fd)
         .then((res) => {
           console.log("Valeur de res dans sendMessage : ", res);
           if (res.data.status) {
             //alert("message envoyé avec succes !!!")
-            this.chat.message = "";
+            this.chat.message   = "";
+            this.chat.photo     = "";
+            this.staff.photo    = "";
+            this.staffImg.img   = "";
+            document.querySelector(".modal-preview-image").classList.add("dnone");
           }
         })
         .catch((err) => {

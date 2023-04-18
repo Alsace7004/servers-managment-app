@@ -198,7 +198,10 @@
             snake_case  ex:first_name
             Remove animate-left from conversationMessages
 
-            
+            Comment associer un deuxième commercial à un intermédiaire svp?
+
+            Dis c'est lors de la création d'un commercial qu'on lui associe un intermédiaire non?
+            ==>
         */
         
     }
