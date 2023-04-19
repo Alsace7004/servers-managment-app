@@ -14,7 +14,7 @@
             <!-- content2-left-side -->
             <div class="content2__left">
               <!-- header -->
-              <div class="content2__left_header">Utilisateurs</div>
+              <div class="content2__left_header">Utilisateurs &#x1f348; &#x1f600;</div>
               <!-- body -->
               <div class="content2__left_body">
                 <div class="content2__left_body_inner">
@@ -431,7 +431,7 @@
                         />
                         <img
                           v-else
-                          style="border:1px solid red;width:100%;height:100%;object-fit:cover"
+                          style="width:100%;height:100%;object-fit:cover"
                           class=""
                           :src="'../img_path/ChatMessages/' + item.photo"
                           alt=""
@@ -456,6 +456,7 @@
 
               <!-- footer -->
               <div class="content2__right_footer chat_mod dnone">
+                <!-- Upload File & Upload Image BEGIN -->
                 <div class="attach_btn mode-file dnone animate-bottom">
                   <!--  -->
                   <div class="opt">
@@ -479,6 +480,7 @@
                       class="dnone"
                       type="file"
                       accept="application/pdf"
+                      @change="selectImage"
                       id="three"
                       required
                     />
@@ -489,7 +491,8 @@
                     <!--  -->
                   </div>
                 </div>
-                <!-- emojis box begin -->
+                <!-- Upload File & Upload Image END -->
+                <!-- emojis box BEGIN -->
                 <div class="emoji_box dnone animate-bottom" style="">
                   <div class="emoji_box_header">
                     Emojis
@@ -498,7 +501,7 @@
                     <div class="emoji_btn_item" v-for="emoji in emojis" :key="emoji" @click="getEmoji(emoji.emoji)">{{emoji.emoji}}</div>
                   </div>
                 </div>
-                <!-- emojis box end -->
+                <!-- emojis box END -->
                 <div class="content2__right_footer_left">
                   <div @click="hiddenThefilesOption()">
                     <i class="icofont-clip bt_icon"></i>
@@ -624,7 +627,8 @@ import vTable from "../components/vTable/vTable.vue";
 import ProperModal from "../components/ProperModal.vue";
 import loader from "../components/loader3.vue";
 import axiosClient from "../axios/index";
-import emojis from "../emoji.js"
+import emojis from "../emoji.js";
+import smileys_people$1 from "../emojis_liste.js";
 import TextareaEmojiPicker from "../components/TextareaEmojiPicker.vue";
 import { useAuthStore } from "../store/index";
 const { id } = useAuthStore();

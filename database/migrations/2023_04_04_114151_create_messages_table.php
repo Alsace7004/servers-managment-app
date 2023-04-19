@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
            /*  $table->integer('sender_id');
             $table->integer('sent_to_id'); */
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->timestamps();
             $table->foreignId('sender_id')->constrained('staff');
             $table->foreignId('sent_to_id')->constrained('staff');
+            $table->string('photo')->nullable();
             // `sender_id` field referenced the `id` field of `users` table:
             /*$table->foreign('sender_id')
                   ->references('id')
