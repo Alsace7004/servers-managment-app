@@ -871,6 +871,246 @@ const emojis = [
         "unicode":"U+1F4A4"
     },
     /**Hands and other Body Parts Emojis**/
+    {
+        "emoji":"👋",
+        "meaning":"Waving hand",
+        "unicode":"U+1F44B"
+    },
+    {
+        "emoji":"🖖",
+        "meaning":"Vulcan salute",
+        "unicode":"U+1F596"
+    },
+    {
+        "emoji":"👌",
+        "meaning":"Ok",
+        "unicode":"U+1F44C"
+    },
+    {
+        "emoji":"🤌",
+        "meaning":"Pinched fingers",
+        "unicode":"U+1F90C"
+    },
+    {
+        "emoji":"🤏",
+        "meaning":"Pinched hand",
+        "unicode":"U+1F90F"
+    },
+    {
+        "emoji":"✌",
+        "meaning":"Victory hand",
+        "unicode":"U+270C"
+    },
+    {
+        "emoji":"🤞",
+        "meaning":"Crossed fingers",
+        "unicode":"U+1F91E"
+    },
+    {
+        "emoji":"🤟",
+        "meaning":"Love you",
+        "unicode":"U+1F91F"
+    },
+    {
+        "emoji":"🤙",
+        "meaning":"Call me hand",
+        "unicode":"U+1F919"
+    },
+    {
+        "emoji":"👈",
+        "meaning":"Index finger pointing left",
+        "unicode":"U+1F448"
+    },
+    {
+        "emoji":"👉",
+        "meaning":"Index finger pointing right",
+        "unicode":"U+1F449"
+    },
+    {
+        "emoji":"👇",
+        "meaning":"Index finger pointing down",
+        "unicode":"U+1F447"
+    },
+    {
+        "emoji":"🖕",
+        "meaning":"Middle finger",
+        "unicode":"U+1F595"
+    },
+    {
+        "emoji":"☝",
+        "meaning":"Forehand Index finger pointing up",
+        "unicode":"U+261D"
+    },
+    {
+        "emoji":"🫵",
+        "meaning":"Index finger pointing at viewer",
+        "unicode":"U+1FAF5"
+    },
+    {
+        "emoji":"👍",
+        "meaning":"Thumbs up",
+        "unicode":"U+1F44D"
+    },
+    {
+        "emoji":"👎",
+        "meaning":"Thumbs down",
+        "unicode":"U+1F44E"
+    },
+    {
+        "emoji":"✊",
+        "meaning":"Raised fist",
+        "unicode":"U+270A"
+    },
+    {
+        "emoji":"👊",
+        "meaning":"Fist",
+        "unicode":"U+1F44A"
+    },
+    {
+        "emoji":"🤛",
+        "meaning":"Left facing fist",
+        "unicode":"U+1F91B"
+    },
+    {
+        "emoji":"🤜",
+        "meaning":"Right facing fist",
+        "unicode":"U+1F91C"
+    },
+    {
+        "emoji":"👏",
+        "meaning":"Clapping hands",
+        "unicode":"U+1F44F"
+    },
+    {
+        "emoji":"🙌",
+        "meaning":"Raised hands",
+        "unicode":"U+1F64C"
+    },
+    {
+        "emoji":"👐",
+        "meaning":"Open hands",
+        "unicode":"U+1F450"
+    },
+    {
+        "emoji":"🤲",
+        "meaning":"Palms together hands",
+        "unicode":"U+1F932"
+    },
+    {
+        "emoji":"🤝",
+        "meaning":"Handshake",
+        "unicode":"U+1F91D"
+    },
+    {
+        "emoji":"🙏",
+        "meaning":"Praying hands",
+        "unicode":"U+1F64F"
+    },
+    {
+        "emoji":"✍",
+        "meaning":"Writing hands",
+        "unicode":"U+270D"
+    },
+    {
+        "emoji":"💅",
+        "meaning":"Nail polish",
+        "unicode":"U+1F485"
+    },
+    {
+        "emoji":"🤳",
+        "meaning":"Selfie hand",
+        "unicode":"U+1F933"
+    },
+    {
+        "emoji":"💪",
+        "meaning":"Flexed biceps",
+        "unicode":"U+1F4AA"
+    },
+    {
+        "emoji":"🦾",
+        "meaning":"Mechanical arm",
+        "unicode":"U+1F9BE"
+    },
+    {
+        "emoji":"🦵",
+        "meaning":"Leg",
+        "unicode":"U+1F9B5"
+    },
+    {
+        "emoji":"🦿",
+        "meaning":"Mechanical leg",
+        "unicode":"U+1F9BF"
+    },
+    {
+        "emoji":"🦶",
+        "meaning":"Foot",
+        "unicode":"U+1F9B6"
+    },
+    {
+        "emoji":"👂",
+        "meaning":"Ear",
+        "unicode":"U+1F442"
+    },
+    {
+        "emoji":"🦻",
+        "meaning":"Ear with earing aid",
+        "unicode":"U+1F9BB"
+    },
+    {
+        "emoji":"👃",
+        "meaning":"Nose",
+        "unicode":"U+1F443"
+    },
+    {
+        "emoji":"🧠",
+        "meaning":"Brain",
+        "unicode":"U+1F9E0"
+    },
+    {
+        "emoji":"👣",
+        "meaning":"Footprint",
+        "unicode":"U+1F463"
+    },
+    {
+        "emoji":"🫀",
+        "meaning":"Mechanical heart",
+        "unicode":"U+1FAC0"
+    },
+    {
+        "emoji":"🫁",
+        "meaning":"Lungs",
+        "unicode":"U+1FAC1"
+    },
+    {
+        "emoji":"🦷",
+        "meaning":"Tooth",
+        "unicode":"U+1F9B7"
+    },
+    {
+        "emoji":"🦴",
+        "meaning":"Bone",
+        "unicode":"U+1F9B7"
+    },
+    {
+        "emoji":"👀",
+        "meaning":"Eyes",
+        "unicode":"U+1F440"
+    },
+    {
+        "emoji":"👁",
+        "meaning":"Eye",
+        "unicode":"U+1F441"
+    },
+    {
+        "emoji":"👅",
+        "meaning":"Langue",
+        "unicode":"U+1F445"
+    },
+    {
+        "emoji":"👄",
+        "meaning":"Mouth",
+        "unicode":"U+1F444"
+    },
     /**Person Emojis**/
     /**Family Emojis**/
     /**Animals and Nature Emojis**/
@@ -2269,6 +2509,8 @@ const emojis = [
     },
     
 
+    /***********************************************************************************************/
+    
 ]
 
 export default emojis;

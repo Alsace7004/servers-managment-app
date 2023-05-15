@@ -582,13 +582,15 @@
     <div class="call_box_container zoom">
       <div id="me"></div>
       <div class="avatar_call_box">
-        <img
+        <!-- <img
           class="call__box_img"
           style=""
           :src="'../profile/chats_img/avatar-24.jpg'"
           alt=""
           srcset=""
-        />
+        /> -->
+        <img v-if="authUserPhoto === null || authUserPhoto === undefined" class="call__box_img" :src="'../profile/chats_img/avatar-24.jpg'" alt="" srcset="">
+        <img v-else class="call__box_img" :src="'../img_path/Staff/'+authUserPhoto" alt="" srcset="">
       </div>
 
       <div class="call__box_btn">
@@ -644,7 +646,7 @@ import emojis from "../emoji.js";
 import smileys_people$1 from "../emojis_liste.js";
 import TextareaEmojiPicker from "../components/TextareaEmojiPicker.vue";
 import { useAuthStore } from "../store/index";
-const { id } = useAuthStore();
+const { id,photo } = useAuthStore();
 /**********************************************************************/
 // import picker compopnent
 import EmojiPicker from "vue3-emoji-picker";
@@ -671,6 +673,7 @@ export default {
   data() {
     return {
       authUserId: id,
+      authUserPhoto: photo,
       departementFriends: [],
       conversationMessages: [],
 
