@@ -597,7 +597,6 @@
             <i class="fas fa-phone-slash "></i>
           </button>
           <button class="btn-call-secondary" id="ss" @click="ToggleMicrophone">
-           
             <i :class="[collapsed ? 'fa-microphone-alt' : 'fa-microphone-slash', 'fa']"></i>
           </button>
         </div>
@@ -619,7 +618,7 @@
                                 </div>
                                 <!-- accept/decline -->
                                 <div class="d-flex justify-content-center" style="gap:5rem">
-                                  <div class="circle_shapes circle_shapes_danger" data-dismiss="modal" aria-label="Close">
+                                  <div class="circle_shapes circle_shapes_danger" @click="deniedCall" data-dismiss="modal" aria-label="Close">
                                     <i class="fas fa-phone-slash"></i>
                                   </div>
                                   <div class="circle_shapes circle_shapes_success" @click="acceptCall">
@@ -827,6 +826,16 @@ export default {
         });
       });
     },
+    deniedCall(){
+        alert("Appel Refuser")
+        axiosClient.post(`api/endCallForThisUser/${this.chat.sent_to_id}`).then((res)=>{
+          console.log("valeur de res : ",res) 
+        })
+        this.calls = []
+        //$("#edit_domaine").modal("hide");
+        document.getElementById('call_box_agora').classList.add("dnone");
+        alert("i left the channel")
+    },
     async join() {
       this.rtc.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
       await this.rtc.client.join(
@@ -862,11 +871,14 @@ export default {
       this.stopAudio();
       this.stopVideo();
       this.rtc.client.leave();
+      axiosClient.post(`api/endCallForThisUser/${this.chat.sent_to_id}`).then((res)=>{
+        console.log("valeur de res : ",res) 
+      })
+      this.calls = []
       //$("#edit_domaine").modal("hide");
       document.getElementById('call_box_agora').classList.add("dnone");
       alert("i left the channel")
       console.log("You left the channel");
-      
     },
     //Toggle The Micro Phone
     ToggleMicrophone() {
@@ -1035,10 +1047,7 @@ export default {
       }
       document.getElementById(e.target.dataset.modal).classList.remove("dnone");
       this.leave();
-      axiosClient.post(`api/endCallForThisUser/${this.chat.sent_to_id}`).then((res)=>{
-        console.log("valeur de res : ",res) 
-      })
-      this.calls = []
+      
     },
     loadOff() {
       document.getElementById("loadTheMessage").classList.add("dnone");
@@ -1116,7 +1125,7 @@ export default {
                 Swal.fire('Success!',`L'appel a été coupé par ${e.email}`,'success');
                 //Fermer le modal de l'appel en cours
                 document.getElementById("call_box_agora").classList.add("dnone");
-                this.chat.sent_to_id = e.id;
+                //this.chat.sent_to_id = e.id;
                 console.log("valeur de e from EndUserCallEvent broadcast: ",e)
       });
   },
