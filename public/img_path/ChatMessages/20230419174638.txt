@@ -1,0 +1,97 @@
+
+1-le mental sensoriel
+ce qui percoit, ce qui est percu, 
+les objets qui sont vue,les objets qui sont entendu,
+les objets qui sont touché,les objets qui sont gouté
+a travers les 5 sens
+2-le mental intermediaire
+il crois ou il ne crois pas
+enfermer dans les dogmes,les croiyances
+sans avoir experimenter par lui meme les choses qu'il lit ecoute
+3-le mental interieure
+nous permet de percevoir les choses mais d'une autre maniere,
+percevoir les choses qui sont invisible au yeux de la chaire
+percevoir les choses invisible au mental sensoriel + intermediaire
+/****************************************************************************/
+
+/****************************************************************************/
+Mental Interieure:30:38
+ouvrir le mental interieur pour voir les choses,cesser d'etre aveugle,
+prendre conscience sue nous sommes des aveugles qui ne voyons pas	
+percevoir l'ultra des choses, des realité,des verités,
+la nature le mystere
+
+pour pouvoir exister veritable,vivre l'initiation,monté les echellon de l'initiation
+a travers l'imagination,l'inspiration et l'intution
+
+le mental intermediaire qui sont les pharisiens
+
+pharisiens interieur ???
+Qu’est-ce que le pharisien intérieur est le pharisien qui juge les autres,
+qui impose des regles,se met au dessus des autres
+/****************************************************************************/
+12-02-2023
+Qu’est-ce que le Vide en toute chose ?
+le vide en toute chose est : consiste a percevoir les choses dans leur realité,
+percevoir leur lumiere reelle
+
+À quoi sert le mantra Ham-Sah ?
+Le mantra Ham-Sah nous permet de : transmuter les energies sexuelles
+
+Comment diriger le Vide Illuminateur?
+
+-sois on se laisse aller dans le courant et on vois où on atteri de l'autre coté
+-sois on lutte contre le courant pour essayer d'arriver a un endroit bien precis où nous voulons arrivé
+-faire croire au mental qu'on se laisse porter par le courant mais en meme temps s dirige en catimini sans
+que le mental ne s'en rende compte pour lui meme arriver de l'autre coté la où il veut 
+Mes pensées sont libres d’aller où elles veulent, mais quoi que je fasse, elles reviennent toujours vers toi.
+-https://message-damour.com/2017/11/message-damour-matinal/
+-https://asafacon.fr/mot-doux-pour-elle/
+-https://laviedesreines.com/citations/citations-amour/message-mignon-50-exemples-pour-vous-inspirer-a-reveler-vos-sentiments-les-plus-profonds/
+
+
+
+Que sont les Chakras ?
+sont des sens occultes,
+ces sens ocultes sont comme des disques ou des roues magnetiques
+qui se trouvent a la surface du coprs physique mais en realité 
+appartiennent au corps astral
+
+Que sont les Tattvas ?
+Vibration de l'ether qui correspondent aux 4 elements
+Le tattvas de la terre
+Le tattvas de l'eau
+Le tattvas de l'air
+Le tattvas du feu
+Sont des ondes qui penetre notre corps a travers les chakra
+
+01-03-2023
+
+-Où sont les demi-tons manquant dans l’octave ? partout dans la nature
+-Qu’est-ce qui remplit chacun de ces demi-tons ? energie libre
+-Qu’est-ce que l’entropie ? est une90943828 loi de la nature qui consiste en ce que la
+nature vous oppose une resistance dans une action que vous mener des que vous
+essayer de faire quelque chose de different, une chose que vous n'avez pas l'habitude de faire
+97999728
+ $arr = [
+            'int'=>'required|numeric',
+            'dev'=>'required|numeric',
+            'ex'=>'required|numeric',
+            'el_id'=>'required|integer',
+            'ma_id'=>'required|integer',
+            'cy_id'=>'required|integer',
+        ];
+        $arr2 = [
+            'int.required'=>'Veuillez remplir ce champ',
+            'int.numeric'=>'Veuillez entrer une valeur numerique',
+            'dev.required'=>'Veuillez remplir ce champ',
+            'dev.numeric'=>'Veuillez entrer une valeur numerique',
+            'ex.required'=>'Veuillez remplir ce champ',
+            'ex.numeric'=>'Veuillez entrer une valeur numerique',
+            'el_id.required'=>'Veuillez remplir ce champ',
+            'el_id.numeric'=>'Veuillez entrer une valeur entière',
+            'ma_id.required'=>'Veuillez remplir ce champ',
+            'ma_id.numeric'=>'Veuillez entrer une valeur entière',
+            'cy_id.required'=>'Veuillez remplir ce champ',
+            'cy_id.numeric'=>'Veuillez entrer une valeur entière',
+        ];

@@ -202,6 +202,14 @@
 
             Dis c'est lors de la création d'un commercial qu'on lui associe un intermédiaire non?
             ==>
+            20-04-2023
+            ---scenario pour terminer un appel---
+            1- A appel B
+            2- B recoit une notification de A
+            3- B accepte l'appel
+            4- Il ya communication entre A et B
+            5- Si A termine l'appel B recoit une notification (et l'appel se termine chez B egalement)
+            6- Si B termine l'appel A recoit une notification (et l'appel se termine chez A egalement)
         */
         
     }

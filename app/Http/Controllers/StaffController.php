@@ -7,6 +7,7 @@ use App\Events\CallUser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Events\CallingUserEvent;
+use App\Events\EndUserCallEvent;
 use App\Events\WebsocketDemoEvent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -361,5 +362,10 @@ class StaffController extends Controller
         $email = auth()->user()->email;
         //dd($email);
         broadcast(new CallingUserEvent($staff,$email))->toOthers();
+    }
+    public function endCallForThisUser(Staff $staff){
+        //dd("je suis appelé depuis endCallForThisUser");
+        $email = auth()->user()->email;
+        broadcast(new EndUserCallEvent($staff,$email))->toOthers();
     }
 }

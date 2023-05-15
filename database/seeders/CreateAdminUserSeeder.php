@@ -44,8 +44,8 @@ class CreateAdminUserSeeder extends Seeder
         $role_admin->syncPermissions($permissions); // asign permission to role admin
         /************************************************************/
         $user_admin->assignRole([$role_admin->id]);
-        $user_secretaire->assignRole([$user_secretaire->id]);
-        $user_utilisateur->assignRole([$user_utilisateur->id]);
+        $user_secretaire->assignRole([$role_secretaire->id]);
+        $user_utilisateur->assignRole([$role_utilisateur->id]);
         /************************************************************/
         /* $role_admin->givePermissionTo([
             $server_create,

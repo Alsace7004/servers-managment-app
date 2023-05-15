@@ -419,8 +419,14 @@
                       "
                     ></div>
                     <div class="text_message">
-                      <div>
+                      <!-- images files begin here -->
+                      <div v-if="getImageFileExtension(item.photo)">
                         <p>{{ item.message }}</p>
+                        <!--if item.photo.ext in_array['png','jpg','svg','jpeg']
+                            (on affiche balise img)
+                            else if item.photo.ext in_array['pdf','docx','excel','pptx']
+                            on affiche un lien
+                        -->
                         <img
                           v-if="item.photo === null || item.photo === undefined"
                           class="user_box__avatar"
@@ -438,10 +444,17 @@
                           srcset=""
                         />
                       </div>
-
-                      <!-- <div class="text_message" style="">
-                        
-                      </div> -->
+                      <!-- images files end here -->
+                      <!-- documents files begin here -->
+                      <div v-if="getDocsFileExtension(item.photo)">
+                        <p>{{ item.message }}</p>
+                        <div class="chat_file_box">
+                          <div class="chat_file_ext_box">.{{getFileAndDisplayExt(item.photo)}}</div>
+                          <a :href="'../img_path/ChatMessages/'+item.photo">cliqué ici pour telecharger</a>
+                        </div>
+                      </div>
+                      <!-- documents files end here -->
+                      
                       <div class="time-right-container">
                         <span
                           class="time-right"
@@ -479,7 +492,8 @@
                     <input
                       class="dnone"
                       type="file"
-                      accept="application/pdf"
+                      
+                      accept=".pdf,.txt,.xlsx,.doc,.docx,.ppt,.pptx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                       @change="selectImage"
                       id="three"
                       required
@@ -1021,6 +1035,9 @@ export default {
       }
       document.getElementById(e.target.dataset.modal).classList.remove("dnone");
       this.leave();
+      axiosClient.post(`api/endCallForThisUser/${this.chat.sent_to_id}`).then((res)=>{
+        console.log("valeur de res : ",res) 
+      })
       this.calls = []
     },
     loadOff() {
@@ -1035,6 +1052,43 @@ export default {
       this.chat.message =this.chat.message + d
     },
     /**************************RECUPERATION-DE-EMOJI-CLIQUE-END********************************/
+    /**************************GET-IMAGE-FILE-EXTENSION-BEGIN**********************************/
+    getImageFileExtension(filename){
+      const arr = [
+        'jpe','jpg','jpeg','gif','png','bmp','ico','svg','svgz',
+        'tif','tiff','ai','drw','pct','psp','xcf','psd','raw','webp'
+      ];
+      
+      if(filename === null) return 'hello';
+      if(filename != null){
+        //console.log("valeur de filename:",filename)
+        //alert("valeur de filename:"+filename)
+        let extension = filename.split(".").pop();
+        //console.log("valeur de extension:",extension)
+        if(arr.includes(extension)){
+          //console.log("its true")
+          return true
+        }
+      }
+    },
+    getDocsFileExtension(filename){
+      const arr = ['pdf','doc','docx','ppt','pptx','txt','xlsx'];
+      if(filename === null) return;
+      if(filename != null){
+        //console.log("valeur de doc filename:",filename)
+        //alert("valeur de filename:"+filename)
+        let extension = filename.split(".").pop();
+        //console.log("valeur de doc extension:",extension)
+        if(arr.includes(extension)){
+          //console.log("its true for doc")
+          return true
+        }
+      }
+    },
+    getFileAndDisplayExt(filename){
+      return filename.split(".").pop();
+    }
+    /**************************GET-IMAGE-FILE-EXTENSION-END**********************************/
   },
 
   created() {
@@ -1047,13 +1101,23 @@ export default {
       //console.log("Valeur de event Echo.channel : ", event);
     });
     //
+      //Calling a Staff
       window.Echo.channel(`callingStaff.${this.authUserId}`).listen('CallingUserEvent', (e) => {
                 //alert("Je suis sensé prevenir le correspondant de l'appel en cours")
                 //alert("Appel vocal entrant de : "+e.staff.email+" Son id est : "+e.staff.id)
-                alert("Appel vocal entrant venant de : "+e.email)
+                //alert("Appel vocal entrant venant de : "+e.email)
                 this.appelEntrantEmail = e.email
                 $("#edit_role").modal('show')
                 console.log("valeur de e from CallingUserEvent broadcast: ",e)
+      });
+      //Close Staff Calling
+      window.Echo.channel(`endUserCall.${this.authUserId}`).listen('EndUserCallEvent', (e) => {
+                //afficher le modal informatif
+                Swal.fire('Success!',`L'appel a été coupé par ${e.email}`,'success');
+                //Fermer le modal de l'appel en cours
+                document.getElementById("call_box_agora").classList.add("dnone");
+                this.chat.sent_to_id = e.id;
+                console.log("valeur de e from EndUserCallEvent broadcast: ",e)
       });
   },
   mounted() {

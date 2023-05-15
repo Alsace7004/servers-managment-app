@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CallingUserEvent implements ShouldBroadcast
+class EndUserCallEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $staff;
@@ -32,11 +32,11 @@ class CallingUserEvent implements ShouldBroadcast
      * Get the channels the event should broadcast on.
      *
      * @return \Illuminate\Broadcasting\Channel|array
-    */
+     */
     public function broadcastOn()
     {
         //return new PrivateChannel('channel-name');
-        return new Channel('callingStaff.'.$this->staff->id);
+        return new Channel('endUserCall.'.$this->staff->id);
     }
     public function broadcastWith(): array
     {

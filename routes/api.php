@@ -78,6 +78,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('typeStaff', TypeStaffController::class);
     //call This Specific User
     Route::post('callThisUser/{staff}', [StaffController::class,'callThisUser']); //
+    //end call for this specific user
+    Route::post('endCallForThisUser/{staff}', [StaffController::class,'endCallForThisUser']); //
     Route::get('getAllTypeStaff', [TypeStaffController::class, 'typeStaffList']); //
     //Staff
     Route::apiResource('staff', StaffController::class);

@@ -3,7 +3,7 @@
 }
 /****************************************************************************/
 
-.glowing-circle {
+  .glowing-circle {
     width: 50px;
     height: 50px;
     border-radius:50%;
@@ -12,7 +12,7 @@
     -moz-animation: glowing 1s ease-in-out infinite alternate;
     animation: glowing 1s ease-in-out infinite alternate;
   }
-  @-webkit-keyframes glowing {
+  @keyframes glowing {
     from {
       box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f0f, 0 0 40px #de3333, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
     }
@@ -30,7 +30,7 @@
     -moz-animation: breathing 2s linear 1s infinite;
     animation:  breathing 2s linear 1s infinite;
   }
-  @-webkit-keyframes pulse {
+  @keyframes pulse {
     0% { box-shadow:0 0 8px var(--legendary), inset 0 0 8px var(--legendary); }
     50% { box-shadow:0 0 16px var(--legendary), inset 0 0 14px var(--legendary); }
     100% { box-shadow:0 0 8px var(--legendary), inset 0 0 8px var(--legendary); }
@@ -42,14 +42,12 @@
       transform: scale(0.9);
       box-shadow:0 0 8px var(--legendary), inset 0 0 8px var(--legendary);
     }
-  
     50% {
       -webkit-transform: scale(1);
       -ms-transform: scale(1);
       transform: scale(1);
       box-shadow:0 0 16px var(--legendary), inset 0 0 14px var(--legendary);
     }
-  
     100% {
       -webkit-transform: scale(0.9);
       -ms-transform: scale(0.9);
@@ -81,5 +79,5 @@
         box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.5),
                     0 0 0 24px rgba(255, 255, 255, 0.3);
     }
-}
+  }
 
