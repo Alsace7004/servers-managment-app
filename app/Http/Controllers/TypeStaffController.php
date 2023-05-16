@@ -115,7 +115,7 @@ class TypeStaffController extends Controller
         } 
         return ['status'=>false]; 
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *

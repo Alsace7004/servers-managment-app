@@ -110,6 +110,7 @@ class PermmissionController extends Controller
         return ['status'=>false];
     }
 
+    //get Auth user permissions and his roles
     public function getAuthUserPermissionAndRole(){
         return auth()->check()?auth()->user()->jsPermissions():0;
     }

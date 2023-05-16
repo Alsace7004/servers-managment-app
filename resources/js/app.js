@@ -28,25 +28,25 @@ import { useAuthStore } from './store';
 /**Agora Begin**/
 // import AgoraRTC from "agora-rtc-sdk-ng";
 let options = 
-{
-    // Pass your App ID here.
-    appId: '69678cdcbda5431e9c38fdd0a6086ec9',
-    // Set the channel name.
-    channel: 'chat',
-    // Pass your temp token here.
-    token: null,
-    // Set the user ID.
-    uid: Math.floor(Math.random() * 2032),
-};
+  {
+      // Pass your App ID here.
+      appId: '69678cdcbda5431e9c38fdd0a6086ec9',
+      // Set the channel name.
+      channel: 'chat',
+      // Pass your temp token here.
+      token: null,
+      // Set the user ID.
+      uid: Math.floor(Math.random() * 2032),
+  };
 let channelParameters =
-{
-  // A variable to hold a local audio track.
-  localAudioTrack: null,
-  // A variable to hold a remote audio track.
-  remoteAudioTrack: null,
-    // A variable to hold the remote user id.
-  remoteUid: 'main',
-};
+  {
+    // A variable to hold a local audio track.
+    localAudioTrack: null,
+    // A variable to hold a remote audio track.
+    remoteAudioTrack: null,
+      // A variable to hold the remote user id.
+    remoteUid: 'main',
+  };
 async function startBasicCall()
 {
         console.log("Nous allons commencé par ici pour voir :");
