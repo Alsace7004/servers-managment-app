@@ -87,7 +87,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveTypeOutil">Sauvegarder</button>
+                                    <!-- <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveTypeOutil">Sauvegarder</button> -->
+                                    <v-button :onClick="saveTypeOutil" id="send_server" class="button"  :class="loading ? 'disabled loading' :''">Sauvegarder</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -107,7 +108,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateTypeOutil">Mettre à jour</button>
+                                    <!-- <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateTypeOutil">Mettre à jour</button> -->
+                                    <v-button :onClick="updateTypeOutil" id="update_server" class="button"  :class="loading ? 'disabled loading' :''">Mettre à jour</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -123,11 +125,13 @@
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
+    import Button from "../components/Button.vue"
     export default {
         name:'TypeOutils',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,
+            'v-button':Button
         },
         data(){
             let columns =[
@@ -183,12 +187,16 @@
             },
             saveTypeOutil(){
                 this.errors = []
+                /*************************************************/
                 let send_server = document.querySelector("#send_server")
                 send_server.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
+                /*************************************************/
                 axiosClient.post("api/type_outils",this.typeOutil).then((res)=>{
+                    /*************************************************/
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de res dans saveTypeOutil:",res)
                     if(res.data.status){
                         $('#create_domaine').modal('hide'); 
@@ -196,8 +204,10 @@
                         Swal.fire('Créer!',"Nouveau Type d'outil Ajouter avec success.",'success') ;
                     }
                 }).catch((err)=>{
+                    /*************************************************/
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de err dans saveTypeOutil:",err.response)
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors
@@ -243,12 +253,16 @@
                 })
             },
             updateTypeOutil(){
+                    /*************************************************/
                     let update_server = document.querySelector("#update_server")
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
+                    /*************************************************/
                     axiosClient.put(`api/type_outils/${this.edit_id}`,this.typeOutil).then((res)=>{
+                        /*************************************************/
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         if(res.data.status){
                             $('#edit_domaine').modal('hide');
                             Swal.fire('Mise à jour!',"Type d'Outil mise à jour avec success.",'success')    
@@ -257,8 +271,10 @@
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
+                        /*************************************************/
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         //console.log("Valeur de err dans updateTypeOutil:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors

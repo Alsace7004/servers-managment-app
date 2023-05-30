@@ -116,7 +116,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveOutil">Sauvegarder</button>
+                                    <!-- <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveOutil">Sauvegarder</button> -->
+                                    <v-button :onClick="saveOutil" id="send_server" class="button"  :class="loading ? 'disabled loading' :''">Sauvegarder</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -161,7 +162,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateOutil">Mettre à jour</button>
+                                    <!-- <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateOutil">Mettre à jour</button> -->
+                                    <v-button :onClick="updateOutil" id="update_server" class="button"  :class="loading ? 'disabled loading' :''">Mettre à jour</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -225,11 +227,13 @@
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
+    import Button from "../components/Button.vue"
     export default {
         name:'outils',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,
+            'v-button':Button
         },
         data(){
             let columns =[
@@ -304,12 +308,16 @@
             },
             saveOutil(){
                 this.errors = []
+                /*************************************************/
                 let send_server = document.querySelector("#send_server")
                 send_server.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
+                /*************************************************/
                 axiosClient.post("api/outils",this.outil).then((res)=>{
+                    /*************************************************/
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de res dans saveOutil:",res)
                     if(res.data.status){
                         $('#create_domaine').modal('hide'); 
@@ -317,8 +325,10 @@
                         Swal.fire('Créer!',"Nouveau outil Ajouter avec success.",'success') ;
                     }
                 }).catch((err)=>{
+                    /*************************************************/
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de err dans saveOutil:",err.response)
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors
@@ -383,12 +393,16 @@
                 })
             }, 
             updateOutil(){
+                    /*************************************************/
                     let update_server = document.querySelector("#update_server")
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
+                    /*************************************************/
                     axiosClient.put(`api/outils/${this.edit_id}`,this.outil).then((res)=>{
+                        /*************************************************/
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         if(res.data.status){
                             $('#edit_domaine').modal('hide');
                             Swal.fire('Mise à jour!',"Outil mise à jour avec success.",'success')    
@@ -397,8 +411,10 @@
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
+                        /*************************************************/
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         //console.log("Valeur de err dans updateOutil:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors
@@ -410,14 +426,14 @@
             },
             deleteOutil(id){
                     Swal.fire({
-                    title: 'Etes-vous sûr?',
-                    text: "Vous ne pourrez pas annuler cette action !!!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Annuler!',
-                    confirmButtonText: 'Oui, supprimez-le!'
+                        title: 'Etes-vous sûr?',
+                        text: "Vous ne pourrez pas annuler cette action !!!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Annuler!',
+                        confirmButtonText: 'Oui, supprimez-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
                                 axiosClient.delete(`api/outils/${id}`).then((res)=>{

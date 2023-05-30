@@ -122,7 +122,8 @@
                                 <span v-if="errors.permission" class="error_txt">{{errors.permission[0]}}</span>
 
                                 <div style="margin-top:2rem">
-                                    <button class="mdl-btn-primary" id="update_role" :class="loading ? 'disabled' :''" @click="updateRole">Mettre à jour</button>
+                                    <!-- <button class="mdl-btn-primary" id="update_role" :class="loading ? 'disabled' :''" @click="updateRole">Mettre à jour</button> -->
+                                    <v-button :onClick="updateRole" id="update_role" class="button"  :class="loading ? 'disabled loading' :''">Mettre à jour</v-button>
                                 </div>
                         <!-- content end -->
                     </div>
@@ -140,11 +141,13 @@
     import Sidebar from "../components/Sidebar.vue";
     import ContentHeader from "../components/ContentHeader.vue";
     import axiosClient from "../axios/index"
+    import Button from "../components/Button.vue"
 
     export default {
         name:'roles',
         components:{
             Navbar,Sidebar,ContentHeader,
+            'v-button':Button
         },
         props: ['self','roleId'],
         data(){
@@ -188,13 +191,18 @@
             },
             //
             updateRole(){
+                    /*************************************************/
                     let update_role = document.querySelector("#update_role")
+                    update_role.classList.add("loading");
                     update_role.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
-                    
+                    /*************************************************/
                     axiosClient.put(`api/roles/${this.edit_id}`,{role:this.role,role2:this.hasCar}).then((res)=>{
+                        /*************************************************/
+                        update_role.classList.remove("loading");
                         update_role.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         if(res.data.status){
                             $('#edit_role').modal('hide');
                             Swal.fire('Mise à jour!','Role mise à jour avec success.','success')    
@@ -204,8 +212,11 @@
                             this.$router.push("/roles"); 
                         }
                     }).catch((err)=>{
+                        /*************************************************/
+                        update_role.classList.remove("loading");
                         update_role.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         //console.log("Valeur de err dans updateRole:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors

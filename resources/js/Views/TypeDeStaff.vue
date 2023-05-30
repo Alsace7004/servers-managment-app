@@ -87,7 +87,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveTypeStaff">Sauvegarder</button>
+                                    <!-- <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveTypeStaff">Sauvegarder</button> -->
+                                    <v-button :onClick="saveTypeStaff" id="send_server" class="button"  :class="loading ? 'disabled loading' :''">Sauvegarder</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -107,7 +108,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateDomaine">Mettre à jour</button>
+                                    <!-- <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateDomaine">Mettre à jour</button> -->
+                                    <v-button :onClick="updateDomaine" id="update_server" class="button"  :class="loading ? 'disabled loading' :''">Mettre à jour</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -123,11 +125,13 @@
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
+    import Button from "../components/Button.vue"
     export default {
         name:'TypeStaffs',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,
+            'v-button':Button
         },
         data(){
             let columns =[
@@ -184,12 +188,18 @@
             },
             saveTypeStaff(){
                 this.errors = []
+                /*************************************************/
                 let send_server = document.querySelector("#send_server")
+                send_server.classList.add("loading");
                 send_server.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
+                /*************************************************/
                 axiosClient.post("api/typeStaff",this.typestaff).then((res)=>{
+                    /*************************************************/
+                    send_server.classList.remove("loading");
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de res dans saveTypeStaff:",res)
                     if(res.data.status){
                         $('#create_domaine').modal('hide'); 
@@ -197,8 +207,11 @@
                         Swal.fire('Créer!','Nouveau Type de Staff Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
+                    /*************************************************/
+                    send_server.classList.remove("loading");
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de err dans saveTypeStaff:",err.response)
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors
@@ -244,12 +257,18 @@
                 })
             },
             updateDomaine(){
+                    /*************************************************/
                     let update_server = document.querySelector("#update_server")
+                    update_server.classList.add("loading");
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
+                    /*************************************************/
                     axiosClient.put(`api/typeStaff/${this.edit_id}`,this.typestaff).then((res)=>{
+                        /*************************************************/
+                        update_server.classList.remove("loading");
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         if(res.data.status){
                             $('#edit_domaine').modal('hide');
                             Swal.fire('Mise à jour!','Type de Staff mise à jour avec success.','success')    
@@ -258,8 +277,11 @@
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
+                        /*************************************************/
+                        update_server.classList.remove("loading");
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         //console.log("Valeur de err dans updateDomaine:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors

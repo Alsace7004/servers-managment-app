@@ -159,7 +159,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveStaff">Sauvegarder</button>
+                                    <!-- <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveStaff">Sauvegarder</button> -->
+                                    <v-button :onClick="saveStaff" id="send_server" class="button"  :class="loading ? 'disabled loading' :''">Sauvegarder</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -240,7 +241,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateStaff">Mettre à jour</button>
+                                    <!-- <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateStaff">Mettre à jour</button> -->
+                                    <v-button :onClick="updateStaff" id="update_server" class="button"  :class="loading ? 'disabled loading' :''">Mettre à jour</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -256,11 +258,13 @@
     import ProperModal from "../components/ProperModal.vue";
     import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
+    import Button from "../components/Button.vue"
     export default {
         name:'staff',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,
+            'v-button':Button
         },
         data(){
             let columns =[
@@ -379,9 +383,12 @@
             },
             saveStaff(){
                 this.errors = []
+                /*************************************************/
                 let send_server = document.querySelector("#send_server")
+                send_server.classList.add("loading");
                 send_server.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
+                /*************************************************/
                 let fd = new FormData()
                     fd.append('nom',this.staff.nom)
                     fd.append('email',this.staff.email)
@@ -394,8 +401,11 @@
                     fd.append('password',this.staff.password)
                     fd.append('checked',this.staff.checked?1:0)
                 axiosClient.post("api/staff",fd).then((res)=>{
+                    /*************************************************/
+                    send_server.classList.remove("loading");
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de res dans saveStaff:",res)
                     if(res.data.status){
                         $('#create_domaine').modal('hide'); 
@@ -403,8 +413,11 @@
                         Swal.fire('Créer!','Nouveau Staff Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
+                    /*************************************************/
+                    send_server.classList.remove("loading");
                     send_server.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de err dans saveStaff:",err.response)
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors
@@ -458,9 +471,12 @@
                 })
             }, 
             updateStaff(){
+                    /*************************************************/
                     let update_server = document.querySelector("#update_server")
+                    update_server.classList.add("loading");
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
+                    /*************************************************/
                     let fl = new FormData()
                         fl.append('nom',this.staff.nom)
                         fl.append('email',this.staff.email)
@@ -472,8 +488,11 @@
                         fl.append('photo',this.staff.photo)
                         fl.append('_method', 'PATCH');
                     axiosClient.post(`api/staff/${this.edit_id}`,fl).then((res)=>{
+                        /*************************************************/
+                        update_server.classList.remove("loading");
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         if(res.data.status){
                             $('#edit_domaine').modal('hide');
                             Swal.fire('Mise à jour!','Staff mise à jour avec success.','success')    
@@ -482,8 +501,11 @@
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
+                        /*************************************************/
+                        update_server.classList.remove("loading");
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /*************************************************/
                         console.log("Valeur de err dans updateStaff:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors

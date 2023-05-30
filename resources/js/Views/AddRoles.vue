@@ -140,7 +140,8 @@
                                 <span v-if="errors.permission" class="error_txt">{{errors.permission[0]}}</span>
                                 <!-- permissions -->
                                 <div style="margin-top:2rem">
-                                    <button class="mdl-btn-primary" id="send_role" :class="loading ? 'disabled' :''" @click="saveRole">Sauvegarder</button>
+                                    <!-- <button class="mdl-btn-primary" id="send_role" :class="loading ? 'disabled' :''" @click="saveRole">Sauvegarder</button> -->
+                                    <v-button :onClick="saveRole" id="send_role" class="button"  :class="loading ? 'disabled loading' :''">Sauvegarder</v-button>
                                 </div>
                         </div>
                         <!-- end -->
@@ -159,11 +160,12 @@
     import Sidebar from "../components/Sidebar.vue";
     import ContentHeader from "../components/ContentHeader.vue";
     import axiosClient from "../axios/index"
-
+    import Button from "../components/Button.vue"
     export default {
         name:'roles',
         components:{
             Navbar,Sidebar,ContentHeader,
+            'v-button':Button
         },
         props: ['self'],
         data(){
@@ -194,12 +196,18 @@
             //
             saveRole(){
                 this.errors = []
+                /*************************************************/
                 let send_role = document.querySelector("#send_role")
+                send_role.classList.add("loading");
                 send_role.innerHTML = "Sauvegarde en cours..."
                 this.loading = true;
+                /*************************************************/
                 axiosClient.post("api/roles",this.role).then((res)=>{
+                    /*************************************************/
+                    send_role.classList.remove("loading");
                     send_role.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de res dans saveRole:",res)
                     if(res.data.status){
                         $('#create_role').modal('hide'); 
@@ -208,8 +216,11 @@
                         this.$router.push("/roles"); 
                     }
                 }).catch((err)=>{
+                    /*************************************************/
+                    send_role.classList.remove("loading");
                     send_role.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /*************************************************/
                     //console.log("Valeur de err dans saveRole:",err.response)
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors

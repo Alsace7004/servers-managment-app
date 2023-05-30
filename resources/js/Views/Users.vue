@@ -103,7 +103,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_user" :class="loading ? 'disabled' :''" @click="saveUser">Sauvegarder</button>
+                                    <!-- <button class="mdl-btn-primary" id="send_user" :class="loading ? 'disabled' :''" @click="saveUser">Sauvegarder</button> -->
+                                    <Button :onClick="saveUser" id="send_user" class="button"  :class="loading ? 'disabled loading' :''">Sauvegarder</Button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -134,7 +135,8 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="update_user" :class="loading ? 'disabled' :''" @click="updateUser">Mettre à jour</button>
+                                    <!-- <button class="mdl-btn-primary" id="update_user" :class="loading ? 'disabled' :''" @click="updateUser">Mettre à jour</button> -->
+                                    <Button :onClick="updateUser" id="update_user" class="button"  :class="loading ? 'disabled loading' :''">Mettre à jour</Button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -174,6 +176,7 @@
     import vTable from "../components/vTable/vTable.vue";
     import loader from "../components/loader3.vue"
     import axiosClient from "../axios"
+    import Button from "../components/Button.vue"
     import {onMounted, ref,reactive} from "vue";
 
     import {useAuthStore} from "../store/index"
@@ -272,22 +275,27 @@
     }
     const saveUser = ()=>{
         errors.value = []
+        /*************************************************/
         let send_user = document.querySelector("#send_user")
         send_user.innerHTML = "Sauvegarde en cours..."
         loading.value = true;
+        /*************************************************/
         axiosClient.post("api/users",user).then((res)=>{
             //console.log("Valeur de res dans saveUser:",res)
+            /*************************************************/
             send_user.innerHTML = "Sauvegarder"
             loading.value = false;
-           
+            /*************************************************/
             if(res.data.status){
                 $('#create_user').modal('hide'); 
                 getUsers()
                 Swal.fire('Créer!','Nouvelle Utilisateur Ajouter avec success.','success') ;
             }
         }).catch((err)=>{
+            /*************************************************/
             send_user.innerHTML = "Sauvegarder"
             loading.value = false;
+            /*************************************************/
             //console.log("Valeur de err dans saveUser:",err.response.data.errors)
             if(err.response.status === 422){
                 errors.value = err.response.data.errors
@@ -342,12 +350,16 @@
         })
     }
     const updateUser = ()=>{
+                    /*************************************************/
                     let update_user = document.querySelector("#update_user")
                     update_user.innerHTML = "Mise à jour en cours..."
                     loading.value = true;
+                    /*************************************************/
                     axiosClient.put(`api/users/${edit_id.value}`,user).then((res)=>{
+                        /*************************************************/
                         update_user.innerHTML = "Mettre à jour"
                         loading.value = false;
+                        /*************************************************/
                         $('#edit_user').modal('hide');
                         if(res.data.status){
                             Swal.fire('Mise à jour!','Utilisateur mise à jour avec success.','success')    
@@ -356,8 +368,10 @@
                             is_Editing.value = false;
                         }
                     }).catch((err)=>{
+                        /*************************************************/
                         update_user.innerHTML = "Mettre à jour"
                         loading.value = false;
+                        /*************************************************/
                         //console.log("Valeur de err dans updateUser:",err.response)
                         if(err.response.status === 422){
                             errors.value = err.response.data.errors
@@ -369,14 +383,14 @@
     }
     const deleteUser = (id)=>{
                     Swal.fire({
-                    title: 'Etes-vous sûr?',
-                    text: "Vous ne pourrez pas annuler cette action !!!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'Annuler!',
-                    confirmButtonText: 'Oui, supprimez-le!'
+                        title: 'Etes-vous sûr?',
+                        text: "Vous ne pourrez pas annuler cette action !!!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Annuler!',
+                        confirmButtonText: 'Oui, supprimez-le!'
                     }).then((result) => {
                         if (result.isConfirmed) {
                                 axiosClient.delete(`api/users/${id}`).then((res)=>{
