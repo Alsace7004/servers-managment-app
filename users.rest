@@ -44,3 +44,5 @@ Authorization: Bearer 34|W0mkBoATkj9kFidurAwRb6qFWOVIlhufbdxsw2zW
 ### GET ALL ROLES
 POST http://localhost:8000/broadcasting/auth
 Authorization: Bearer 56|WKpFmQhI7falTf0ckTu2IHVGLE2jUuxfHkJSWo0g
+### un petite test
+GET http://localhost:8004/api/roles

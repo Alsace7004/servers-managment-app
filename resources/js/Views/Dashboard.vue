@@ -12,6 +12,7 @@
         <div class="content_body">
           <!-- router-view-begin -->
           <ContentHeader message="Tableau de bord !!!" />
+          <div class="spin"></div>
           <!--Am The Dashboard Components !!!-->
           <div class="card" style="">
             <!--The First part-->

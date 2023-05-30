@@ -187,6 +187,14 @@ const logout = () => {
 .deconnexion_btn {
   cursor: pointer;
 }
+.conteneur_inner{
+  height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.conteneur_inner::-webkit-scrollbar{
+    display: none;
+}
 /* .sidebar > ul:hover{
     scrollbar-width: thin;
     overflow-y : scroll;
