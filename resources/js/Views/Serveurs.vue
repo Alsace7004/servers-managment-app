@@ -133,7 +133,12 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger"  data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="send_server" :class="loading ? 'disabled' :''" @click="saveServer">Sauvegarder</button>
+                                    <!--<button class="mdl-btn-primary-1" id="send_server" :class="loading ? 'disabled' :''" @click="saveServer">Sauvegarder</button>-->
+                                    <!-- <button class="button" id="amapiano" :class="loading ? 'disabled button--loading' :''" @click="saveServer">
+                                        <span class="button__text">Sauvegarder</span>
+                                    </button> -->
+                                    <!-- <button class="button" id="amapiano" :class="loading ? 'disabled loading' :''" @click="saveServer">Sauvegarder</button> -->
+                                    <v-button :onClick="saveServer" id="amapiano" class="button"  :class="loading ? 'disabled loading' :''">Sauvegarder</v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -191,7 +196,10 @@
                             <template v-slot:footer>
                                 <div>
                                     <button class="mdl-btn-danger" data-dismiss="modal" aria-label="Close">Fermer</button>
-                                    <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateServer">Mettre à jour</button>
+                                    <!-- <button class="mdl-btn-primary" id="update_server" :class="loading ? 'disabled' :''" @click="updateServer">Mettre à jour</button> -->
+                                    <v-button :onClick="updateServer" id="update_server" class="button"  :class="loading ? 'disabled loading' :''">
+                                        Mettre à jour
+                                    </v-button>
                                 </div>
                             </template>
                         </proper-modal>
@@ -271,12 +279,14 @@
     import loader from "../components/loader3.vue"
     import axiosClient from "../axios/index"
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import Button from "../components/Button.vue"
     export default {
         name:'servers',
         components:{
             ContentHeader,vTable,ProperModal,
             loader,Sidebar,Navbar,
-            ClassicEditor
+            ClassicEditor,
+            'v-button':Button
         },
         data(){
             let columns =[
@@ -357,23 +367,34 @@
                     console.log("Valeur de err dans getServers:",err.response)
                 })
             },
+            consoleClick(){
+                alert("am cliked !!!")
+            },
             saveServer(){
                 this.errors = []
-                let send_server = document.querySelector("#send_server")
-                send_server.innerHTML = "Sauvegarde en cours..."
+                /*************************************************/
+                const btn = document.querySelector("#amapiano");
+                btn.classList.add("loading");
+                btn.innerHTML="Sauvegarde en cours...";
+                /*************************************************/
                 this.loading = true;
                 axiosClient.post("api/servers",this.server).then((res)=>{
-                    send_server.innerHTML = "Sauvegarder"
+                    /**********************************************************/
+                    btn.classList.remove("loading");
+                    btn.innerHTML = "Sauvegarder"
                     this.loading = false;
-                    //console.log("Valeur de res dans saveServer:",res)
+                    /**********************************************************/
                     if(res.data.status){
                         $('#create_server').modal('hide'); 
                         this.getServers()
                         Swal.fire('Créer!','Nouveau Serveur Ajouter avec success.','success') ;
                     }
                 }).catch((err)=>{
-                    send_server.innerHTML = "Sauvegarder"
+                    /**********************************************************/
+                    btn.classList.remove("loading");
+                    btn.innerHTML = "Sauvegarder"
                     this.loading = false;
+                    /**********************************************************/
                     //console.log("Valeur de err dans saveServer:",err.response)
                     if(err.response.status === 422){
                         this.errors = err.response.data.errors
@@ -444,12 +465,18 @@
                 })
             },  
             updateServer(){
+                    /**********************************************************/
                     let update_server = document.querySelector("#update_server")
+                    update_server.classList.add("loading");
                     update_server.innerHTML = "Mise à jour en cours..."
                     this.loading = true;
+                    /**********************************************************/
                     axiosClient.put(`api/servers/${this.edit_id}`,this.server).then((res)=>{
+                        /**********************************************************/
+                        update_server.classList.remove("loading");
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /**********************************************************/
                         if(res.data.status){
                             $('#edit_server').modal('hide');
                             Swal.fire('Mise à jour!','Serveur mise à jour avec success.','success')    
@@ -458,8 +485,11 @@
                             this.is_Editing = false;
                         }
                     }).catch((err)=>{
+                        /**********************************************************/
+                        update_server.classList.remove("loading");
                         update_server.innerHTML = "Mettre à jour"
                         this.loading = false;
+                        /**********************************************************/
                         console.log("Valeur de err dans updateServer:",err.response)
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors
@@ -512,5 +542,7 @@
 </script>
 
 <style scoped>
-
+    /**********************************************************/
+    /**********************************************************/
+    /* all styles */
 </style>

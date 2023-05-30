@@ -40,17 +40,23 @@ export default {
         loginUser(){
             this.getToken();
             this.errors = []
-            let login_btn = document.querySelector('.login_btn')
+            /*************************************************/
+            const login_btn = document.querySelector('.login_btn')
+            login_btn.classList.add("loading");
             login_btn.innerHTML = "Connexion en cours..."
             this.loading =  true
+            /*************************************************/
             axios.get('/sanctum/csrf-cookie').then(response => {
                 
                 console.log("Valeur de response dans sanctum/csrf-cookie:",response)
                 // Login...
                     axios.post('api/login',this.user).then((res)=>{
                         localStorage.clear(); 
+                        /*************************************************/
+                        login_btn.classList.remove("loading");
                         login_btn.innerHTML ="Se connecter"
                         this.loading =  false
+                        /*************************************************/
                         console.log("Valeur de res dans loginUser:",res)
                         console.log("Valeur du checked du user connecté:",res.data.user.checked)
                         //verifier l'attribut checked
@@ -73,8 +79,11 @@ export default {
                             }
                         }
                     }).catch((err)=>{
+                        /*************************************************/
+                        login_btn.classList.remove("loading");
                         login_btn.innerHTML ="Se connecter"
                         this.loading =  false
+                        /*************************************************/
                         console.log("Valeur de err dans loginUser:",err.response)
                         
                         if(err.response.status === 422){
