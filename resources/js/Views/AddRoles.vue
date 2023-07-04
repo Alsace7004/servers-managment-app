@@ -126,7 +126,6 @@
                                     <label for=""><strong>Domaines :</strong></label>
                                     <label for=""><strong>Serveurs :</strong></label>
                                 </div> -->
-
                                 <!-- permissions -->
                                 <!-- <div class="col-md-12" style="margin-top:2rem">
                                     <label for=""><strong>Choisir une permission :</strong></label>
