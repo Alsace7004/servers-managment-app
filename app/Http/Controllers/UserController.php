@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\CreateUserRequest;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -182,5 +183,62 @@ class UserController extends Controller
         and u.id =$id");
         $user = $user[0];
         return $user;
+    }
+
+    public function updateProfileInfo(Request $request, User $user){
+      
+        $data = $request->only(['name','email','last_password','new_password']);
+        //dd($data);
+        $validator = Validator::make($data,[
+            'name' => ['required','string','min:2','max:100',
+                Rule::unique('users')->ignore($user->id)
+            ],
+            'email' => ['required','email',
+                Rule::unique('users')->ignore($user->id)
+            ],
+            'last_password'             => 'required|string|min:8',
+            'new_password'              => 'required|string|min:8',
+        ],[
+            'name.required'             =>'Veuillez remplir ce champ',
+            'name.string'               =>'Veuillez entrer des chaines de caractère',
+            'name.min'                  =>'Trop court...',
+            'name.max'                  =>'Trop long...',
+            'name.unique'               =>'Cette valeur existe déjà...',
+            'email.required'            =>'Veuillez remplir ce champ',
+            'email.email'               =>'Veuillez entrer une adresse mail valide',
+            'email.unique'              =>'Mail déjà utilisé.',
+            'last_password.required'    =>'Veuillez remplir ce champ...',
+            'new_password.required'     =>'Veuillez remplir ce champ...',
+            'last_password.min'         =>'Trop court...',
+            'new_password.min'          =>'Trop court...',
+        ]);
+        if($validator->fails()){
+            return response()->json(['status'=>false,'errors'=>$validator->errors()],422);
+        }
+
+        //on do les verifications
+        if (!Hash::check($data['last_password'],$user->password)){
+            return response()->json([
+                'status'=>false,
+                'message'=>'mot de passe incorrecte !!!'
+            ]);
+        }else{
+            
+            // going to update
+            $finalPassword = bcrypt($data['new_password']);
+
+            if($user->where('id',$user->id)->update([
+                'name'=>$data['name'],
+                'email'=>$data['email'],
+                'password'=>$finalPassword,
+            ])){
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'Mot de passe mise à jour avec succèss !!!'
+                ]); 
+            }
+            return ['status'=>false];
+        }
+      
     }
 }

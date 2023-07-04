@@ -20,6 +20,7 @@ use App\Http\Controllers\TypeOutilController;
 use App\Http\Controllers\TypeStaffController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\PermmissionController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategorieServeurController;
 use App\Http\Controllers\CategoriePermissionController;
 /*
@@ -101,6 +102,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("getSelectedUser/{id}", [StaffController::class, 'getSelectedUserInfo']);
     Route::post("sendMessage", [MessageController::class, 'sendMessage']);
     Route::get("fetchConversationMessages", [MessageController::class, 'fetchMessages']);
+    //mettre à jour les informations du profile
+    Route::put('profiles/userProfile/{user}',[UserController::class,'updateProfileInfo']);
+    //Route::apiResource('profiles',ProfileController::class);
 });
 
 /* Route::middleware('web')->group(function () {
@@ -206,6 +210,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 });
+
 
 
 Broadcast::routes(['middleware' => ['auth:sanctum']]);

@@ -37,6 +37,7 @@ const routes = [
         name:'modifyStaffPassword',
         component:()=>import("../Views/ModifyStaffPassword.vue")
     },
+    
     //utilisateurs
     {
         path:'/users',
@@ -54,6 +55,24 @@ const routes = [
                 next({name:'notAuthorised'})
             }
         }
+    },
+    //Profile
+    {
+        path:'/profiles',
+        name:'profiles',
+        component:()=>import("../Views/Profile.vue"),
+        meta:{
+            requiresAuth:true
+        },
+        /* beforeEnter(to,from,next){
+             let {U_permissions}=useAuthStore()
+            if(U_permissions.includes('outil-list')){
+                //verifier la permission
+                next()
+            }else{
+                next({name:'notAuthorised'})
+            } 
+        } */
     },
     //roles
     {

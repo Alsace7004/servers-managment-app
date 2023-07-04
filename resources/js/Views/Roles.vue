@@ -25,7 +25,7 @@
                             <!--<button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button>-->
                             <!-- <button v-if="$can('role-create')" style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer" @click="showModal">Ajouter Nouveau Role</button> --> 
                             <div style="margin-right:1rem;margin-bottom:1rem;padding:5px 10px;border-radius:5px;background-color: #2f3640;color:#fff;cursor:pointer;width:15%">
-                                <router-link v-if="$can('role-create')" :to="{name:'AddRoles'}" >Ajouter Nouveau Role</router-link>    
+                                <router-link v-if="$can('role-create')" :to="{name:'AddRoles'}" >Ajouter Role</router-link>    
                             </div>
                             
                             <!-- Create Role Btn end-->

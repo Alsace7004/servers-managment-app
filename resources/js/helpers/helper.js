@@ -95,7 +95,7 @@ export default {
             },    
             mounted(){
                 this.getPermission() 
-                console.log("Printing from mounted in helper.js");  
+                //console.log("Printing from mounted in helper.js");  
             }
         });
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar animate-left">
+  <div class="sidebar">
     <div class="close_btn_box">
       <i class="fas fa-times close_btn"></i>
     </div>
@@ -108,6 +108,16 @@
           </router-link>
         </li>
         <li>
+          <router-link
+            
+            :to="{ name: 'profiles' }"
+            class="item"
+          >
+            <span class="icon"><i class="fas fa-user"></i></span>
+            <span>Profile</span>
+          </router-link>
+        </li>
+        <li>
           <router-link :to="{ name: 'messageries' }" class="item">
             <span class="icon"><i class="far fa-comments"></i></span>
             <span>Messagerie</span>
@@ -149,7 +159,7 @@ const logout = () => {
   axiosClient
     .post("api/logout")
     .then((res) => {
-      console.log("Valeur de res dans logout:", res);
+      //console.log("Valeur de res dans logout:", res);
       if (res.data.status) {
         //Swal.fire('Deconnexion!','Deconnexion reussi !!!.','success');
         userStore.clearUser();
@@ -161,7 +171,7 @@ const logout = () => {
       }
     })
     .catch((err) => {
-      console.log("Valeur de error dans logout:", err);
+      //console.log("Valeur de error dans logout:", err);
     });
 };
 

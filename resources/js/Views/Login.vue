@@ -48,7 +48,7 @@ export default {
             /*************************************************/
             axios.get('/sanctum/csrf-cookie').then(response => {
                 
-                console.log("Valeur de response dans sanctum/csrf-cookie:",response)
+                //console.log("Valeur de response dans sanctum/csrf-cookie:",response)
                 // Login...
                     axios.post('api/login',this.user).then((res)=>{
                         localStorage.clear(); 
@@ -57,8 +57,8 @@ export default {
                         login_btn.innerHTML ="Se connecter"
                         this.loading =  false
                         /*************************************************/
-                        console.log("Valeur de res dans loginUser:",res)
-                        console.log("Valeur du checked du user connecté:",res.data.user.checked)
+                        //console.log("Valeur de res dans loginUser:",res)
+                        //console.log("Valeur du checked du user connecté:",res.data.user.checked)
                         //verifier l'attribut checked
                         
                         if(res.data.status){
@@ -84,12 +84,13 @@ export default {
                         login_btn.innerHTML ="Se connecter"
                         this.loading =  false
                         /*************************************************/
-                        console.log("Valeur de err dans loginUser:",err.response)
+                        //console.log("Valeur de err dans loginUser:",err.response)
                         
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors
                         }else if(err.response.status === 401){
                             Swal.fire('Erreur!',`${err.response.data.message}`,'error') ;
+                            this.user.password =''
                         }else{
                             //console.log("erreur: probleme de connexion")
                             Swal.fire('Erreur!','Probleme de connexion.','error') ;

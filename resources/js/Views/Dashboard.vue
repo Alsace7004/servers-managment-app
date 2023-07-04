@@ -164,7 +164,7 @@ export default {
           //console.log("Valeur de res dans getCountServers:",content)
         })
         .catch((err) => {
-          console.log("Valeur de err dans getCountServers:", err);
+          //console.log("Valeur de err dans getCountServers:", err);
         });
     },
     getCountDomaines() {
@@ -176,7 +176,7 @@ export default {
           //console.log("Valeur de res dans getCountDomaines:",content)
         })
         .catch((err) => {
-          console.log("Valeur de err dans getCountDomaines:", err);
+          //console.log("Valeur de err dans getCountDomaines:", err);
         });
     },
     getCountDepartements() {
@@ -188,7 +188,7 @@ export default {
           //console.log("Valeur de res dans getCountDepartements:",content)
         })
         .catch((err) => {
-          console.log("Valeur de err dans getCountDepartements:", err);
+          //console.log("Valeur de err dans getCountDepartements:", err);
         });
     },
     getCountStaffs() {
@@ -200,7 +200,7 @@ export default {
           //console.log("Valeur de res dans getCountStaffs:",content)
         })
         .catch((err) => {
-          console.log("Valeur de err dans getCountStaffs:", err);
+          //console.log("Valeur de err dans getCountStaffs:", err);
         });
     },
     getExpireServer() {
@@ -212,7 +212,7 @@ export default {
           //console.log("Valeur de res dans getExpireServer:",content)
         })
         .catch((err) => {
-          console.log("Valeur de err dans getExpireServer:", err);
+          //console.log("Valeur de err dans getExpireServer:", err);
         });
     },
     getExpireDomaines() {
@@ -224,7 +224,7 @@ export default {
           //console.log("Valeur de res dans getExpireDomaines:",content)
         })
         .catch((err) => {
-          console.log("Valeur de err dans getExpireDomaines:", err);
+          //console.log("Valeur de err dans getExpireDomaines:", err);
         });
     },
   },
