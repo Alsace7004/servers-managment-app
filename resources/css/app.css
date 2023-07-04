@@ -4,6 +4,7 @@
 @import url("./animation.css");
 @import url("./custum.css");
 @import url("../../public/admin/fontawesome-free/css/all.min.css");
+@import url("./forms.css");
 /* @import url(./messagerie.css); */
 /********************************MODAL-FONT-AWESOME-ICON-BEGIN*********************/
 .md_icon{
@@ -28,9 +29,7 @@
     outline: none;
     padding: 8px 15px;
 }
-.mb_3{
-    margin-bottom: 0.5rem;
-}
+
 .error_txt{
     color: #dd3333;
 }

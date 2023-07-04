@@ -74,30 +74,36 @@
                                     </div>
                                 </div>
                             </div> -->
-                            <div class="input_form mb_3">
-                                <input type="text" class="input_form_item" v-model="user.name" placeholder="nom...">
-                            </div>
-                            <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
+                            <div class="form_container">
+                                    <div class="input_form mb_1">
+                                        <input type="text" class="input_form_item" v-model="user.name" placeholder="nom...">
+                                    </div>
+                                    <span v-if="errors.name" class="error_txt">{{errors.name[0]}}</span>
 
-                            <div class="input_form mb_3">
-                                <input type="text" class="input_form_item" v-model="user.email" placeholder="email...">
+                                    <div class="input_form mb_1">
+                                        <input type="text" class="input_form_item" v-model="user.email" placeholder="email...">
+                                    </div>
+                                    <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
+                                    <div class="input_form mb_1">
+                                        <input type="password" class="input_form_item" v-model="user.last_password" placeholder="ancien mot de passe...">
+                                    </div>
+                                    <span v-if="errors.last_password" class="error_txt">{{errors.last_password[0]}}</span>
+                                    <div class="input_form mb_1">
+                                        <input type="password" class="input_form_item" v-model="user.new_password" placeholder="nouveau mot de passe...">
+                                    </div>
+                                    <span v-if="errors.new_password" class="error_txt">{{errors.new_password[0]}}</span>
+                                    <div>
+                                        <!-- <v-button :onClick="saveServer" id="amapiano" class="button"  :class="loading ? 'disabled loading' :''">mettre à jour</v-button> -->
+                                        <button class="mdl-btn-primary" style="margin-left:0" id="send_role" :class="loading ? 'disabled' :''" @click="updateProfileInfo">mettre à jour</button>
+                                    </div>
                             </div>
-                            <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
+                            
 
-                            <div class="input_form mb_3">
-                                <input type="password" class="input_form_item" v-model="user.last_password" placeholder="ancien mot de passe...">
-                            </div>
-                            <span v-if="errors.last_password" class="error_txt">{{errors.last_password[0]}}</span>
+                            
 
-                            <div class="input_form mb_3">
-                                <input type="password" class="input_form_item" v-model="user.new_password" placeholder="nouveau mot de passe...">
-                            </div>
-                            <span v-if="errors.new_password" class="error_txt">{{errors.new_password[0]}}</span>
+                            
 
-                            <div>
-                                 <!-- <v-button :onClick="saveServer" id="amapiano" class="button"  :class="loading ? 'disabled loading' :''">mettre à jour</v-button> -->
-                                <button class="mdl-btn-primary" style="margin-left:0" id="send_role" :class="loading ? 'disabled' :''" @click="updateProfileInfo">mettre à jour</button>
-                            </div>
+                            
                             
                         <!-- router-view-end -->
                     </div>

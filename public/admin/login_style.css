@@ -20,6 +20,7 @@
     height: 300px;
     width: 330px;
     border-radius: 5px;
+    background-color: var(--secondary-color);
 }
 .login_form_input{
     border: 1px solid red;
