@@ -160,16 +160,16 @@
                 axiosClient.put("api/profiles/userProfile/"+this.user.id,this.user).then((res)=>{
                     send_role.innerHTML = "mettre à jour"
                     this.loading = false;
-                    console.log("Valeur de res dans updateProfileInfo:",res)
+                    //console.log("Valeur de res dans updateProfileInfo:",res)
                     if(res.data.status){
                         Swal.fire('Créer!','Information mise à jour avec success.','success') ;
-                        this.name.last_password=''
-                        this.name.new_password=''
+                        this.user.last_password=''
+                        this.user.new_password=''
                     } 
                     if(!res.data.status){
                         Swal.fire('Erreur!','Mot de passe incorrete.','error') ;
-                        this.name.last_password=''
-                        this.name.new_password=''
+                        this.user.last_password=''
+                        this.user.new_password=''
                     }
                 }).catch((err)=>{
                     send_role.innerHTML = "mettre à jour"

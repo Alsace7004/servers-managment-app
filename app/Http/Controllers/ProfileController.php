@@ -106,7 +106,7 @@ class ProfileController extends Controller
             return response()->json([
                 'status'=>false,
                 'message'=>'mot de passe incorrecte !!!'
-            ]);
+            ],422);
         }else{
             
             // going to update
