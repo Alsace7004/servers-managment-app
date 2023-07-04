@@ -26,14 +26,14 @@ export const useAuthStore = defineStore("auth",{
         }, */
         async getUserRoleAndPermission(){
             await axiosClient.get("api/get-permissions").then((res)=>{
-                console.log("Valeur de data depuis getUserRoleAndPermission dans pinia store:",res)
+                //console.log("Valeur de data depuis getUserRoleAndPermission dans pinia store:",res)
                 this.$state.U_permissions  = res.data.permissions;
                 this.$state.U_roles        = res.data.roles;
             });
             
         },
         async  setUserDetails(res){
-            console.log("valeur de setUserDetails:",res.data)
+            //console.log("valeur de setUserDetails:",res.data)
             this.$state.id              = res.data.user.id
             this.$state.token           = res.data.access_token
             this.$state.name            = res.data.user.name
