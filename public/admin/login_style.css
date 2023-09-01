@@ -4,9 +4,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-body{
-    background-color: #fff;
-}
+
 :root{
     --primary-color:#dd3333;
     --secondary-color:#fff;
