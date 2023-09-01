@@ -1,5 +1,6 @@
 <template>
-    <div class="login_container">
+<div class="hello">
+<div class="login_container">
         <div class="login_text">Se connecter</div>
         <div class="login_form_input_control">
             <input type="text" class="login_form_input" v-model="user.email" placeholder="Email">
@@ -16,6 +17,8 @@
             <button class="login_btn" :class="loading ? 'disabled':''" @click="loginUser">Se connecter</button>
         </div>
     </div>
+</div>
+    
 </template>
 
 <script>
@@ -111,5 +114,9 @@ export default {
 </script>
 
 <style scoped>
-
+    .hello{
+        flex: 1;
+        height: 100vh;
+        background-color: #fff;
+    }
 </style>
