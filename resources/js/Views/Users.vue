@@ -163,7 +163,7 @@
                                 </div>
                             </template>
                         </proper-modal>
-                        <!-- Proper Voew Modal End -->
+                        <!-- Proper View Modal End -->
 </template>
 
 <script setup>

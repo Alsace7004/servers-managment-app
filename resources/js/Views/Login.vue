@@ -5,10 +5,13 @@
             <input type="text" class="login_form_input" v-model="user.email" placeholder="Email">
         </div>
         <span v-if="errors.email" class="error_txt">{{errors.email[0]}}</span>
+
         <div class="login_form_input_control">
             <input type="password" class="login_form_input" v-model="user.password" name="" id="" placeholder="Password">
         </div>
         <span v-if="errors.password" class="error_txt">{{errors.password[0]}}</span>
+        
+        <span v-if="errMessage" class="error_txt">{{errMessage}}</span>
         <div class="login_form_input_control">
             <button class="login_btn" :class="loading ? 'disabled':''" @click="loginUser">Se connecter</button>
         </div>
@@ -31,6 +34,7 @@ export default {
                 password:''
             },
             loading:false,
+            errMessage:'',
         }
     },
     methods:{
@@ -39,6 +43,7 @@ export default {
         },
         loginUser(){
             this.getToken();
+            this.errMessage=''
             this.errors = []
             /*************************************************/
             const login_btn = document.querySelector('.login_btn')
@@ -89,11 +94,13 @@ export default {
                         if(err.response.status === 422){
                             this.errors = err.response.data.errors
                         }else if(err.response.status === 401){
-                            Swal.fire('Erreur!',`${err.response.data.message}`,'error') ;
+                            //this.errors = err.response.data.message
+                            this.errMessage = err.response.data.message
+                            //Swal.fire('Erreur!',`${err.response.data.message}`,'error') ;
                             this.user.password =''
                         }else{
-                            //console.log("erreur: probleme de connexion")
-                            Swal.fire('Erreur!','Probleme de connexion.','error') ;
+                            console.log("erreur: probleme de connexion")
+                            //Swal.fire('Erreur!','Probleme de connexion.','error') ;
                         }
                     })
             });
